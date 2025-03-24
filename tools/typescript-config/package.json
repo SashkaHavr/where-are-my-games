@@ -3,8 +3,6 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./base": "./base.json",
-    "./compiled-package": "./compiled-package.json",
-    "./web": "./web.json"
+    "./base": "./base.json"
   }
 }
