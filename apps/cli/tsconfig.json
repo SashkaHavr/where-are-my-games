@@ -1,0 +1,10 @@
+{
+  "extends": "@where-are-my-games/typescript-config/base",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["./src", "./tsup.config.ts", "./vitest.config.ts", "./tests"]
+}

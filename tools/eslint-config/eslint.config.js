@@ -1,10 +1,13 @@
 import js from '@eslint/js';
 import pluginQuery from '@tanstack/eslint-plugin-query';
+// @ts-ignore
 import turbo from 'eslint-config-turbo/flat';
+// @ts-ignore
 import pluginReactCompiler from 'eslint-plugin-react-compiler';
+// @ts-ignore
 import pluginReactHooks from 'eslint-plugin-react-hooks';
 import pluginReactRefresh from 'eslint-plugin-react-refresh';
-import tseslint from 'typescript-eslint'
+import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -12,12 +15,11 @@ export default tseslint.config(
     files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
-      tseslint.configs.recommended,
-      tseslint.configs.recommendedTypeChecked,
-      tseslint.configs.stylistic,
-      tseslint.configs.stylisticTypeChecked,
-      pluginQuery.configs['flat/recommended'],
-      // @ts-ignore
+      ...tseslint.configs.recommended,
+      ...tseslint.configs.recommendedTypeChecked,
+      ...tseslint.configs.stylistic,
+      ...tseslint.configs.stylisticTypeChecked,
+      ...pluginQuery.configs['flat/recommended'],
       ...turbo,
     ],
     plugins: {
@@ -42,6 +44,13 @@ export default tseslint.config(
           allowNullableBoolean: true,
         },
       ],
+      '@typescript-eslint/no-unnecessary-condition': 'error',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/no-empty-function': 'off',
       curly: ['error', 'multi-line'],
     },
     languageOptions: {
