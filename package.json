@@ -1,0 +1,24 @@
+{
+  "name": "where-are-my-games",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "check": "turbo lint:root:check format:check lint typecheck",
+    "fix": "turbo lint:root format lint typecheck",
+    "dev": "turbo dev",
+    "format": "turbo format",
+    "format:check": "turbo format:check",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "clean": "turbo clean:root clean",
+    "test": "turbo test",
+    "test:watch": "turbo test:watch",
+    "clean:root": "git clean -xdf .turbo node_modules",
+    "lint:root": "pnpx sherif@latest -r non-existant-packages --fix --no-install && pnpm install",
+    "lint:root:check": "pnpx sherif@latest -r non-existant-packages"
+  },
+  "devDependencies": {
+    "turbo": "^2.4.4"
+  },
+  "packageManager": "pnpm@10.6.5"
+}

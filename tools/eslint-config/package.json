@@ -1,0 +1,30 @@
+{
+  "name": "@where-are-my-games/eslint-config",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./eslint.config.js"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
+    "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
+    "typecheck": "tsc --noEmit"
+  },
+  "prettier": "@where-are-my-games/prettier-config",
+  "devDependencies": {
+    "@eslint/compat": "^1.2.7",
+    "@eslint/js": "^9.23.0",
+    "@where-are-my-games/prettier-config": "workspace:*",
+    "@where-are-my-games/typescript-config": "workspace:*",
+    "@tanstack/eslint-plugin-query": "^5.68.0",
+    "eslint": "^9.23.0",
+    "eslint-config-turbo": "^2.4.4",
+    "eslint-plugin-react-compiler": "19.0.0-beta-aeaed83-20250323",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "prettier": "^3.5.3",
+    "typescript": "5.8.2",
+    "typescript-eslint": "^8.28.0"
+  }
+}

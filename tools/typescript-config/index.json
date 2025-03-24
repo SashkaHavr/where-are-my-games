@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    // Based on https://www.totaltypescript.com/tsconfig-cheat-sheet and Bun default tsconfig
+
+    // Base Options:
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+
+    // Strictness
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "checkJs": true,
+
+    // NOT transpiling with TypeScript:
+    "module": "preserve",
+    "noEmit": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+
+    // React and DOM
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "jsx": "react-jsx"
+  }
+}
