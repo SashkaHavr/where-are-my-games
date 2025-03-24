@@ -3,8 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./app/*"]
     }
   },
-  "include": ["./src", "./tsup.config.ts", "./vitest.config.ts", "./tests"]
+  "include": ["./app"]
 }
