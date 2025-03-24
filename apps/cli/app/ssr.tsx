@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable no-restricted-exports */
 import { getRouterManifest } from '@tanstack/react-start/router-manifest';
 import {
   createStartHandler,
