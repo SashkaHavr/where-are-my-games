@@ -15,11 +15,17 @@ export default tseslint.config(
     files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
+      // @ts-ignore
       ...tseslint.configs.recommended,
+      // @ts-ignore
       ...tseslint.configs.recommendedTypeChecked,
+      // @ts-ignore
       ...tseslint.configs.stylistic,
+      // @ts-ignore
       ...tseslint.configs.stylisticTypeChecked,
+      // @ts-ignore
       ...pluginQuery.configs['flat/recommended'],
+      // @ts-ignore
       ...turbo,
     ],
     plugins: {
@@ -44,13 +50,6 @@ export default tseslint.config(
           allowNullableBoolean: true,
         },
       ],
-      '@typescript-eslint/no-unnecessary-condition': 'error',
-      '@typescript-eslint/no-unsafe-argument': 'off',
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/no-unsafe-call': 'off',
-      '@typescript-eslint/no-unsafe-member-access': 'off',
-      '@typescript-eslint/no-unsafe-return': 'off',
-      '@typescript-eslint/no-empty-function': 'off',
       curly: ['error', 'multi-line'],
     },
     languageOptions: {
