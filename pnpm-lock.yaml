@@ -112,7 +112,7 @@ importers:
         specifier: ^3.4.2
         version: 3.5.3
       typescript:
-        specifier: ^5.7.3
+        specifier: ^5.8.2
         version: 5.8.2
       typescript-eslint:
         specifier: ^8.19.1
@@ -121,22 +121,22 @@ importers:
   tools/prettier-config:
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: ^4.4.0
+        specifier: ^4.4.1
         version: 4.4.1(prettier@3.5.3)
       '@where-are-my-games/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
       prettier:
-        specifier: ^3.4.2
+        specifier: ^3.5.3
         version: 3.5.3
       prettier-plugin-packagejson:
-        specifier: ^2.5.6
+        specifier: ^2.5.10
         version: 2.5.10(prettier@3.5.3)
       prettier-plugin-tailwindcss:
-        specifier: ^0.6.9
+        specifier: ^0.6.11
         version: 0.6.11(@ianvs/prettier-plugin-sort-imports@4.4.1(prettier@3.5.3))(prettier@3.5.3)
       typescript:
-        specifier: ^5.7.3
+        specifier: ^5.8.2
         version: 5.8.2
 
   tools/typescript-config: {}
