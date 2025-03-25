@@ -12,31 +12,6 @@ importers:
         specifier: ^2.3.3
         version: 2.4.4
 
-  apps/api-server:
-    dependencies:
-      hono:
-        specifier: ^4.7.5
-        version: 4.7.5
-    devDependencies:
-      '@types/bun':
-        specifier: latest
-        version: 1.2.6
-      '@where-are-my-games/api':
-        specifier: workspace:*
-        version: link:../../packages/api
-      '@where-are-my-games/eslint-config':
-        specifier: workspace:*
-        version: link:../../tools/eslint-config
-      '@where-are-my-games/prettier-config':
-        specifier: workspace:*
-        version: link:../../tools/prettier-config
-      '@where-are-my-games/typescript-config':
-        specifier: workspace:*
-        version: link:../../tools/typescript-config
-      typescript:
-        specifier: ^5.8.2
-        version: 5.8.2
-
   apps/web:
     dependencies:
       '@tanstack/react-query':
@@ -54,9 +29,6 @@ importers:
       '@trpc/tanstack-react-query':
         specifier: ^11.0.0
         version: 11.0.0(@tanstack/react-query@5.69.0(react@19.0.0))(@trpc/client@11.0.0(@trpc/server@11.0.0(typescript@5.8.2))(typescript@5.8.2))(@trpc/server@11.0.0(typescript@5.8.2))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
-      hono:
-        specifier: ^4.7.5
-        version: 4.7.5
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -79,9 +51,6 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.3.4
         version: 4.3.4(vite@6.2.3(@types/node@22.13.13)(jiti@2.4.2)(terser@5.39.0)(tsx@4.19.3))
-      '@where-are-my-games/api':
-        specifier: workspace:*
-        version: link:../../packages/api
       '@where-are-my-games/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
@@ -100,27 +69,6 @@ importers:
       vite-tsconfig-paths:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.8.2)(vite@6.2.3(@types/node@22.13.13)(jiti@2.4.2)(terser@5.39.0)(tsx@4.19.3))
-
-  packages/api:
-    devDependencies:
-      '@types/bun':
-        specifier: latest
-        version: 1.2.6
-      '@where-are-my-games/eslint-config':
-        specifier: workspace:*
-        version: link:../../tools/eslint-config
-      '@where-are-my-games/prettier-config':
-        specifier: workspace:*
-        version: link:../../tools/prettier-config
-      '@where-are-my-games/typescript-config':
-        specifier: workspace:*
-        version: link:../../tools/typescript-config
-      hono:
-        specifier: ^4.7.5
-        version: 4.7.5
-      typescript:
-        specifier: ^5.8.2
-        version: 5.8.2
 
   packages/trpc:
     dependencies:
@@ -2219,10 +2167,6 @@ packages:
 
   hermes-parser@0.20.1:
     resolution: {integrity: sha512-BL5P83cwCogI8D7rrDCgsFY0tdYUtmFP9XaXtl2IQjC+2Xo+4okjfXintlTxcIwl4qeGddEl28Z11kbVIw0aNA==}
-
-  hono@4.7.5:
-    resolution: {integrity: sha512-fDOK5W2C1vZACsgLONigdZTRZxuBqFtcKh7bUQ5cVSbwI2RWjloJDcgFOVzbQrlI6pCmhlTsVYZ7zpLj4m4qMQ==}
-    engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
     resolution: {integrity: sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ==}
@@ -5778,8 +5722,6 @@ snapshots:
   hermes-parser@0.20.1:
     dependencies:
       hermes-estree: 0.20.1
-
-  hono@4.7.5: {}
 
   hookable@5.5.3: {}
 
