@@ -1,3 +1,4 @@
+import { api } from '@/apiClient';
 import { createFileRoute } from '@tanstack/react-router';
 
 // function get_rand() {
@@ -6,6 +7,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/')({
   component: Home,
+  loader: async () => (await api.hello.$get()).text(),
 });
 
 function Home() {
@@ -13,5 +15,11 @@ function Home() {
   //   return 'Works!';
   // }
 
-  return 'Works!';
+  const state = Route.useLoaderData();
+  return (
+    <div>
+      <p>Works!</p>
+      <p>{state}</p>
+    </div>
+  );
 }

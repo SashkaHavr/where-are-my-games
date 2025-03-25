@@ -41,6 +41,7 @@ export default tseslint.config(
       ],
       'react-compiler/react-compiler': 'error',
       'react-hooks/exhaustive-deps': 'off',
+      '@typescript-eslint/no-unnecessary-condition': 'error',
       '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'error',
       '@typescript-eslint/strict-boolean-expressions': [
         'error',
@@ -51,6 +52,13 @@ export default tseslint.config(
         },
       ],
       curly: ['error', 'multi-line'],
+      '@typescript-eslint/no-empty-function': 'off',
+      // These doesn't work in monorepo
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
     },
     languageOptions: {
       parserOptions: {

@@ -1,35 +1,23 @@
 {
-  "name": "@where-are-my-games/web",
+  "name": "@where-are-my-games/api-routes",
   "type": "module",
-  "bin": "dist/index.js",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
-    "build": "vinxi build",
     "clean": "git clean -xdf .turbo node_modules",
-    "dev": "vinxi dev",
     "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
     "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
     "lint": "eslint",
-    "start": "vinxi start",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@where-are-my-games/prettier-config",
-  "dependencies": {
-    "@tanstack/react-router": "^1.114.27",
-    "@tanstack/react-start": "^1.114.27",
-    "hono": "^4.7.5",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "vinxi": "^0.5.3"
-  },
   "devDependencies": {
-    "@types/react": "^19.0.12",
-    "@types/react-dom": "^19.0.4",
-    "@vitejs/plugin-react": "^4.3.4",
-    "@where-are-my-games/api-routes": "workspace:*",
+    "@types/bun": "latest",
     "@where-are-my-games/eslint-config": "workspace:*",
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",
-    "typescript": "^5.8.2",
-    "vite-tsconfig-paths": "^5.1.4"
+    "hono": "^4.7.5",
+    "typescript": "^5.8.2"
   }
 }
