@@ -1,23 +1,25 @@
 {
-  "name": "@where-are-my-games/api-routes",
+  "name": "@where-are-my-games/api-server",
   "type": "module",
-  "exports": {
-    ".": "./src/index.ts"
-  },
+  "bin": "dist/index.js",
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
+    "dev": "bun run --hot src/index.ts",
     "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
     "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
     "lint": "eslint",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@where-are-my-games/prettier-config",
+  "dependencies": {
+    "hono": "^4.7.5"
+  },
   "devDependencies": {
     "@types/bun": "latest",
+    "@where-are-my-games/api": "workspace:*",
     "@where-are-my-games/eslint-config": "workspace:*",
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",
-    "hono": "^4.7.5",
     "typescript": "^5.8.2"
   }
 }
