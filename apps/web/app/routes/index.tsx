@@ -1,25 +1,22 @@
-import { api } from '@/apiClient';
+import { useTRPC } from '@/trpc';
+import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
-
-// function get_rand() {
-//   return Math.random() > 0.5 ? 1 : undefined;
-// }
 
 export const Route = createFileRoute('/')({
   component: Home,
-  loader: async () => (await api.hello.$get()).text(),
+  loader: async ({ context }) => await context.trpc.hello.query(),
 });
 
 function Home() {
-  // if (get_rand()) {
-  //   return 'Works!';
-  // }
+  const trpc = useTRPC();
+  const useHello = useQuery(trpc.hello.queryOptions());
 
   const state = Route.useLoaderData();
   return (
     <div>
       <p>Works!</p>
       <p>{state}</p>
+      {useHello.isSuccess && <p>On client: {useHello.data}</p>}
     </div>
   );
 }

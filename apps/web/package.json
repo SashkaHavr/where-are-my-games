@@ -14,11 +14,15 @@
   },
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
+    "@tanstack/react-query": "^5.69.0",
     "@tanstack/react-router": "^1.114.27",
     "@tanstack/react-start": "^1.114.27",
+    "@trpc/client": "^11.0.0",
+    "@trpc/tanstack-react-query": "^11.0.0",
     "hono": "^4.7.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "superjson": "^2.2.2",
     "vinxi": "^0.5.3"
   },
   "devDependencies": {
@@ -28,6 +32,7 @@
     "@where-are-my-games/api": "workspace:*",
     "@where-are-my-games/eslint-config": "workspace:*",
     "@where-are-my-games/prettier-config": "workspace:*",
+    "@where-are-my-games/trpc": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",
     "typescript": "^5.8.2",
     "vite-tsconfig-paths": "^5.1.4"

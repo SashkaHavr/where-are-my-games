@@ -1,12 +1,19 @@
 import type { ReactNode } from 'react';
+import { QueryClient } from '@tanstack/react-query';
 import {
-  createRootRoute,
+  createRootRouteWithContext,
   HeadContent,
   Outlet,
   Scripts,
 } from '@tanstack/react-router';
+import { TRPCClient } from '@trpc/client';
 
-export const Route = createRootRoute({
+import { AppRouter } from '@where-are-my-games/trpc';
+
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+  trpc: TRPCClient<AppRouter>;
+}>()({
   head: () => ({
     meta: [
       {
