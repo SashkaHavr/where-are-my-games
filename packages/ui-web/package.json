@@ -1,0 +1,33 @@
+{
+  "name": "@where-are-my-games/trpc",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "add-component": "pnpm dlx shadcn@latest add",
+    "clean": "git clean -xdf .turbo node_modules",
+    "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
+    "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit"
+  },
+  "prettier": "@where-are-my-games/prettier-config",
+  "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.484.0",
+    "tailwind-merge": "^3.0.2",
+    "tw-animate-css": "^1.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.17",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "@where-are-my-games/eslint-config": "workspace:*",
+    "@where-are-my-games/prettier-config": "workspace:*",
+    "@where-are-my-games/typescript-config": "workspace:*",
+    "tailwindcss": "^4.0.17",
+    "typescript": "^5.8.2"
+  }
+}
