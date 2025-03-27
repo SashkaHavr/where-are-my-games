@@ -10,7 +10,7 @@
     "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
     "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
     "lint": "eslint",
-    "start": "vinxi start",
+    "start": "bun run .output/server/index.mjs",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@where-are-my-games/prettier-config",
@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.17",
+    "@types/bun": "^1.2.8",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",

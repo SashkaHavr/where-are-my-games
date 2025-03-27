@@ -48,6 +48,9 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4.0.17
         version: 4.0.17
+      '@types/bun':
+        specifier: ^1.2.8
+        version: 1.2.8
       '@types/react':
         specifier: ^19.0.12
         version: 19.0.12
