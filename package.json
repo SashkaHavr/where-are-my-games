@@ -14,7 +14,7 @@
     "test": "turbo test",
     "test:watch": "turbo test:watch",
     "clean:root": "git clean -xdf .turbo node_modules",
-    "lint:root": "pnpx sherif@latest -r non-existant-packages --fix --no-install && pnpm install",
+    "lint:root": "pnpx sherif@latest -r non-existant-packages --fix --no-install",
     "lint:root:check": "pnpx sherif@latest -r non-existant-packages"
   },
   "devDependencies": {

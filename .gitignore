@@ -135,3 +135,5 @@ dist
 # Turborepo
 .turbo
 
+.vinxi
+.output

@@ -38,10 +38,16 @@ importers:
       superjson:
         specifier: ^2.2.2
         version: 2.2.2
+      tw-animate-css:
+        specifier: ^1.2.4
+        version: 1.2.4
       vinxi:
         specifier: ^0.5.3
         version: 0.5.3(@types/node@22.13.13)(db0@0.3.1)(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
     devDependencies:
+      '@tailwindcss/postcss':
+        specifier: ^4.0.17
+        version: 4.0.17
       '@types/react':
         specifier: ^19.0.12
         version: 19.0.12
@@ -59,10 +65,19 @@ importers:
         version: link:../../tools/prettier-config
       '@where-are-my-games/trpc':
         specifier: workspace:*
-        version: link:../../packages/ui-web
+        version: link:../../packages/trpc
       '@where-are-my-games/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
+      '@where-are-my-games/ui-web':
+        specifier: workspace:*
+        version: link:../../packages/ui-web
+      postcss:
+        specifier: ^8.5.3
+        version: 8.5.3
+      tailwindcss:
+        specifier: ^4.0.17
+        version: 4.0.17
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -81,7 +96,7 @@ importers:
     devDependencies:
       '@types/bun':
         specifier: latest
-        version: 1.2.6
+        version: 1.2.8
       '@where-are-my-games/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
@@ -103,22 +118,10 @@ importers:
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
       lucide-react:
         specifier: ^0.484.0
         version: 0.484.0(react@19.0.0)
-      tailwind-merge:
-        specifier: ^3.0.2
-        version: 3.0.2
-      tw-animate-css:
-        specifier: ^1.2.4
-        version: 1.2.4
     devDependencies:
-      '@tailwindcss/postcss':
-        specifier: ^4.0.17
-        version: 4.0.17
       '@types/react':
         specifier: ^19.0.12
         version: 19.0.12
@@ -134,9 +137,34 @@ importers:
       '@where-are-my-games/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
-      tailwindcss:
-        specifier: ^4.0.17
-        version: 4.0.17
+      '@where-are-my-games/utils':
+        specifier: workspace:*
+        version: link:../utils
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.2
+
+  packages/utils:
+    dependencies:
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      tailwind-merge:
+        specifier: ^3.0.2
+        version: 3.0.2
+    devDependencies:
+      '@where-are-my-games/eslint-config':
+        specifier: workspace:*
+        version: link:../../tools/eslint-config
+      '@where-are-my-games/prettier-config':
+        specifier: workspace:*
+        version: link:../../tools/prettier-config
+      '@where-are-my-games/typescript-config':
+        specifier: workspace:*
+        version: link:../../tools/typescript-config
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1512,8 +1540,8 @@ packages:
   '@types/braces@3.0.5':
     resolution: {integrity: sha512-SQFof9H+LXeWNz8wDe7oN5zu7ket0qwMu5vZubW4GCJ8Kkeh6nBWUz87+KTz/G3Kqsrp0j/W253XJb3KMEeg3w==}
 
-  '@types/bun@1.2.6':
-    resolution: {integrity: sha512-fY9CAmTdJH1Llx7rugB0FpgWK2RKuHCs3g2cFDYXUutIy1QGiPQxKkGY8owhfZ4MXWNfxwIbQLChgH5gDsY7vw==}
+  '@types/bun@1.2.8':
+    resolution: {integrity: sha512-t8L1RvJVUghW5V+M/fL3Thbxcs0HwNsXsnTEBEfEVqGteiJToOlZ/fyOEaR1kZsNqnu+3XA4RI/qmnX4w6+S+w==}
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
@@ -1735,8 +1763,8 @@ packages:
   buffer@6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
 
-  bun-types@1.2.6:
-    resolution: {integrity: sha512-FbCKyr5KDiPULUzN/nm5oqQs9nXCHD8dVc64BArxJadCvbNzAI6lUWGh9fSJZWeDIRD38ikceBU8Kj/Uh+53oQ==}
+  bun-types@1.2.7:
+    resolution: {integrity: sha512-P4hHhk7kjF99acXqKvltyuMQ2kf/rzIw3ylEDpCxDS9Xa0X0Yp/gJu/vDCucmWpiur5qJ0lwB2bWzOXa2GlHqA==}
 
   c12@3.0.2:
     resolution: {integrity: sha512-6Tzk1/TNeI3WBPpK0j/Ss4+gPj3PUJYbWl/MWDJBThFvwNGNkXtd7Cz8BJtD4aRwoGHtzQD0SnxamgUiBH0/Nw==}
@@ -5146,9 +5174,9 @@ snapshots:
 
   '@types/braces@3.0.5': {}
 
-  '@types/bun@1.2.6':
+  '@types/bun@1.2.8':
     dependencies:
-      bun-types: 1.2.6
+      bun-types: 1.2.7
 
   '@types/estree@1.0.6': {}
 
@@ -5443,7 +5471,7 @@ snapshots:
       base64-js: 1.5.1
       ieee754: 1.2.1
 
-  bun-types@1.2.6:
+  bun-types@1.2.7:
     dependencies:
       '@types/node': 22.13.13
       '@types/ws': 8.5.14

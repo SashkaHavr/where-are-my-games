@@ -1,0 +1,4 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '../node_modules/@where-are-my-games/ui-web/src/global.css';
+@source '../node_modules/@where-are-my-games/ui-web';

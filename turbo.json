@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "ui": "stream",
+  "ui": "tui",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -40,7 +40,8 @@
       "cache": false
     },
     "//#lint:root": {
-      "cache": false
+      "cache": false,
+      "interactive": true
     },
     "//#lint:root:check": {
       "outputLogs": "errors-only"

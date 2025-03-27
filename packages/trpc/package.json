@@ -1,6 +1,9 @@
 {
   "name": "@where-are-my-games/trpc",
   "type": "module",
+  "imports": {
+    "#*": "./src/*"
+  },
   "exports": {
     ".": "./src/index.ts"
   },

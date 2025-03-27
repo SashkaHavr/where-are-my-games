@@ -1,6 +1,5 @@
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
-
-import { publicProcedure, router } from './init';
+import { publicProcedure, router } from '#init.ts';
 
 const appRouter = router({
   hello: publicProcedure.query(() => 'Hello from tRPC!'),

@@ -1,12 +1,12 @@
 {
-  "name": "@where-are-my-games/ui-web",
+  "name": "@where-are-my-games/utils",
   "type": "module",
   "exports": {
-    "./ui/*": "./src/ui/*",
+    ".": "./index.ts",
+    "./utils": "./src/utils.ts",
     "./styles": "./src/global.css"
   },
   "scripts": {
-    "add-component": "pnpm dlx shadcn@latest add",
     "clean": "git clean -xdf .turbo node_modules",
     "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
     "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
@@ -15,17 +15,14 @@
   },
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
-    "@radix-ui/react-slot": "^1.1.2",
     "class-variance-authority": "^0.7.1",
-    "lucide-react": "^0.484.0"
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.0.2"
   },
   "devDependencies": {
-    "@types/react": "^19.0.12",
-    "@types/react-dom": "^19.0.4",
     "@where-are-my-games/eslint-config": "workspace:*",
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",
-    "@where-are-my-games/utils": "workspace:*",
     "typescript": "^5.8.2"
   }
 }

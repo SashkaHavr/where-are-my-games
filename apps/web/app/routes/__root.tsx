@@ -10,6 +10,8 @@ import { TRPCClient } from '@trpc/client';
 
 import { AppRouter } from '@where-are-my-games/trpc';
 
+import appCss from '../app.css?url';
+
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
   trpc: TRPCClient<AppRouter>;
@@ -25,6 +27,12 @@ export const Route = createRootRouteWithContext<{
       },
       {
         title: 'TanStack Start Starter',
+      },
+    ],
+    links: [
+      {
+        rel: 'stylesheet',
+        href: appCss,
       },
     ],
   }),
