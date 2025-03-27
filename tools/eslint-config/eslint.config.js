@@ -10,7 +10,7 @@ import pluginReactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', '.output', '.vinxi'] },
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
