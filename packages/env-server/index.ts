@@ -1,22 +1,17 @@
 import { createEnv } from '@t3-oss/env-core';
 import { z } from 'zod';
 
+import { dbConfig } from './db';
+
 export const envServer = createEnv({
   server: {
-    DATABASE_HOST: z.string().default('localhost'),
-    DATABASE_PORT: z
-      .string()
-      .transform((str) => parseInt(str))
-      .pipe(z.number())
-      .default('5432'),
-    DATABASE_NAME: z.string(),
-    DATABASE_USER: z.string(),
-    DATABASE_PASSWORD: z.string(),
-    DATABASE_SSL: z
-      .string()
-      .refine((s) => s === 'true' || s === 'false')
-      .transform((s) => s === 'true')
-      .default('true'),
+    ...dbConfig,
+
+    BETTER_AUTH_SECRET: z.string(),
+    BETTER_AUTH_URL: z.string().url(),
+
+    GITHUB_CLIENT_ID: z.string().optional(),
+    GITHUB_CLIENT_SECRET: z.string().optional(),
   },
   runtimeEnv: process.env,
   emptyStringAsUndefined: true,

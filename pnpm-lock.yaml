@@ -22,13 +22,16 @@ importers:
         version: 1.114.27(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@tanstack/react-start':
         specifier: ^1.114.27
-        version: 1.114.27(@tanstack/react-router@1.114.27(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3))
+        version: 1.114.27(@tanstack/react-router@1.114.27(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3))
       '@trpc/client':
         specifier: ^11.0.0
         version: 11.0.0(@trpc/server@11.0.0(typescript@5.8.2))(typescript@5.8.2)
       '@trpc/tanstack-react-query':
         specifier: ^11.0.0
         version: 11.0.0(@tanstack/react-query@5.69.0(react@19.0.0))(@trpc/client@11.0.0(@trpc/server@11.0.0(typescript@5.8.2))(typescript@5.8.2))(@trpc/server@11.0.0(typescript@5.8.2))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
+      better-auth:
+        specifier: ^1.2.5
+        version: 1.2.5(typescript@5.8.2)
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -43,7 +46,7 @@ importers:
         version: 1.2.4
       vinxi:
         specifier: ^0.5.3
-        version: 0.5.3(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
+        version: 0.5.3(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.0.17
@@ -60,6 +63,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.3.4
         version: 4.3.4(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3))
+      '@where-are-my-games/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
       '@where-are-my-games/env-server':
         specifier: workspace:*
         version: link:../../packages/env-server
@@ -91,6 +97,34 @@ importers:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.8.2)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3))
 
+  packages/auth:
+    dependencies:
+      '@where-are-my-games/db':
+        specifier: workspace:*
+        version: link:../db
+      '@where-are-my-games/env-server':
+        specifier: workspace:*
+        version: link:../env-server
+      better-auth:
+        specifier: ^1.2.5
+        version: 1.2.5(typescript@5.8.2)
+    devDependencies:
+      '@types/bun':
+        specifier: latest
+        version: 1.2.8
+      '@where-are-my-games/eslint-config':
+        specifier: workspace:*
+        version: link:../../tools/eslint-config
+      '@where-are-my-games/prettier-config':
+        specifier: workspace:*
+        version: link:../../tools/prettier-config
+      '@where-are-my-games/typescript-config':
+        specifier: workspace:*
+        version: link:../../tools/typescript-config
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.2
+
   packages/db:
     dependencies:
       '@where-are-my-games/env-server':
@@ -98,7 +132,7 @@ importers:
         version: link:../env-server
       drizzle-orm:
         specifier: ^0.41.0
-        version: 0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)
+        version: 0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)
       pg:
         specifier: ^8.14.1
         version: 8.14.1
@@ -129,7 +163,7 @@ importers:
     dependencies:
       '@t3-oss/env-core':
         specifier: ^0.12.0
-        version: 0.12.0(typescript@5.8.2)(zod@3.24.2)
+        version: 0.12.0(typescript@5.8.2)(valibot@1.0.0-beta.15(typescript@5.8.2))(zod@3.24.2)
       zod:
         specifier: ^3.24.2
         version: 3.24.2
@@ -431,6 +465,12 @@ packages:
   '@babel/types@7.27.0':
     resolution: {integrity: sha512-H45s8fVLYjbhFH62dIJ3WtmJ6RSPt/3DRO0ZcT2SUiYiQyz3BLVb9ADEnLl91m74aQPS3AzzeajZHYOalWe3bg==}
     engines: {node: '>=6.9.0'}
+
+  '@better-auth/utils@0.2.4':
+    resolution: {integrity: sha512-ayiX87Xd5sCHEplAdeMgwkA0FgnXsEZBgDn890XHHwSWNqqRZDYOq3uj2Ei2leTv1I2KbG5HHn60Ah1i2JWZjQ==}
+
+  '@better-fetch/fetch@1.1.18':
+    resolution: {integrity: sha512-rEFOE1MYIsBmoMJtQbl32PGHHXuG2hDxvEd7rUHE0vCBoFQVSDqaVs9hkZEtHCxRoY+CljXKFCOuJ8uxqw1LcA==}
 
   '@cloudflare/kv-asset-handler@0.4.0':
     resolution: {integrity: sha512-+tv3z+SPp+gqTIcImN9o0hqE9xyfQjI1XD9pL6NuKjua9B1y7mNYv0S9cP+QEbA4ppVgGZEmKOvHX5G5Ei1CVA==}
@@ -1208,6 +1248,9 @@ packages:
     resolution: {integrity: sha512-JubJ5B2pJ4k4yGxaNLdbjrnk9d/iDz6/q8wOilpIowd6PJPgaxCuHBnBszq7Ce2TyMrywm5r4PnKm6V3iiZF+g==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@hexagon/base64@1.1.28':
+    resolution: {integrity: sha512-lhqDEAvWixy3bZ+UOYbPwUbBkwBq5C1LAJ/xPC8Oi+lL54oyakv/npbA0aU2hgCsx/1NUd4IBvV03+aUBWxerw==}
+
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
     engines: {node: '>=18.18.0'}
@@ -1269,6 +1312,9 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
+  '@levischuck/tiny-cbor@0.2.11':
+    resolution: {integrity: sha512-llBRm4dT4Z89aRsm6u2oEZ8tfwL/2l6BwpZ7JcyieouniDECM5AqNgr/y08zalEIvW3RSK4upYyybDcmjXqAow==}
+
   '@mapbox/node-pre-gyp@2.0.0':
     resolution: {integrity: sha512-llMXd39jtP0HpQLVI37Bf1m2ADlEb35GYSh1SDSLsBhR+5iCxiNGlT31yqbNtVHygHAtMy6dWFERpU2JgufhPg==}
     engines: {node: '>=18'}
@@ -1281,6 +1327,13 @@ packages:
   '@netlify/serverless-functions-api@1.36.0':
     resolution: {integrity: sha512-z6okREyK8in0486a22Oro0k+YsuyEjDXJt46FpgeOgXqKJ9ElM8QPll0iuLBkpbH33ENiNbIPLd1cuClRQnhiw==}
     engines: {node: '>=18.0.0'}
+
+  '@noble/ciphers@0.6.0':
+    resolution: {integrity: sha512-mIbq/R9QXk5/cTfESb1OKtyFnk7oc1Om/8onA1158K9/OZUQFDEVy55jVTato+xmp3XX6F6Qh0zz0Nc1AxAlRQ==}
+
+  '@noble/hashes@1.7.1':
+    resolution: {integrity: sha512-B8XBPsn4vT/KJAGqDzbwztd+6Yte3P4V7iafm24bxgDe/mlRuK6xmWPuCNrKt2vDafZ8MfJLlchDG/vYafQEjQ==}
+    engines: {node: ^14.21.3 || >=16}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -1387,6 +1440,21 @@ packages:
   '@parcel/watcher@2.5.1':
     resolution: {integrity: sha512-dfUnCxiN9H4ap84DvD2ubjw+3vUNpstxa0TneY/Paat8a3R4uQZDLSvWjmznAY/DoahqTHl9V46HF/Zs3F29pg==}
     engines: {node: '>= 10.0.0'}
+
+  '@peculiar/asn1-android@2.3.16':
+    resolution: {integrity: sha512-a1viIv3bIahXNssrOIkXZIlI2ePpZaNmR30d4aBL99mu2rO+mT9D6zBsp7H6eROWGtmwv0Ionp5olJurIo09dw==}
+
+  '@peculiar/asn1-ecc@2.3.15':
+    resolution: {integrity: sha512-/HtR91dvgog7z/WhCVdxZJ/jitJuIu8iTqiyWVgRE9Ac5imt2sT/E4obqIVGKQw7PIy+X6i8lVBoT6wC73XUgA==}
+
+  '@peculiar/asn1-rsa@2.3.15':
+    resolution: {integrity: sha512-p6hsanvPhexRtYSOHihLvUUgrJ8y0FtOM97N5UEpC+VifFYyZa0iZ5cXjTkZoDwxJ/TTJ1IJo3HVTB2JJTpXvg==}
+
+  '@peculiar/asn1-schema@2.3.15':
+    resolution: {integrity: sha512-QPeD8UA8axQREpgR5UTAfu2mqQmm97oUqahDtNdBcfj3qAnoXzFdQW+aNf/tD2WVXF8Fhmftxoj0eMIT++gX2w==}
+
+  '@peculiar/asn1-x509@2.3.15':
+    resolution: {integrity: sha512-0dK5xqTqSLaxv1FHXIcd4Q/BZNuopg+u1l23hT9rOmQ1g4dNtw0g/RnEi+TboB0gOwGtrWn269v27cMgchFIIg==}
 
   '@petamoriken/float16@3.9.2':
     resolution: {integrity: sha512-VgffxawQde93xKxT3qap3OH+meZf7VaSB5Sqd4Rqc+FP5alWbpOyan/7tRbOAvynjpG3GpdtAuGU/NdhQpmrog==}
@@ -1609,6 +1677,13 @@ packages:
     resolution: {integrity: sha512-LWbXUBwn/bcLx2sSsqy7pK5o+Nr+VCoRoAohfJ5C/aBio9nfJmGQqHAhU6pwxV/RmyTk5AqdySma7uwWGlmeuA==}
     cpu: [x64]
     os: [win32]
+
+  '@simplewebauthn/browser@13.1.0':
+    resolution: {integrity: sha512-WuHZ/PYvyPJ9nxSzgHtOEjogBhwJfC8xzYkPC+rR/+8chl/ft4ngjiK8kSU5HtRJfczupyOh33b25TjYbvwAcg==}
+
+  '@simplewebauthn/server@13.1.1':
+    resolution: {integrity: sha512-1hsLpRHfSuMB9ee2aAdh0Htza/X3f4djhYISrggqGe3xopNjOcePiSDkDDoPzDYaaMCrbqGP1H2TYU7bgL9PmA==}
+    engines: {node: '>=20.0.0'}
 
   '@sindresorhus/is@7.0.1':
     resolution: {integrity: sha512-QWLl2P+rsCJeofkDNIT3WFmb6NrRud1SUYW8dIhXK/46XFV8Q/g7Bsvib0Askb0reRLe+WYPeeE+l5cH7SlkuQ==}
@@ -2072,6 +2147,10 @@ packages:
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
 
+  asn1js@3.0.6:
+    resolution: {integrity: sha512-UOCGPYbl0tv8+006qks/dTgV9ajs97X2p0FAbyS2iyCRrmLSRolDaHdp+v/CLgnzHc3fVB+CwYiUmei7ndFcgA==}
+    engines: {node: '>=12.0.0'}
+
   async-sema@3.1.1:
     resolution: {integrity: sha512-tLRNUXati5MFePdAk8dw7Qt7DpxPB60ofAgn8WRhW6a2rcimZnYBP9oxHiv0OHy+Wz7kPMG+t4LGdt31+4EmGg==}
 
@@ -2092,6 +2171,12 @@ packages:
 
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
+
+  better-auth@1.2.5:
+    resolution: {integrity: sha512-Tz2aKImkvaT7P9qHQ67Vhw/Slo6zpvE0jG7GoDQM+dd5tWuC3lP0OGjjWkNCZdToVlWB193i5nSHeZT90sFqEw==}
+
+  better-call@1.0.5:
+    resolution: {integrity: sha512-rAT73GWIJ8LbSP8Y3BdJnY1hwAiQPRRmUJ4R3YVhcVGS927l3eTXG5o5TD6Bv6je6ygjdx6iVq3/BU49eGUCHg==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -2994,6 +3079,9 @@ packages:
     resolution: {integrity: sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A==}
     hasBin: true
 
+  jose@5.10.0:
+    resolution: {integrity: sha512-s+3Al/p9g32Iq+oqXxkW//7jk2Vig6FF1CFqzVXoTUXt2qz89YWbL+OwS17NFYEvxC35n0FKeGO2LGYSxeM2Gg==}
+
   js-levenshtein@1.1.6:
     resolution: {integrity: sha512-X2BB11YZtrRqY4EnQcLX5Rh373zbK4alC1FW7D7MBhL2gtcC17cTnr6DmfHZeS0s2rTHjUTMMHfG7gO8SSdw+g==}
     engines: {node: '>=0.10.0'}
@@ -3043,6 +3131,10 @@ packages:
 
   knitwork@1.2.0:
     resolution: {integrity: sha512-xYSH7AvuQ6nXkq42x0v5S8/Iry+cfulBz/DJQzhIyESdLD7425jXsPy4vn5cCXU+HhRN2kVw51Vd1K6/By4BQg==}
+
+  kysely@0.27.6:
+    resolution: {integrity: sha512-FIyV/64EkKhJmjgC0g2hygpBv5RNWVPyNCqSAD7eTCv6eFWNIi4PN1UvdSJGicN/o35bnevgis4Y0UDC0qi8jQ==}
+    engines: {node: '>=14.0.0'}
 
   lazystream@1.0.1:
     resolution: {integrity: sha512-b94GiNHQNy6JNTrt5w6zNyffMrNkXZb3KTkCZJb2V1xaEGCk093vkZ2jk3tpaeP33/OiXC+WvK9AxUebnf5nbw==}
@@ -3224,6 +3316,10 @@ packages:
     resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  nanostores@0.11.4:
+    resolution: {integrity: sha512-k1oiVNN4hDK8NcNERSZLQiMfRzEGtfnvZvdBvey3SQbgn8Dcrk0h1I6vpxApjb10PFUflZrgJ2WEZyJQ+5v7YQ==}
+    engines: {node: ^18.0.0 || >=20.0.0}
 
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
@@ -3566,6 +3662,13 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
+  pvtsutils@1.3.6:
+    resolution: {integrity: sha512-PLgQXQ6H2FWCaeRak8vvk1GW462lMxB5s3Jm673N82zI4vqtVUPuZdffdZbPDFRoU8kAhItWFtPCWiPpp4/EDg==}
+
+  pvutils@1.1.3:
+    resolution: {integrity: sha512-pMpnA0qRdFp32b1sJl1wOJNxZLQ2cbQx+k6tjNtZ8CpvVhNqEPRgivZ2WOUev2YMajecdH7ctUPDvEe87nariQ==}
+    engines: {node: '>=6.0.0'}
+
   quansync@0.2.10:
     resolution: {integrity: sha512-t41VRkMYbkHyCYmOvx/6URnN80H7k4X0lLdBMGsz+maAwrJQYB1djpV6vHrQIBE0WBSGqhtEHrK9U3DWWH8v7A==}
 
@@ -3677,6 +3780,9 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
+  rou3@0.5.1:
+    resolution: {integrity: sha512-OXMmJ3zRk2xeXFGfA3K+EOPHC5u7RDFG7lIOx0X1pdnhUkI8MdVrbV+sNsD80ElpUZ+MRHdyxPnFthq9VHs8uQ==}
+
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
 
@@ -3714,6 +3820,9 @@ packages:
   serve-static@1.16.2:
     resolution: {integrity: sha512-VqpjJZKadQB/PEbEwvFdO43Ax5dFBZ2UECszz8bQ7pi7wt//PWe1P6MN7eCnjsatYtBT6EuiClbjSWP2WrIoTw==}
     engines: {node: '>= 0.8.0'}
+
+  set-cookie-parser@2.7.1:
+    resolution: {integrity: sha512-IOc8uWeOZgnb3ptbCURJWNjWUPcO3ZnTTdzsurqERrP6nPyv+paC55vJM0LpOlT2ne+Ix+9+CRG1MNLlyZ4GjQ==}
 
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
@@ -4112,6 +4221,14 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
+  valibot@1.0.0-beta.15:
+    resolution: {integrity: sha512-BKy8XosZkDHWmYC+cJG74LBzP++Gfntwi33pP3D3RKztz2XV9jmFWnkOi21GoqARP8wAWARwhV6eTr1JcWzjGw==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   vinxi@0.5.3:
     resolution: {integrity: sha512-4sL2SMrRzdzClapP44oXdGjCE1oq7/DagsbjY5A09EibmoIO4LP8ScRVdh03lfXxKRk7nCWK7n7dqKvm+fp/9w==}
     hasBin: true
@@ -4470,6 +4587,13 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
+
+  '@better-auth/utils@0.2.4':
+    dependencies:
+      typescript: 5.8.2
+      uncrypto: 0.1.3
+
+  '@better-fetch/fetch@1.1.18': {}
 
   '@cloudflare/kv-asset-handler@0.4.0':
     dependencies:
@@ -4896,6 +5020,8 @@ snapshots:
       '@eslint/core': 0.12.0
       levn: 0.4.1
 
+  '@hexagon/base64@1.1.28': {}
+
   '@humanfs/core@0.19.1': {}
 
   '@humanfs/node@0.16.6':
@@ -4957,6 +5083,8 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
+  '@levischuck/tiny-cbor@0.2.11': {}
+
   '@mapbox/node-pre-gyp@2.0.0':
     dependencies:
       consola: 3.4.2
@@ -4975,6 +5103,10 @@ snapshots:
       '@netlify/serverless-functions-api': 1.36.0
 
   '@netlify/serverless-functions-api@1.36.0': {}
+
+  '@noble/ciphers@0.6.0': {}
+
+  '@noble/hashes@1.7.1': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -5057,6 +5189,39 @@ snapshots:
       '@parcel/watcher-win32-arm64': 2.5.1
       '@parcel/watcher-win32-ia32': 2.5.1
       '@parcel/watcher-win32-x64': 2.5.1
+
+  '@peculiar/asn1-android@2.3.16':
+    dependencies:
+      '@peculiar/asn1-schema': 2.3.15
+      asn1js: 3.0.6
+      tslib: 2.8.1
+
+  '@peculiar/asn1-ecc@2.3.15':
+    dependencies:
+      '@peculiar/asn1-schema': 2.3.15
+      '@peculiar/asn1-x509': 2.3.15
+      asn1js: 3.0.6
+      tslib: 2.8.1
+
+  '@peculiar/asn1-rsa@2.3.15':
+    dependencies:
+      '@peculiar/asn1-schema': 2.3.15
+      '@peculiar/asn1-x509': 2.3.15
+      asn1js: 3.0.6
+      tslib: 2.8.1
+
+  '@peculiar/asn1-schema@2.3.15':
+    dependencies:
+      asn1js: 3.0.6
+      pvtsutils: 1.3.6
+      tslib: 2.8.1
+
+  '@peculiar/asn1-x509@2.3.15':
+    dependencies:
+      '@peculiar/asn1-schema': 2.3.15
+      asn1js: 3.0.6
+      pvtsutils: 1.3.6
+      tslib: 2.8.1
 
   '@petamoriken/float16@3.9.2': {}
 
@@ -5236,15 +5401,28 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.37.0':
     optional: true
 
+  '@simplewebauthn/browser@13.1.0': {}
+
+  '@simplewebauthn/server@13.1.1':
+    dependencies:
+      '@hexagon/base64': 1.1.28
+      '@levischuck/tiny-cbor': 0.2.11
+      '@peculiar/asn1-android': 2.3.16
+      '@peculiar/asn1-ecc': 2.3.15
+      '@peculiar/asn1-rsa': 2.3.15
+      '@peculiar/asn1-schema': 2.3.15
+      '@peculiar/asn1-x509': 2.3.15
+
   '@sindresorhus/is@7.0.1': {}
 
   '@sindresorhus/merge-streams@2.3.0': {}
 
   '@speed-highlight/core@1.2.7': {}
 
-  '@t3-oss/env-core@0.12.0(typescript@5.8.2)(zod@3.24.2)':
+  '@t3-oss/env-core@0.12.0(typescript@5.8.2)(valibot@1.0.0-beta.15(typescript@5.8.2))(zod@3.24.2)':
     optionalDependencies:
       typescript: 5.8.2
+      valibot: 1.0.0-beta.15(typescript@5.8.2)
       zod: 3.24.2
 
   '@tailwindcss/node@4.0.17':
@@ -5366,7 +5544,7 @@ snapshots:
       tiny-invariant: 1.3.3
       tiny-warning: 1.0.3
 
-  '@tanstack/react-start-client@1.114.27(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)':
+  '@tanstack/react-start-client@1.114.27(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)':
     dependencies:
       '@tanstack/react-router': 1.114.27(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@tanstack/router-core': 1.114.25
@@ -5377,7 +5555,7 @@ snapshots:
       react-dom: 19.0.0(react@19.0.0)
       tiny-invariant: 1.3.3
       tiny-warning: 1.0.3
-      vinxi: 0.5.3(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
+      vinxi: 0.5.3(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
     transitivePeerDependencies:
       - '@azure/app-configuration'
       - '@azure/cosmos'
@@ -5421,7 +5599,7 @@ snapshots:
       - xml2js
       - yaml
 
-  '@tanstack/react-start-config@1.114.27(@tanstack/react-router@1.114.27(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3))':
+  '@tanstack/react-start-config@1.114.27(@tanstack/react-router@1.114.27(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3))':
     dependencies:
       '@tanstack/react-start-plugin': 1.114.12(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)
       '@tanstack/router-core': 1.114.25
@@ -5431,11 +5609,11 @@ snapshots:
       '@tanstack/start-server-functions-handler': 1.114.25
       '@vitejs/plugin-react': 4.3.4(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3))
       import-meta-resolve: 4.1.0
-      nitropack: 2.11.7(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(typescript@5.8.2)
+      nitropack: 2.11.7(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(typescript@5.8.2)
       ofetch: 1.4.1
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
-      vinxi: 0.5.3(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
+      vinxi: 0.5.3(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
       vite: 6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)
       zod: 3.24.2
     transitivePeerDependencies:
@@ -5513,11 +5691,11 @@ snapshots:
       - tsx
       - yaml
 
-  '@tanstack/react-start-router-manifest@1.114.25(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)':
+  '@tanstack/react-start-router-manifest@1.114.25(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)':
     dependencies:
       '@tanstack/router-core': 1.114.25
       tiny-invariant: 1.3.3
-      vinxi: 0.5.3(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
+      vinxi: 0.5.3(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
     transitivePeerDependencies:
       - '@azure/app-configuration'
       - '@azure/cosmos'
@@ -5576,13 +5754,13 @@ snapshots:
       tiny-warning: 1.0.3
       unctx: 2.4.1
 
-  '@tanstack/react-start@1.114.27(@tanstack/react-router@1.114.27(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3))':
+  '@tanstack/react-start@1.114.27(@tanstack/react-router@1.114.27(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3))':
     dependencies:
-      '@tanstack/react-start-client': 1.114.27(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
-      '@tanstack/react-start-config': 1.114.27(@tanstack/react-router@1.114.27(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3))
-      '@tanstack/react-start-router-manifest': 1.114.25(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
+      '@tanstack/react-start-client': 1.114.27(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
+      '@tanstack/react-start-config': 1.114.27(@tanstack/react-router@1.114.27(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3))
+      '@tanstack/react-start-router-manifest': 1.114.25(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
       '@tanstack/react-start-server': 1.114.27(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@tanstack/start-api-routes': 1.114.25(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
+      '@tanstack/start-api-routes': 1.114.25(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
       '@tanstack/start-server-functions-client': 1.114.25(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)
       '@tanstack/start-server-functions-handler': 1.114.25
       '@tanstack/start-server-functions-server': 1.114.12(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)
@@ -5720,11 +5898,11 @@ snapshots:
       - tsx
       - yaml
 
-  '@tanstack/start-api-routes@1.114.25(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)':
+  '@tanstack/start-api-routes@1.114.25(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)':
     dependencies:
       '@tanstack/router-core': 1.114.25
       '@tanstack/start-server-core': 1.114.25
-      vinxi: 0.5.3(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
+      vinxi: 0.5.3(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)
     transitivePeerDependencies:
       - '@azure/app-configuration'
       - '@azure/cosmos'
@@ -6142,6 +6320,12 @@ snapshots:
 
   argparse@2.0.1: {}
 
+  asn1js@3.0.6:
+    dependencies:
+      pvtsutils: 1.3.6
+      pvutils: 1.1.3
+      tslib: 2.8.1
+
   async-sema@3.1.1: {}
 
   async@3.2.6: {}
@@ -6163,6 +6347,31 @@ snapshots:
     optional: true
 
   base64-js@1.5.1: {}
+
+  better-auth@1.2.5(typescript@5.8.2):
+    dependencies:
+      '@better-auth/utils': 0.2.4
+      '@better-fetch/fetch': 1.1.18
+      '@noble/ciphers': 0.6.0
+      '@noble/hashes': 1.7.1
+      '@simplewebauthn/browser': 13.1.0
+      '@simplewebauthn/server': 13.1.1
+      better-call: 1.0.5
+      defu: 6.1.4
+      jose: 5.10.0
+      kysely: 0.27.6
+      nanostores: 0.11.4
+      valibot: 1.0.0-beta.15(typescript@5.8.2)
+      zod: 3.24.2
+    transitivePeerDependencies:
+      - typescript
+
+  better-call@1.0.5:
+    dependencies:
+      '@better-fetch/fetch': 1.1.18
+      rou3: 0.5.1
+      set-cookie-parser: 2.7.1
+      uncrypto: 0.1.3
 
   binary-extensions@2.3.0: {}
 
@@ -6361,9 +6570,9 @@ snapshots:
       '@deno/shim-deno': 0.19.2
       undici-types: 5.28.4
 
-  db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)):
+  db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)):
     optionalDependencies:
-      drizzle-orm: 0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)
+      drizzle-orm: 0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)
 
   debug@2.6.9:
     dependencies:
@@ -6421,11 +6630,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1):
+  drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1):
     optionalDependencies:
       '@types/pg': 8.11.11
       bun-types: 1.2.7
       gel: 2.0.1
+      kysely: 0.27.6
       pg: 8.14.1
 
   duplexer@0.1.2: {}
@@ -7041,6 +7251,8 @@ snapshots:
 
   jiti@2.4.2: {}
 
+  jose@5.10.0: {}
+
   js-levenshtein@1.1.6: {}
 
   js-tokens@4.0.0: {}
@@ -7072,6 +7284,8 @@ snapshots:
   klona@2.0.6: {}
 
   knitwork@1.2.0: {}
+
+  kysely@0.27.6: {}
 
   lazystream@1.0.1:
     dependencies:
@@ -7237,9 +7451,11 @@ snapshots:
 
   nanoid@3.3.11: {}
 
+  nanostores@0.11.4: {}
+
   natural-compare@1.4.0: {}
 
-  nitropack@2.11.7(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(typescript@5.8.2):
+  nitropack@2.11.7(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(typescript@5.8.2):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.0
       '@netlify/functions': 3.0.4
@@ -7261,7 +7477,7 @@ snapshots:
       cookie-es: 2.0.0
       croner: 9.0.0
       crossws: 0.3.4
-      db0: 0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))
+      db0: 0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))
       defu: 6.1.4
       destr: 2.0.3
       dot-prop: 9.0.0
@@ -7308,7 +7524,7 @@ snapshots:
       unenv: 2.0.0-rc.15
       unimport: 4.1.2
       unplugin-utils: 0.2.4
-      unstorage: 1.15.0(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(ioredis@5.6.0)
+      unstorage: 1.15.0(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(ioredis@5.6.0)
       untyped: 2.0.0
       unwasm: 0.3.9
       youch: 4.1.0-beta.6
@@ -7585,6 +7801,12 @@ snapshots:
 
   punycode@2.3.1: {}
 
+  pvtsutils@1.3.6:
+    dependencies:
+      tslib: 2.8.1
+
+  pvutils@1.1.3: {}
+
   quansync@0.2.10: {}
 
   queue-microtask@1.2.3: {}
@@ -7704,6 +7926,8 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.37.0
       fsevents: 2.3.3
 
+  rou3@0.5.1: {}
+
   run-parallel@1.2.0:
     dependencies:
       queue-microtask: 1.2.3
@@ -7754,6 +7978,8 @@ snapshots:
       send: 0.19.0
     transitivePeerDependencies:
       - supports-color
+
+  set-cookie-parser@2.7.1: {}
 
   setprototypeof@1.2.0: {}
 
@@ -8051,7 +8277,7 @@ snapshots:
       acorn: 8.14.1
       webpack-virtual-modules: 0.6.2
 
-  unstorage@1.15.0(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(ioredis@5.6.0):
+  unstorage@1.15.0(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(ioredis@5.6.0):
     dependencies:
       anymatch: 3.1.3
       chokidar: 4.0.3
@@ -8062,7 +8288,7 @@ snapshots:
       ofetch: 1.4.1
       ufo: 1.5.4
     optionalDependencies:
-      db0: 0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))
+      db0: 0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))
       ioredis: 5.6.0
 
   untun@0.1.3:
@@ -8108,7 +8334,11 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  vinxi@0.5.3(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2):
+  valibot@1.0.0-beta.15(typescript@5.8.2):
+    optionalDependencies:
+      typescript: 5.8.2
+
+  vinxi@0.5.3(@types/node@22.13.14)(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(ioredis@5.6.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2):
     dependencies:
       '@babel/core': 7.26.10
       '@babel/plugin-syntax-jsx': 7.25.9(@babel/core@7.26.10)
@@ -8130,7 +8360,7 @@ snapshots:
       hookable: 5.5.3
       http-proxy: 1.18.1
       micromatch: 4.0.8
-      nitropack: 2.11.7(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1))(typescript@5.8.2)
+      nitropack: 2.11.7(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1))(typescript@5.8.2)
       node-fetch-native: 1.6.6
       path-to-regexp: 6.3.0
       pathe: 1.1.2
@@ -8141,7 +8371,7 @@ snapshots:
       ufo: 1.5.4
       unctx: 2.4.1
       unenv: 1.10.0
-      unstorage: 1.15.0(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(pg@8.14.1)))(ioredis@5.6.0)
+      unstorage: 1.15.0(db0@0.3.1(drizzle-orm@0.41.0(@types/pg@8.11.11)(bun-types@1.2.7)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)))(ioredis@5.6.0)
       vite: 6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(tsx@4.19.3)
       zod: 3.24.2
     transitivePeerDependencies:
