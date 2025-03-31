@@ -1,0 +1,27 @@
+{
+  "name": "@where-are-my-games/env-server",
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./utils": "./src/utils.ts",
+    "./styles": "./src/global.css"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
+    "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit"
+  },
+  "prettier": "@where-are-my-games/prettier-config",
+  "dependencies": {
+    "@t3-oss/env-core": "^0.12.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@where-are-my-games/eslint-config": "workspace:*",
+    "@where-are-my-games/prettier-config": "workspace:*",
+    "@where-are-my-games/typescript-config": "workspace:*",
+    "typescript": "^5.8.2"
+  }
+}

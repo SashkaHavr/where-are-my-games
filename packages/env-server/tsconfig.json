@@ -1,0 +1,4 @@
+{
+  "extends": "@where-are-my-games/typescript-config/base",
+  "include": ["index.ts"]
+}
