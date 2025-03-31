@@ -1,0 +1,32 @@
+{
+  "name": "@where-are-my-games/db",
+  "type": "module",
+  "imports": {
+    "#*": "./src/*"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
+    "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit"
+  },
+  "prettier": "@where-are-my-games/prettier-config",
+  "dependencies": {
+    "@where-are-my-games/env-server": "workspace:*",
+    "drizzle-orm": "^0.41.0",
+    "pg": "^8.14.1"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/pg": "^8.11.11",
+    "@where-are-my-games/eslint-config": "workspace:*",
+    "@where-are-my-games/prettier-config": "workspace:*",
+    "@where-are-my-games/typescript-config": "workspace:*",
+    "drizzle-kit": "^0.30.6",
+    "typescript": "^5.8.2"
+  }
+}
