@@ -1,4 +1,4 @@
-import { signIn, signOut, useSession } from '@/auth';
+import { authClient, useSession } from '@/auth';
 import { useTRPC } from '@/trpc';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
@@ -26,12 +26,12 @@ function Home() {
       <Button variant="default">This is a button</Button>
       <Button
         variant="default"
-        onClick={() => void signIn.social({ provider: 'github' })}
+        onClick={() => void authClient.signIn.social({ provider: 'github' })}
       >
         Sign in GitHub
       </Button>
       <p>User email: {session.data?.user.email ?? 'Not logged in'}</p>
-      <Button variant="default" onClick={() => void signOut()}>
+      <Button variant="default" onClick={() => void authClient.signOut()}>
         Sign out
       </Button>
     </div>
