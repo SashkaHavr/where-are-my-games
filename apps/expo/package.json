@@ -1,12 +1,14 @@
 {
-  "name": "expo-blank-typescript",
-  "version": "1.0.0",
+  "name": "@where-are-my-games/expo",
+  "private": true,
+  "type": "module",
   "main": "index.ts",
   "scripts": {
-    "start": "expo start",
     "android": "expo start --android",
-    "ios": "expo start --ios"
+    "ios": "expo start --ios",
+    "start": "expo start"
   },
+  "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
     "expo": "~52.0.43",
     "expo-status-bar": "~2.0.1",
@@ -16,7 +18,10 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~18.3.12",
+    "@where-are-my-games/eslint-config": "workspace:*",
+    "@where-are-my-games/prettier-config": "workspace:*",
+    "@where-are-my-games/trpc": "workspace:*",
+    "@where-are-my-games/typescript-config": "workspace:*",
     "typescript": "^5.3.3"
-  },
-  "private": true
+  }
 }

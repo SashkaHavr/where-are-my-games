@@ -1,7 +1,6 @@
 {
   "name": "@where-are-my-games/web",
   "type": "module",
-  "bin": "dist/index.js",
   "scripts": {
     "add-component": "pnpm dlx shadcn@latest add -c ../../packages/ui-web",
     "build": "vinxi build",
