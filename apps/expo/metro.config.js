@@ -2,11 +2,15 @@
 const { getDefaultConfig } = require('expo/metro-config');
 const { FileStore } = require('metro-cache');
 const path = require('path');
+const { withNativeWind } = require('nativewind/metro');
 
 // Create the default Expo config for Metro
 // This includes the automatic monorepo configuration for workspaces
 // See: https://docs.expo.dev/guides/monorepos/#automatic-configuration
-const config = getDefaultConfig(__dirname);
+const config = withNativeWind(getDefaultConfig(__dirname), {
+  input: './src/styles.css',
+  configPath: './tailwind.config.ts',
+});
 
 // You can configure it manually as well, the most important parts are:
 // const projectRoot = __dirname;
