@@ -1,7 +1,7 @@
 {
+  // "extends": "@where-are-my-games/typescript-config/base",
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true,
     "paths": {
       "@/*": ["./*"]
     },
