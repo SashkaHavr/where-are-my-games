@@ -26,7 +26,7 @@ function Home() {
 
   const data = Route.useLoaderData();
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-2">
+    <div className="gap-2 flex w-full flex-col items-center justify-center">
       <p>Works!</p>
       <p>{data.hello}</p>
       {useHello.isSuccess && <p>On client: {useHello.data}</p>}
