@@ -13,18 +13,18 @@
   },
   "prettier": "@where-are-my-games/prettier-config",
   "devDependencies": {
-    "@eslint/compat": "^1.2.7",
-    "@eslint/js": "^9.23.0",
-    "@tanstack/eslint-plugin-query": "^5.68.0",
+    "@eslint/compat": "^1.2.8",
+    "@eslint/js": "^9.24.0",
+    "@tanstack/eslint-plugin-query": "^5.72.2",
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",
-    "eslint": "^9.23.0",
-    "eslint-config-turbo": "^2.4.4",
-    "eslint-plugin-react-compiler": "19.0.0-beta-63b359f-20241101",
-    "eslint-plugin-react-hooks": "rc",
+    "eslint": "^9.24.0",
+    "eslint-config-turbo": "^2.5.0",
+    "eslint-plugin-react-compiler": "latest",
+    "eslint-plugin-react-hooks": "5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "prettier": "^3.5.3",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.28.0"
+    "typescript-eslint": "^8.29.1"
   }
 }
