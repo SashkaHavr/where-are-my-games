@@ -13,6 +13,7 @@ export default tseslint.config(
     extends: [js.configs.recommended],
     rules: {
       curly: ['error', 'multi-line'],
+      'func-style': ['error', 'declaration'],
     },
   },
   {
