@@ -1,5 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
-/* eslint-disable no-restricted-exports */
 import { getRouterManifest } from '@tanstack/react-start/router-manifest';
 import {
   createStartHandler,
@@ -11,4 +9,5 @@ import { createRouter } from './router';
 export default createStartHandler({
   createRouter,
   getRouterManifest,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 })(defaultStreamHandler);

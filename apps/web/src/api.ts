@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-exports */
 import {
   createStartAPIHandler,
   defaultAPIFileRouteHandler,
