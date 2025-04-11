@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRouter as createTanStackRouter } from '@tanstack/react-router';
-import { createTRPCClient, httpBatchLink } from '@trpc/client';
+import { createTRPCClient, httpBatchStreamLink } from '@trpc/client';
 import superjson from 'superjson';
 
 import type { AppRouter } from '@where-are-my-games/trpc';
@@ -26,7 +26,7 @@ export function createRouter() {
 
   const trpcClient = createTRPCClient<AppRouter>({
     links: [
-      httpBatchLink({
+      httpBatchStreamLink({
         transformer: superjson,
         url: getUrl(),
       }),
