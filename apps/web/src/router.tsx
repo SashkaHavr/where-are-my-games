@@ -1,12 +1,18 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRouter as createTanStackRouter } from '@tanstack/react-router';
-import { createTRPCClient, httpBatchStreamLink } from '@trpc/client';
+import {
+  createTRPCClient,
+  httpBatchStreamLink,
+  // httpLink,
+  // loggerLink,
+} from '@trpc/client';
+import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query';
 import superjson from 'superjson';
 
 import type { AppRouter } from '@where-are-my-games/trpc';
 
+import { TRPCProvider } from './lib/trpc';
 import { routeTree } from './routeTree.gen';
-import { TRPCProvider } from './trpc';
 
 function getUrl() {
   const base = (() => {
@@ -26,6 +32,7 @@ export function createRouter() {
 
   const trpcClient = createTRPCClient<AppRouter>({
     links: [
+      // loggerLink(),
       httpBatchStreamLink({
         transformer: superjson,
         url: getUrl(),
@@ -33,10 +40,15 @@ export function createRouter() {
     ],
   });
 
+  const serverHelpers = createTRPCOptionsProxy({
+    client: trpcClient,
+    queryClient: queryClient,
+  });
+
   const router = createTanStackRouter({
     routeTree,
     scrollRestoration: true,
-    context: { queryClient, trpc: trpcClient },
+    context: { queryClient, trpc: serverHelpers },
     Wrap: (props) => {
       return (
         <QueryClientProvider client={queryClient}>

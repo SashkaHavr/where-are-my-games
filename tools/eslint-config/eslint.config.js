@@ -13,7 +13,6 @@ export default tseslint.config(
     extends: [js.configs.recommended],
     rules: {
       curly: ['error', 'multi-line'],
-      'func-style': ['error', 'declaration'],
     },
   },
   {
@@ -43,8 +42,11 @@ export default tseslint.config(
           allowNumber: false,
           allowNullableString: true,
           allowNullableBoolean: true,
+          allowNullableObject: true,
         },
       ],
+      '@typescript-eslint/only-throw-error': 'off',
+      '@typescript-eslint/consistent-type-imports': 'error',
     },
   },
   pluginReactHooks.configs['recommended-latest'],
@@ -70,6 +72,29 @@ export default tseslint.config(
             namedFrom: true,
             namespaceFrom: true,
           },
+        },
+      ],
+    },
+  },
+  {
+    files: ['**/*.{ts,tsx}'],
+    rules: {
+      'func-style': ['error', 'declaration', { allowArrowFunctions: true }],
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector:
+            'Program > VariableDeclaration > VariableDeclarator > ArrowFunctionExpression',
+          message: 'Top-level arrow functions are not allowed.',
+        },
+        {
+          selector:
+            'ExportNamedDeclaration > VariableDeclaration > VariableDeclarator > ArrowFunctionExpression',
+          message: 'Top-level arrow functions are not allowed.',
+        },
+        {
+          selector: 'ExportDefaultDeclaration > ArrowFunctionExpression',
+          message: 'Top-level arrow functions are not allowed.',
         },
       ],
     },

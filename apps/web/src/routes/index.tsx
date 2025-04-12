@@ -1,15 +1,19 @@
-import { authClient, useSession } from '@/auth';
-import { useTRPC } from '@/trpc';
+import { authClient, useSession } from '@/lib/auth';
+import { useTRPC } from '@/lib/trpc';
+import { trpcMiddleware } from '@/lib/trpcMiddlewareServerFn';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { createServerFn } from '@tanstack/react-start';
 
 import { Button } from '@where-are-my-games/ui-web/ui/button.tsx';
 
+const hello = createServerFn()
+  .middleware([trpcMiddleware])
+  .handler(({ context }) => context.trpc.hello());
+
 export const Route = createFileRoute('/')({
   component: Home,
-  loader: async ({ context }) => ({
-    hello: await context.trpc.hello.query(),
-  }),
+  loader: () => hello(),
 });
 
 function Home() {
@@ -24,11 +28,11 @@ function Home() {
   );
   const queryClient = useQueryClient();
 
-  const data = Route.useLoaderData();
+  // const data = Route.useLoaderData();
   return (
     <div className="gap-2 flex w-full flex-col items-center justify-center">
       <p>Works!</p>
-      <p>{data.hello}</p>
+      {/* <p>{data.hello}</p> */}
       {useHello.isSuccess && <p>On client: {useHello.data}</p>}
       <Button variant="default">This is a button</Button>
       {!session.data ? (
@@ -61,6 +65,9 @@ function Home() {
         </p>
       )}
       {useProtectedHello.isSuccess && <p>{useProtectedHello.data}</p>}
+      <Link className="text-blue-500 underline" to="/protected">
+        Link to protected route
+      </Link>
     </div>
   );
 }

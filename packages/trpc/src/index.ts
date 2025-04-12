@@ -1,6 +1,11 @@
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
-import { createContext } from '#context.ts';
-import { protectedProcedure, publicProcedure, router } from '#init.ts';
+import { createContext, createContextRaw } from '#context.ts';
+import {
+  createCallerFactory,
+  protectedProcedure,
+  publicProcedure,
+  router,
+} from '#init.ts';
 
 const appRouter = router({
   hello: publicProcedure.query(() => 'Hello from tRPC!'),
@@ -22,3 +27,6 @@ export function trpcHandler({ request }: { request: Request }) {
 }
 
 export type AppRouter = typeof appRouter;
+export async function createTRPCCaller(request: Request) {
+  return createCallerFactory(appRouter)(await createContextRaw(request));
+}

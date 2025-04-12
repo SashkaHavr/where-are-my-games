@@ -1,20 +1,23 @@
+import type { QueryClient } from '@tanstack/react-query';
+import type { TRPCOptionsProxy } from '@trpc/tanstack-react-query';
 import type { ReactNode } from 'react';
-import { QueryClient } from '@tanstack/react-query';
+import { DefaultCatchBoundary } from '@/components/DefaultCatchBoundary';
+import { NotFound } from '@/components/NotFound';
+import { getSession } from '@/lib/getSessionServerFn';
 import {
   createRootRouteWithContext,
   HeadContent,
   Outlet,
   Scripts,
 } from '@tanstack/react-router';
-import { TRPCClient } from '@trpc/client';
 
-import { AppRouter } from '@where-are-my-games/trpc';
+import type { AppRouter } from '@where-are-my-games/trpc';
 
 import appCss from '../app.css?url';
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
-  trpc: TRPCClient<AppRouter>;
+  trpc: TRPCOptionsProxy<AppRouter>;
 }>()({
   head: () => ({
     meta: [
@@ -37,6 +40,20 @@ export const Route = createRootRouteWithContext<{
     ],
   }),
   component: RootComponent,
+  errorComponent: (props) => {
+    return (
+      <RootDocument>
+        <DefaultCatchBoundary {...props} />
+      </RootDocument>
+    );
+  },
+  notFoundComponent: () => <NotFound />,
+  beforeLoad: async () => {
+    const session = await getSession();
+    return {
+      session,
+    };
+  },
 });
 
 function RootComponent() {

@@ -1,5 +1,5 @@
+import type { Context } from '#context.ts';
 import { initTRPC, TRPCError } from '@trpc/server';
-import { Context } from '#context.ts';
 import superjson from 'superjson';
 import { ZodError } from 'zod';
 
@@ -28,3 +28,4 @@ export const protectedProcedure = publicProcedure.use((opts) => {
   }
   return opts.next();
 });
+export const createCallerFactory = t.createCallerFactory;
