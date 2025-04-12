@@ -17,7 +17,7 @@
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
     "@where-are-my-games/db": "workspace:*",
-    "@where-are-my-games/env-server": "workspace:*",
+    "@where-are-my-games/env": "workspace:*",
     "better-auth": "^1.2.5"
   },
   "devDependencies": {

@@ -1,8 +1,8 @@
 {
-  "name": "@where-are-my-games/ui-web",
+  "name": "@where-are-my-games/ui",
   "type": "module",
   "exports": {
-    "./ui/*": "./src/ui/*",
+    "./*": "./src/ui/*",
     "./styles": "./src/global.css"
   },
   "scripts": {

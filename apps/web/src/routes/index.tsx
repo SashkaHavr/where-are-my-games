@@ -5,7 +5,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
 
-import { Button } from '@where-are-my-games/ui-web/ui/button.tsx';
+import { Button } from '@where-are-my-games/ui/button.tsx';
 
 const hello = createServerFn()
   .middleware([trpcMiddleware])

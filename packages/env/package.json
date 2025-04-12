@@ -1,5 +1,5 @@
 {
-  "name": "@where-are-my-games/env-server",
+  "name": "@where-are-my-games/env",
   "type": "module",
   "exports": {
     ".": "./src/index.ts",

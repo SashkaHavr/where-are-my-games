@@ -18,7 +18,7 @@
   },
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
-    "@where-are-my-games/env-server": "workspace:*",
+    "@where-are-my-games/env": "workspace:*",
     "drizzle-orm": "^0.41.0",
     "pg": "^8.14.1"
   },

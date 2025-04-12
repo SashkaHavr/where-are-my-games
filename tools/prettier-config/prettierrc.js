@@ -12,7 +12,7 @@ export default {
   ],
 
   tailwindFunctions: ['cn', 'cva'],
-  tailwindStylesheet: '../../packages/ui-web/src/global.css',
+  tailwindStylesheet: '../../packages/ui/src/global.css',
 
   importOrder: [
     '<TYPES>',

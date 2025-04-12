@@ -1,6 +1,6 @@
 import { defineConfig } from 'drizzle-kit';
 
-import { envDB } from '@where-are-my-games/env-server/db';
+import { envDB } from '@where-are-my-games/env/db';
 
 export default defineConfig({
   out: './drizzle',
