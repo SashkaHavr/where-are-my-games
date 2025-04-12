@@ -1,5 +1,5 @@
 {
-  "extends": "@where-are-my-games/typescript-config/base",
+  "extends": "@where-are-my-games/typescript-config",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

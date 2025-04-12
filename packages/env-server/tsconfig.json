@@ -1,4 +1,4 @@
 {
-  "extends": "@where-are-my-games/typescript-config/base",
-  "include": ["index.ts", "db.ts"]
+  "extends": "@where-are-my-games/typescript-config",
+  "include": ["./src"]
 }
