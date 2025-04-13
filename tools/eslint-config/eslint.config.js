@@ -1,6 +1,5 @@
 import js from '@eslint/js';
 import pluginQuery from '@tanstack/eslint-plugin-query';
-import turboConfig from 'eslint-config-turbo/flat';
 import pluginReactCompiler from 'eslint-plugin-react-compiler';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
 import pluginReactRefresh from 'eslint-plugin-react-refresh';
@@ -57,7 +56,6 @@ export default tseslint.config(
   },
   pluginReactCompiler.configs.recommended,
   pluginQuery.configs['flat/recommended'],
-  turboConfig,
   {
     files: ['**/*.{ts,tsx}'],
     ignores: ['*.config.ts', 'src/api.ts', 'src/ssr.tsx'],
