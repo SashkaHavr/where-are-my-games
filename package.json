@@ -4,20 +4,22 @@
   "scripts": {
     "build": "turbo build",
     "check": "turbo lint:root:check format:check lint typecheck",
-    "fix": "turbo lint:root format lint typecheck",
+    "clean": "turbo clean:root clean",
+    "clean:root": "git clean -xdf .turbo node_modules",
     "dev": "turbo dev",
+    "fix": "turbo lint:root format lint typecheck",
     "format": "turbo format",
     "format:check": "turbo format:check",
     "lint": "turbo lint",
-    "typecheck": "turbo typecheck",
-    "clean": "turbo clean:root clean",
+    "lint:root": "pnpx sherif@latest -r non-existant-packages --fix --no-install",
+    "lint:root:check": "pnpx sherif@latest -r non-existant-packages",
     "test": "turbo test",
     "test:watch": "turbo test:watch",
-    "clean:root": "git clean -xdf .turbo node_modules",
-    "lint:root": "pnpx sherif@latest -r non-existant-packages --fix --no-install",
-    "lint:root:check": "pnpx sherif@latest -r non-existant-packages"
+    "typecheck": "turbo typecheck"
   },
+  "prettier": "@where-are-my-games/prettier-config",
   "devDependencies": {
+    "@where-are-my-games/prettier-config": "workspace:*",
     "turbo": "^2.3.3"
   },
   "packageManager": "pnpm@10.6.5"

@@ -49,6 +49,9 @@ importers:
 
   .:
     devDependencies:
+      '@where-are-my-games/prettier-config':
+        specifier: workspace:*
+        version: link:tools/prettier-config
       turbo:
         specifier: ^2.3.3
         version: 2.4.4
