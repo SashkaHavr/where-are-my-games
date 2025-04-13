@@ -2,7 +2,7 @@ import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 
 import { db } from '@where-are-my-games/db';
-import { envServer } from '@where-are-my-games/env';
+import { envServer } from '@where-are-my-games/env/server';
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {

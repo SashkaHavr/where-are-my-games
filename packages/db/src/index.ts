@@ -1,6 +1,6 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
 
-import { envServer } from '@where-are-my-games/env';
+import { envServer } from '@where-are-my-games/env/server';
 
 import * as schema from './schema';
 

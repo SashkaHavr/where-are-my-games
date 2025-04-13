@@ -2,7 +2,7 @@
   "name": "@where-are-my-games/env",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
+    "./server": "./src/server.ts",
     "./db": "./src/db.ts"
   },
   "scripts": {

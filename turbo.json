@@ -5,8 +5,7 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env", ".env.local"],
-      "outputs": ["dist", ".output", ".vinxi"],
-      "env": ["PORT"]
+      "outputs": ["dist", ".output", ".vinxi"]
     },
     "dev": {
       "cache": false,
