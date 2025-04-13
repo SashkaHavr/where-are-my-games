@@ -21,6 +21,6 @@
     "@where-are-my-games/eslint-config": "workspace:*",
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",
-    "typescript": "^5.8.2"
+    "typescript": "catalog:"
   }
 }

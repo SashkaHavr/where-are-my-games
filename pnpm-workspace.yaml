@@ -1,4 +1,22 @@
 packages:
-  - 'apps/*'
-  - 'tools/*'
-  - 'packages/*'
+  - "apps/*"
+  - "tools/*"
+  - "packages/*"
+
+catalog:
+  "typescript": "5.8.2"
+  "@types/bun": "^1.2.8"
+  "better-auth": "^1.2.5"
+  "superjson": "^2.2.2"
+  "zod": "^3.24.2"
+
+catalogs:
+  react:
+    "react": "^19.0.0"
+    "react-dom": "^19.0.0"
+    "@types/react": "^19.0.0"
+    "@types/react-dom": "^19.0.0"
+  trpc:
+    "@trpc/server": "^11.0.0"
+    "@trpc/client": "^11.0.0"
+    "@trpc/tanstack-react-query": "^11.0.0"

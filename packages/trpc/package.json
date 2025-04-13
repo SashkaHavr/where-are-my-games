@@ -16,17 +16,16 @@
   },
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
-    "@tanstack/react-start": "^1.114.27",
-    "@trpc/server": "^11.0.0",
+    "@trpc/server": "catalog:trpc",
     "@where-are-my-games/auth": "workspace:*",
-    "superjson": "^2.2.2",
-    "zod": "^3.24.2"
+    "superjson": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "@types/bun": "latest",
+    "@types/bun": "catalog:",
     "@where-are-my-games/eslint-config": "workspace:*",
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",
-    "typescript": "^5.8.2"
+    "typescript": "catalog:"
   }
 }
