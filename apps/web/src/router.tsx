@@ -14,14 +14,6 @@ import type { AppRouter } from '@where-are-my-games/trpc';
 import { TRPCProvider } from './lib/trpc';
 import { routeTree } from './routeTree.gen';
 
-function getUrl() {
-  const base = (() => {
-    if (typeof window !== 'undefined') return '';
-    return `http://localhost:${process.env.PORT ?? 3000}`;
-  })();
-  return base + '/api/trpc';
-}
-
 export function createRouter() {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -35,7 +27,7 @@ export function createRouter() {
       // loggerLink(),
       httpBatchStreamLink({
         transformer: superjson,
-        url: getUrl(),
+        url: '/api/trpc',
       }),
     ],
   });
