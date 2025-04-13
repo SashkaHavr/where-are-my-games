@@ -1,52 +1,34 @@
 import type { ErrorComponentProps } from '@tanstack/react-router';
-import {
-  ErrorComponent,
-  Link,
-  rootRouteId,
-  useMatch,
-  useRouter,
-} from '@tanstack/react-router';
+import { ErrorComponent, Link, useRouter } from '@tanstack/react-router';
+
+import { Button } from '@where-are-my-games/ui/button.tsx';
 
 export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
   const router = useRouter();
-  const isRoot = useMatch({
-    strict: false,
-    select: (state) => state.id === rootRouteId,
-  });
-
-  console.error('DefaultCatchBoundary Error:', error);
 
   return (
-    <div className="min-w-0 p-4 gap-6 flex flex-1 flex-col items-center justify-center">
-      <ErrorComponent error={error} />
+    <div className="p-4 gap-4 flex flex-col items-center">
+      <p className="text-2xl font-bold">Something went wrong 😢</p>
+      {import.meta.env.DEV && <ErrorComponent error={error} />}
       <div className="gap-2 flex flex-wrap items-center">
-        <button
-          onClick={() => {
-            void router.invalidate();
-          }}
-          className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white font-extrabold uppercase`}
-        >
-          Try Again
-        </button>
-        {isRoot ? (
-          <Link
-            to="/"
-            className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white font-extrabold uppercase`}
-          >
-            Home
-          </Link>
-        ) : (
-          <Link
-            to="/"
-            className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white font-extrabold uppercase`}
-            onClick={(e) => {
-              e.preventDefault();
-              window.history.back();
+        {import.meta.env.DEV && (
+          <Button
+            onClick={() => {
+              void router.invalidate();
             }}
+            variant="destructive"
           >
+            Try Again
+          </Button>
+        )}
+        <Button>
+          <Link to="/">Home Page</Link>
+        </Button>
+        <Button variant="outline">
+          <Link to="/" onClick={() => window.history.back()}>
             Go Back
           </Link>
-        )}
+        </Button>
       </div>
     </div>
   );
