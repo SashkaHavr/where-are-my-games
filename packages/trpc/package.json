@@ -18,6 +18,7 @@
   "dependencies": {
     "@trpc/server": "catalog:trpc",
     "@where-are-my-games/auth": "workspace:*",
+    "@where-are-my-games/env": "workspace:*",
     "superjson": "catalog:",
     "zod": "catalog:"
   },

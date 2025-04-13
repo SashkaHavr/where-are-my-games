@@ -233,6 +233,9 @@ importers:
       '@where-are-my-games/auth':
         specifier: workspace:*
         version: link:../auth
+      '@where-are-my-games/env':
+        specifier: workspace:*
+        version: link:../env
       superjson:
         specifier: 'catalog:'
         version: 2.2.2

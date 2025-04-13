@@ -3,7 +3,6 @@ import type { TRPCOptionsProxy } from '@trpc/tanstack-react-query';
 import type { ReactNode } from 'react';
 import { DefaultCatchBoundary } from '@/components/DefaultCatchBoundary';
 import { NotFound } from '@/components/NotFound';
-import { getSession } from '@/lib/getSessionServerFn';
 import {
   createRootRouteWithContext,
   HeadContent,
@@ -48,12 +47,6 @@ export const Route = createRootRouteWithContext<{
     );
   },
   notFoundComponent: () => <NotFound />,
-  beforeLoad: async () => {
-    const session = await getSession();
-    return {
-      session,
-    };
-  },
 });
 
 function RootComponent() {

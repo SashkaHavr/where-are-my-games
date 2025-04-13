@@ -12,6 +12,12 @@ export const envServer = createEnv({
 
     GITHUB_CLIENT_ID: z.string(),
     GITHUB_CLIENT_SECRET: z.string(),
+
+    AUTHORIZED_EMAILS: z
+      .string()
+      .optional()
+      .transform((s) => (s == undefined ? [] : s.split(' ')))
+      .refine((a) => z.array(z.string().email()).safeParse(a)),
   },
   runtimeEnv: process.env,
   emptyStringAsUndefined: true,

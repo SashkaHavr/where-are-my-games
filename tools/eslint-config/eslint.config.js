@@ -12,6 +12,7 @@ export default tseslint.config(
     extends: [js.configs.recommended],
     rules: {
       curly: ['error', 'multi-line'],
+      'no-empty': ['error', { allowEmptyCatch: true }],
     },
   },
   {

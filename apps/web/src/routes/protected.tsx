@@ -1,5 +1,6 @@
+import { redirectToHomeIfNotAuthenticated } from '@/lib/isAuthenticatedServerFn';
 import { trpcMiddleware } from '@/lib/trpcMiddlewareServerFn';
-import { createFileRoute, Link, redirect } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
 
 const protectedHello = createServerFn()
@@ -10,12 +11,12 @@ const protectedHello = createServerFn()
 
 export const Route = createFileRoute('/protected')({
   component: RouteComponent,
-  beforeLoad: ({ context }) => {
-    if (!context.session) {
-      throw redirect({ to: '/' });
-    }
+  beforeLoad: async () => {
+    await redirectToHomeIfNotAuthenticated();
   },
-  loader: () => protectedHello(),
+  loader: async () => {
+    return await protectedHello();
+  },
 });
 
 function RouteComponent() {
