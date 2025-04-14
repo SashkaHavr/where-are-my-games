@@ -14,9 +14,9 @@
   },
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
-    "@tanstack/react-query": "^5.69.0",
-    "@tanstack/react-router": "^1.114.27",
-    "@tanstack/react-start": "^1.114.27",
+    "@tanstack/react-query": "^5.74.3",
+    "@tanstack/react-router": "^1.116.0",
+    "@tanstack/react-start": "^1.116.1",
     "@trpc/client": "catalog:trpc",
     "@trpc/tanstack-react-query": "catalog:trpc",
     "better-auth": "catalog:",
@@ -24,7 +24,7 @@
     "react-dom": "catalog:react",
     "superjson": "catalog:",
     "tw-animate-css": "catalog:tailwind",
-    "vinxi": "^0.5.3"
+    "vinxi": "^0.5.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "catalog:tailwind",

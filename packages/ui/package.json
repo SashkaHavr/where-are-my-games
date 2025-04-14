@@ -15,9 +15,9 @@
   },
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
-    "@radix-ui/react-slot": "^1.1.2",
+    "@radix-ui/react-slot": "^1.2.0",
     "class-variance-authority": "^0.7.1",
-    "lucide-react": "^0.484.0",
+    "lucide-react": "^0.488.0",
     "tw-animate-css": "catalog:tailwind"
   },
   "devDependencies": {

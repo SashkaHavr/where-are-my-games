@@ -6,6 +6,10 @@
     "check": "turbo lint:root:check format:check lint typecheck",
     "clean": "turbo clean:root clean",
     "clean:root": "git clean -xdf .turbo node_modules",
+    "deps": "pnpx taze -r",
+    "deps-major": "pnpx taze major  -r",
+    "deps-major-w": "pnpx taze major -r -w",
+    "deps-w": "pnpx taze -r -w",
     "dev": "turbo dev",
     "fix": "turbo lint:root format lint typecheck",
     "format": "turbo format",
@@ -13,6 +17,7 @@
     "lint": "turbo lint",
     "lint:root": "pnpx sherif@latest -r non-existant-packages --fix --no-install",
     "lint:root:check": "pnpx sherif@latest -r non-existant-packages",
+    "start": "turbo start",
     "test": "turbo test",
     "test:watch": "turbo test:watch",
     "typecheck": "turbo typecheck"
@@ -20,7 +25,7 @@
   "prettier": "@where-are-my-games/prettier-config",
   "devDependencies": {
     "@where-are-my-games/prettier-config": "workspace:*",
-    "turbo": "^2.3.3"
+    "turbo": "^2.5.0"
   },
-  "packageManager": "pnpm@10.6.5"
+  "packageManager": "pnpm@10.8.1"
 }
