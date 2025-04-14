@@ -1,3 +1,4 @@
+import { authorizedEmailsPlugin } from '#authorizedEmailsPlugin.ts';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 
@@ -17,4 +18,5 @@ export const auth = betterAuth({
           }
         : undefined,
   },
+  plugins: [authorizedEmailsPlugin(envServer.AUTHORIZED_EMAILS)],
 });

@@ -4,15 +4,24 @@ import { getWebRequest } from '@tanstack/react-start/server';
 
 import { auth } from '@where-are-my-games/auth';
 
+const getSession = createServerFn().handler(async () => {
+  return await auth.api.getSession({
+    headers: getWebRequest()!.headers,
+  });
+});
+
 export const isAuthenticated = createServerFn().handler(async () => {
-  try {
-    const session = await auth.api.getSession({
-      headers: getWebRequest()!.headers,
-    });
-    if (session) {
-      return true;
-    }
-  } catch {}
+  if (await getSession()) {
+    return true;
+  }
+  return false;
+});
+
+export const isAuthorized = createServerFn().handler(async () => {
+  const session = await getSession();
+  if (session?.isAuthorized) {
+    return true;
+  }
   return false;
 });
 
