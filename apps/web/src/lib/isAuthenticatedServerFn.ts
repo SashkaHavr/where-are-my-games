@@ -4,7 +4,7 @@ import { getWebRequest } from '@tanstack/react-start/server';
 
 import { auth } from '@where-are-my-games/auth';
 
-const getSession = createServerFn().handler(async () => {
+export const getSession = createServerFn().handler(async () => {
   return await auth.api.getSession({
     headers: getWebRequest()!.headers,
   });
@@ -27,6 +27,12 @@ export const isAuthorized = createServerFn().handler(async () => {
 
 export async function redirectToHomeIfNotAuthenticated() {
   if (!(await isAuthenticated())) {
+    throw redirect({ to: '/' });
+  }
+}
+
+export async function redirectToHomeIfNotAuthorized() {
+  if (!(await isAuthorized())) {
     throw redirect({ to: '/' });
   }
 }
