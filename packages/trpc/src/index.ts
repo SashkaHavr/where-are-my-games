@@ -1,5 +1,5 @@
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
-import { createContext } from '#context.ts';
+import { createContext, createContextRaw } from '#context.ts';
 import {
   createCallerFactory,
   protectedProcedure,
@@ -7,13 +7,11 @@ import {
   router,
 } from '#init.ts';
 
-import { auth } from '@where-are-my-games/auth';
-
 const appRouter = router({
   hello: publicProcedure.query(() => 'Hello from tRPC!'),
   invalidateOnSessionChange: router({
     isAuthorised: publicProcedure.query(async ({ ctx }) => {
-      const session = await auth.api.getSession({
+      const session = await ctx.auth.getSession({
         headers: ctx.request.headers,
       });
       return session != undefined;
@@ -32,6 +30,8 @@ export function trpcHandler({ request }: { request: Request }) {
 }
 
 export type AppRouter = typeof appRouter;
-export function createTRPCCaller(request: Request) {
-  return createCallerFactory(appRouter)({ request });
+export function createTRPCCaller(
+  props: Parameters<typeof createContextRaw>[0],
+) {
+  return createCallerFactory(appRouter)(createContextRaw(props));
 }

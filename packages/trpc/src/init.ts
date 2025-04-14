@@ -3,9 +3,6 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 import { ZodError } from 'zod';
 
-import { auth } from '@where-are-my-games/auth';
-import { envServer } from '@where-are-my-games/env/server';
-
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
   errorFormatter(opts) {
@@ -25,29 +22,32 @@ const t = initTRPC.context<Context>().create({
 
 export const router = t.router;
 export const publicProcedure = t.procedure;
-export const protectedProcedure = publicProcedure.use(async ({ ctx, next }) => {
-  const session = await auth.api.getSession({
-    headers: ctx.request.headers,
-  });
-  if (!session) {
-    throw new TRPCError({
-      message: 'You must authenticate to use this endpoint',
-      code: 'UNAUTHORIZED',
+export const protectedProcedure = publicProcedure
+  .use(async ({ ctx, next }) => {
+    const session = await ctx.auth.getSession({
+      headers: ctx.request.headers,
     });
-  }
-
-  if (!envServer.AUTHORIZED_EMAILS.includes(session.user.email)) {
-    throw new TRPCError({
-      message: 'You are not authorized to use this endpoint',
-      code: 'FORBIDDEN',
+    if (!session) {
+      throw new TRPCError({
+        message: 'You must authenticate to use this endpoint',
+        code: 'UNAUTHORIZED',
+      });
+    }
+    return next({
+      ctx: {
+        ...ctx,
+        session: session,
+      },
     });
-  }
+  })
+  .use(async ({ ctx, next }) => {
+    if (!ctx.env.AUTHORIZED_EMAILS.includes(ctx.session.user.email)) {
+      throw new TRPCError({
+        message: 'You are not authorized to use this endpoint',
+        code: 'FORBIDDEN',
+      });
+    }
 
-  return next({
-    ctx: {
-      ...ctx,
-      session: session,
-    },
+    return next();
   });
-});
 export const createCallerFactory = t.createCallerFactory;
