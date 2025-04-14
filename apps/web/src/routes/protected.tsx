@@ -22,7 +22,7 @@ export const Route = createFileRoute('/protected')({
 function RouteComponent() {
   const data = Route.useLoaderData();
   return (
-    <div className="gap-2 flex w-full flex-col items-center">
+    <div className="flex w-full flex-col items-center gap-2">
       <p>Hello "/protected"!</p>
       <p>{data}</p>
       <Link className="text-blue-500 underline" to="/">

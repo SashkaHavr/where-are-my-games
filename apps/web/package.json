@@ -23,11 +23,11 @@
     "react": "catalog:react",
     "react-dom": "catalog:react",
     "superjson": "catalog:",
-    "tw-animate-css": "^1.2.4",
+    "tw-animate-css": "catalog:tailwind",
     "vinxi": "^0.5.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.0.17",
+    "@tailwindcss/postcss": "catalog:tailwind",
     "@types/bun": "catalog:",
     "@types/react": "catalog:react",
     "@types/react-dom": "catalog:react",
@@ -39,8 +39,8 @@
     "@where-are-my-games/trpc": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",
     "@where-are-my-games/ui": "workspace:*",
-    "postcss": "^8.5.3",
-    "tailwindcss": "^4.0.17",
+    "postcss": "catalog:tailwind",
+    "tailwindcss": "catalog:tailwind",
     "typescript": "catalog:",
     "vite-tsconfig-paths": "^5.1.4"
   }
