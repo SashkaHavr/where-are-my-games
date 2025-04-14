@@ -7,10 +7,10 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
   const router = useRouter();
 
   return (
-    <div className="p-4 gap-4 flex flex-col items-center">
+    <div className="flex h-lvh flex-col items-center justify-center gap-4 px-4 pb-20">
       <p className="text-2xl font-bold">Something went wrong 😢</p>
       {import.meta.env.DEV && <ErrorComponent error={error} />}
-      <div className="gap-2 flex flex-wrap items-center">
+      <div className="flex flex-wrap items-center gap-2">
         {import.meta.env.DEV && (
           <Button
             onClick={() => {
@@ -21,13 +21,11 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
             Try Again
           </Button>
         )}
-        <Button>
-          <Link to="/">Home Page</Link>
+        <Button asChild>
+          <Link to="/">Home page</Link>
         </Button>
-        <Button variant="outline">
-          <Link to="/" onClick={() => window.history.back()}>
-            Go Back
-          </Link>
+        <Button variant="outline" onClick={() => window.history.back()}>
+          Go back
         </Button>
       </div>
     </div>
