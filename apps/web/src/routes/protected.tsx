@@ -1,5 +1,5 @@
-import { redirectToHomeIfNotAuthenticated } from '@/lib/isAuthenticatedServerFn';
-import { trpcMiddleware } from '@/lib/trpcMiddlewareServerFn';
+import { redirectToHomeIfNotAuthenticated } from '@/lib/authServer';
+import { trpcMiddleware } from '@/lib/trpcServer';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
 

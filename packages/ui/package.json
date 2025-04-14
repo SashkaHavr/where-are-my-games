@@ -27,7 +27,7 @@
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",
     "@where-are-my-games/utils": "workspace:*",
-    "tailwindcss": "^catalog:tailwind",
+    "tailwindcss": "catalog:tailwind",
     "typescript": "catalog:"
   }
 }

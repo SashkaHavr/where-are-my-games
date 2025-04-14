@@ -1,4 +1,4 @@
-import { redirectToHomeIfNotAuthorized } from '@/lib/isAuthenticatedServerFn';
+import { redirectToHomeIfNotAuthorized } from '@/lib/authServer';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/authorized')({

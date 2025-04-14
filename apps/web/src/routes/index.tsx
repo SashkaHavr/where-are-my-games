@@ -1,7 +1,7 @@
 import { authClient, useSession } from '@/lib/auth';
-import { getSession } from '@/lib/isAuthenticatedServerFn';
+import { getSession } from '@/lib/authServer';
 import { useTRPC } from '@/lib/trpc';
-import { trpcMiddleware } from '@/lib/trpcMiddlewareServerFn';
+import { trpcMiddleware } from '@/lib/trpcServer';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
