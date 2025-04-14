@@ -6,6 +6,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
 
+import { envVite } from '@where-are-my-games/env/vite';
 import { Button } from '@where-are-my-games/ui/button.tsx';
 
 const hello = createServerFn()
@@ -14,7 +15,7 @@ const hello = createServerFn()
 
 export const Route = createFileRoute('/')({
   component: Home,
-  loader: async () => ({ hello: hello(), session: await getSession() }),
+  loader: async () => ({ hello: await hello(), session: await getSession() }),
 });
 
 function Home() {
@@ -67,6 +68,7 @@ function Home() {
       <Link className="text-blue-500 underline" to="/authorized">
         Link to authorized route
       </Link>
+      <p>VITE env: {envVite.VITE_TEST}</p>
     </div>
   );
 }

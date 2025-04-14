@@ -4,7 +4,7 @@
   "scripts": {
     "add-component": "pnpm dlx shadcn@latest add -c ../../packages/ui",
     "build": "vinxi build",
-    "clean": "git clean -xdf .turbo node_modules",
+    "clean": "git clean -xdf .turbo node_modules .vinxi .output",
     "dev": "vinxi dev",
     "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
     "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
