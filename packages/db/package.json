@@ -19,16 +19,16 @@
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
     "@where-are-my-games/env": "workspace:*",
-    "drizzle-orm": "^0.41.0",
+    "drizzle-orm": "^0.42.0",
     "pg": "^8.14.1"
   },
   "devDependencies": {
     "@types/bun": "catalog:",
-    "@types/pg": "^8.11.12",
+    "@types/pg": "^8.11.13",
     "@where-are-my-games/eslint-config": "workspace:*",
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",
-    "drizzle-kit": "^0.30.6",
+    "drizzle-kit": "^0.31.0",
     "typescript": "catalog:"
   }
 }

@@ -14,7 +14,7 @@
   },
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
-    "@tanstack/react-query": "^5.74.3",
+    "@tanstack/react-query": "^5.74.0",
     "@tanstack/react-router": "^1.116.0",
     "@tanstack/react-start": "^1.116.1",
     "@trpc/client": "catalog:trpc",
@@ -31,7 +31,7 @@
     "@types/bun": "catalog:",
     "@types/react": "catalog:react",
     "@types/react-dom": "catalog:react",
-    "@vitejs/plugin-react": "^4.3.4",
+    "@vitejs/plugin-react": "^4.4.0",
     "@where-are-my-games/auth": "workspace:*",
     "@where-are-my-games/env": "workspace:*",
     "@where-are-my-games/eslint-config": "workspace:*",
