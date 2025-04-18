@@ -2,36 +2,32 @@
   "name": "@where-are-my-games/web",
   "type": "module",
   "scripts": {
-    "add-component": "pnpm dlx shadcn@latest add -c ../../packages/ui",
-    "build": "vinxi build",
-    "clean": "git clean -xdf .turbo node_modules .vinxi .output",
-    "dev": "vinxi dev",
+    "build": "tsc -b && vite build",
+    "clean": "git clean -xdf .turbo node_modules",
+    "dev": "vite",
     "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
     "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
     "lint": "eslint",
-    "start": "bun run .output/server/index.mjs",
+    "start": "vite preview",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
+    "@tailwindcss/vite": "catalog:tailwind",
     "@tanstack/react-query": "^5.74.0",
     "@tanstack/react-router": "^1.116.0",
-    "@tanstack/react-start": "^1.116.1",
     "@trpc/client": "catalog:trpc",
     "@trpc/tanstack-react-query": "catalog:trpc",
-    "better-auth": "catalog:",
     "react": "catalog:react",
     "react-dom": "catalog:react",
     "superjson": "catalog:",
-    "tw-animate-css": "catalog:tailwind",
-    "vinxi": "^0.5.4"
+    "tailwindcss": "catalog:tailwind"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "catalog:tailwind",
-    "@types/bun": "catalog:",
+    "@tanstack/router-plugin": "^1.116.1",
     "@types/react": "catalog:react",
     "@types/react-dom": "catalog:react",
-    "@vitejs/plugin-react": "^4.4.0",
+    "@vitejs/plugin-react": "^4.3.4",
     "@where-are-my-games/auth": "workspace:*",
     "@where-are-my-games/env": "workspace:*",
     "@where-are-my-games/eslint-config": "workspace:*",
@@ -39,9 +35,9 @@
     "@where-are-my-games/trpc": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",
     "@where-are-my-games/ui": "workspace:*",
-    "postcss": "catalog:tailwind",
-    "tailwindcss": "catalog:tailwind",
+    "babel-plugin-react-compiler": "latest",
     "typescript": "catalog:",
+    "vite": "^6.3.1",
     "vite-tsconfig-paths": "^5.1.4"
   }
 }

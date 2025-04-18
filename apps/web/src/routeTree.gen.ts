@@ -11,21 +11,14 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ProtectedImport } from './routes/protected'
-import { Route as AuthorizedImport } from './routes/authorized'
+import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
-const ProtectedRoute = ProtectedImport.update({
-  id: '/protected',
-  path: '/protected',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AuthorizedRoute = AuthorizedImport.update({
-  id: '/authorized',
-  path: '/authorized',
+const AboutRoute = AboutImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,18 +39,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/authorized': {
-      id: '/authorized'
-      path: '/authorized'
-      fullPath: '/authorized'
-      preLoaderRoute: typeof AuthorizedImport
-      parentRoute: typeof rootRoute
-    }
-    '/protected': {
-      id: '/protected'
-      path: '/protected'
-      fullPath: '/protected'
-      preLoaderRoute: typeof ProtectedImport
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
   }
@@ -67,42 +53,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/authorized': typeof AuthorizedRoute
-  '/protected': typeof ProtectedRoute
+  '/about': typeof AboutRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/authorized': typeof AuthorizedRoute
-  '/protected': typeof ProtectedRoute
+  '/about': typeof AboutRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/authorized': typeof AuthorizedRoute
-  '/protected': typeof ProtectedRoute
+  '/about': typeof AboutRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/authorized' | '/protected'
+  fullPaths: '/' | '/about'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/authorized' | '/protected'
-  id: '__root__' | '/' | '/authorized' | '/protected'
+  to: '/' | '/about'
+  id: '__root__' | '/' | '/about'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthorizedRoute: typeof AuthorizedRoute
-  ProtectedRoute: typeof ProtectedRoute
+  AboutRoute: typeof AboutRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthorizedRoute: AuthorizedRoute,
-  ProtectedRoute: ProtectedRoute,
+  AboutRoute: AboutRoute,
 }
 
 export const routeTree = rootRoute
@@ -116,18 +97,14 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/authorized",
-        "/protected"
+        "/about"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/authorized": {
-      "filePath": "authorized.tsx"
-    },
-    "/protected": {
-      "filePath": "protected.tsx"
+    "/about": {
+      "filePath": "about.tsx"
     }
   }
 }
