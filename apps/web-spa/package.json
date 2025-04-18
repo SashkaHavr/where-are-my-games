@@ -23,6 +23,7 @@
     "@where-are-my-games/eslint-config": "workspace:*",
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",
+    "babel-plugin-react-compiler": "latest",
     "typescript": "catalog:",
     "vite": "^6.3.1",
     "vite-tsconfig-paths": "^5.1.4"
