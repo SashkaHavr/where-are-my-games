@@ -2,8 +2,9 @@
   "name": "@where-are-my-games/web",
   "type": "module",
   "scripts": {
+    "add-component": "pnpm dlx shadcn@latest add -c ../../packages/ui",
     "build": "tsc -b && vite build",
-    "clean": "git clean -xdf .turbo node_modules",
+    "clean": "git clean -xdf .turbo node_modules dist",
     "dev": "vite",
     "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
     "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
@@ -18,10 +19,11 @@
     "@tanstack/react-router": "^1.116.0",
     "@trpc/client": "catalog:trpc",
     "@trpc/tanstack-react-query": "catalog:trpc",
+    "better-auth": "catalog:",
     "react": "catalog:react",
     "react-dom": "catalog:react",
     "superjson": "catalog:",
-    "tailwindcss": "catalog:tailwind"
+    "tw-animate-css": "catalog:tailwind"
   },
   "devDependencies": {
     "@tanstack/router-plugin": "^1.116.1",
@@ -36,6 +38,7 @@
     "@where-are-my-games/typescript-config": "workspace:*",
     "@where-are-my-games/ui": "workspace:*",
     "babel-plugin-react-compiler": "latest",
+    "tailwindcss": "catalog:tailwind",
     "typescript": "catalog:",
     "vite": "^6.3.1",
     "vite-tsconfig-paths": "^5.1.4"
