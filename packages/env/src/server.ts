@@ -7,6 +7,14 @@ export const envServer = createEnv({
   server: {
     ...dbConfig,
 
+    CORS_ORIGINS: z
+      .string()
+      .optional()
+      .transform((s) =>
+        s == undefined ? ['http://localhost:5173'] : s.split(' '),
+      )
+      .refine((a) => z.array(z.string().url()).safeParse(a)),
+
     BETTER_AUTH_SECRET: z.string(),
     BETTER_AUTH_URL: z.string().url(),
 

@@ -28,6 +28,7 @@ export default tseslint.config(
         project: [
           '../../packages/*/tsconfig.json',
           '../../apps/*/tsconfig.json',
+          '../../apps/*/tsconfig.app.json',
           '../../tools/*/tsconfig.json',
         ],
         tsconfigRootDir: import.meta.dirname,
@@ -52,14 +53,14 @@ export default tseslint.config(
   pluginReactHooks.configs['recommended-latest'],
   {
     files: ['**/*.{tsx}'],
-    ignores: ['src/ui/*.tsx', 'src/ssr.tsx'],
+    ignores: ['src/ui/*.tsx'],
     extends: [pluginReactRefresh.configs.recommended],
   },
   pluginReactCompiler.configs.recommended,
   pluginQuery.configs['flat/recommended'],
   {
     files: ['**/*.{ts,tsx}'],
-    ignores: ['*.config.ts', 'src/api.ts', 'src/ssr.tsx'],
+    ignores: ['*.config.ts', 'src/index.ts'],
     rules: {
       'no-restricted-exports': [
         'error',
