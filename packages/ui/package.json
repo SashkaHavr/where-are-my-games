@@ -16,7 +16,7 @@
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.0",
-    "class-variance-authority": "^0.7.1",
+    "class-variance-authority": "catalog:tailwind",
     "lucide-react": "^0.488.0",
     "tw-animate-css": "catalog:tailwind"
   },

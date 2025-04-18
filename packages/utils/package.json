@@ -13,9 +13,9 @@
   },
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "tailwind-merge": "^3.2.0"
+    "class-variance-authority": "catalog:tailwind",
+    "clsx": "catalog:tailwind",
+    "tailwind-merge": "catalog:tailwind"
   },
   "devDependencies": {
     "@where-are-my-games/eslint-config": "workspace:*",

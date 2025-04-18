@@ -38,9 +38,18 @@ catalogs:
     '@tailwindcss/postcss':
       specifier: ^4.1.4
       version: 4.1.4
+    class-variance-authority:
+      specifier: ^0.7.1
+      version: 0.7.1
+    clsx:
+      specifier: ^2.1.1
+      version: 2.1.1
     postcss:
       specifier: ^8.5.3
       version: 8.5.3
+    tailwind-merge:
+      specifier: ^3.2.0
+      version: 3.2.0
     tailwindcss:
       specifier: ^4.1.4
       version: 4.1.4
@@ -278,7 +287,7 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(@types/react@19.1.2)(react@19.1.0)
       class-variance-authority:
-        specifier: ^0.7.1
+        specifier: catalog:tailwind
         version: 0.7.1
       lucide-react:
         specifier: ^0.488.0
@@ -315,13 +324,13 @@ importers:
   packages/utils:
     dependencies:
       class-variance-authority:
-        specifier: ^0.7.1
+        specifier: catalog:tailwind
         version: 0.7.1
       clsx:
-        specifier: ^2.1.1
+        specifier: catalog:tailwind
         version: 2.1.1
       tailwind-merge:
-        specifier: ^3.2.0
+        specifier: catalog:tailwind
         version: 3.2.0
     devDependencies:
       '@where-are-my-games/eslint-config':
