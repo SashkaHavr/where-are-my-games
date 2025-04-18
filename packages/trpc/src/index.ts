@@ -24,7 +24,7 @@ export function trpcHandler({ request }: { request: Request }) {
   return fetchRequestHandler({
     req: request,
     router: appRouter,
-    endpoint: '/api/trpc',
+    endpoint: '/trpc',
     createContext: createContext,
   });
 }
