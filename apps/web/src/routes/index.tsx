@@ -1,5 +1,4 @@
 import { authClient, useSession } from '@/lib/auth';
-import { getSession } from '@/lib/authServer';
 import { useTRPC } from '@/lib/trpc';
 import { trpcMiddleware } from '@/lib/trpcServer';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -15,10 +14,11 @@ const hello = createServerFn()
 
 export const Route = createFileRoute('/')({
   component: Home,
-  loader: async () => ({ hello: await hello(), session: await getSession() }),
+  loader: async () => ({ hello: await hello() }),
 });
 
 function Home() {
+  const serverSession = Route.useRouteContext().session;
   const trpc = useTRPC();
   const router = useRouter();
   const session = useSession();
@@ -31,7 +31,7 @@ function Home() {
       <p>Data from loader: {loaderData.hello}</p>
       <p>Data from client: {useHello.isSuccess ? useHello.data : ''}</p>
       <Button variant="default">This is a button</Button>
-      {!loaderData.session ? (
+      {!serverSession ? (
         <Button
           variant="default"
           onClick={() => {
@@ -55,8 +55,7 @@ function Home() {
         </Button>
       )}
       <p>
-        User email from server:{' '}
-        {loaderData.session?.user.email ?? 'Not logged in'}
+        User email from server: {serverSession?.user.email ?? 'Not logged in'}
       </p>
       <p>
         User email from client: {session.data?.user.email ?? 'Not logged in'}
