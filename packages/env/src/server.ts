@@ -11,7 +11,9 @@ export const envServer = createEnv({
       .string()
       .optional()
       .transform((s) =>
-        s == undefined ? ['http://localhost:5173'] : s.split(' '),
+        s == undefined
+          ? ['http://localhost:5173', 'http://localhost:4173']
+          : s.split(' '),
       )
       .refine((a) => z.array(z.string().url()).safeParse(a)),
 

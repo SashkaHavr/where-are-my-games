@@ -17,13 +17,12 @@ import { routeTree } from './routeTree.gen';
 
 export function createRouter() {
   const queryClient = new QueryClient({});
-  console.log('Create router');
 
   const trpcClient = createTRPCClient<AppRouter>({
     links: [
       httpBatchStreamLink({
         transformer: superjson,
-        url: envVite.VITE_TRPC_URL,
+        url: new URL('/trpc', envVite.VITE_API_URL),
       }),
     ],
   });

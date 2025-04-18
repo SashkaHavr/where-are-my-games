@@ -5,6 +5,7 @@ import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 import type { AppRouter } from '@where-are-my-games/trpc';
 
 import { NotFound } from '../components/NotFound';
+import { authClient } from '../lib/auth';
 
 // import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
@@ -12,11 +13,11 @@ export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
   trpc: TRPCOptionsProxy<AppRouter>;
 }>()({
-  // beforeLoad: async () => {
-  //   return {
-  //     session: await getSession(),
-  //   };
-  // },
+  beforeLoad: async () => {
+    return {
+      session: (await authClient.getSession()).data,
+    };
+  },
   component: RootComponent,
   notFoundComponent: () => <NotFound />,
 });

@@ -5,6 +5,7 @@ import { envServer } from '@where-are-my-games/env/server';
 import * as schema from './schema';
 
 export const db = drizzle({
+  logger: true,
   connection: {
     host: envServer.DATABASE_HOST,
     port: envServer.DATABASE_PORT,

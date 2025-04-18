@@ -7,19 +7,25 @@ import { trpcHandler } from '@where-are-my-games/trpc';
 
 const app = new Hono();
 
-function createCors() {
-  return cors({
+app.use(
+  '/auth/*',
+  cors({
     origin: envServer.CORS_ORIGINS,
-    // allowHeaders: ['Content-Type', 'Authorization'],
-    // allowMethods: ['POST', 'GET', 'OPTIONS'],
-    // exposeHeaders: ['Content-Length'],
+    allowHeaders: ['Content-Type', 'Authorization'],
+    allowMethods: ['POST', 'GET', 'OPTIONS'],
+    exposeHeaders: ['Content-Length'],
     maxAge: 600,
     credentials: true,
-  });
-}
-
-app.use('/auth/*', createCors());
-app.use('/trpc/*', createCors());
+  }),
+);
+app.use(
+  '/trpc/*',
+  cors({
+    origin: envServer.CORS_ORIGINS,
+    maxAge: 600,
+    credentials: true,
+  }),
+);
 
 app.on(['POST', 'GET'], '/auth/*', (c) => {
   return auth.handler(c.req.raw);
