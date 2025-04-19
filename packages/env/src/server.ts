@@ -7,6 +7,8 @@ export const envServer = createEnv({
   server: {
     ...dbConfig,
 
+    NODE_ENV: z.enum(['development', 'production']),
+
     CORS_ORIGINS: z
       .string()
       .optional()

@@ -4,7 +4,11 @@ import {
   createRouter as createTanStackRouter,
   RouterProvider,
 } from '@tanstack/react-router';
-import { createTRPCClient, httpBatchStreamLink } from '@trpc/client';
+import {
+  createTRPCClient,
+  httpBatchStreamLink,
+  loggerLink,
+} from '@trpc/client';
 import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query';
 import ReactDOM from 'react-dom/client';
 import superjson from 'superjson';
@@ -23,6 +27,12 @@ export function createRouter() {
       httpBatchStreamLink({
         transformer: superjson,
         url: new URL('/trpc', envVite.VITE_API_URL),
+        fetch(url, options) {
+          return fetch(url, {
+            ...options,
+            credentials: 'include',
+          });
+        },
       }),
     ],
   });

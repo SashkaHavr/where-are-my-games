@@ -3,6 +3,8 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 import { ZodError } from 'zod';
 
+import { envServer } from '@where-are-my-games/env/server';
+
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
   errorFormatter(opts) {
@@ -21,7 +23,19 @@ const t = initTRPC.context<Context>().create({
 });
 
 export const router = t.router;
-export const publicProcedure = t.procedure;
+export const publicProcedure =
+  envServer.NODE_ENV == 'production'
+    ? t.procedure
+    : t.procedure.use(async ({ next }) => {
+        const result = await next();
+        if (!result.ok) {
+          console.error(
+            // result.error,
+            `${result.error.name} ${result.error.code} ${result.error.message}`,
+          );
+        }
+        return result;
+      });
 export const protectedProcedure = publicProcedure.use(async ({ ctx, next }) => {
   const session = await ctx.auth.getSession({
     headers: ctx.request.headers,

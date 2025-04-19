@@ -3,11 +3,11 @@
   "type": "module",
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
-    "dev": "cd ../../ && bun run --hot --env-file apps/api/.env apps/api/src/index.ts",
+    "dev": "cd ../../ && bun exec \"NODE_ENV=development bun run --hot --env-file apps/api/.env apps/api/src/index.ts\"",
     "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
     "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
     "lint": "eslint",
-    "start": "bun run src/index.ts",
+    "start": "bun exec \"NODE_ENV=production bun run src/index.ts\"",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@where-are-my-games/prettier-config",
