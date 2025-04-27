@@ -4,11 +4,7 @@ import {
   createRouter as createTanStackRouter,
   RouterProvider,
 } from '@tanstack/react-router';
-import {
-  createTRPCClient,
-  httpBatchStreamLink,
-  loggerLink,
-} from '@trpc/client';
+import { createTRPCClient, httpBatchStreamLink } from '@trpc/client';
 import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query';
 import ReactDOM from 'react-dom/client';
 import superjson from 'superjson';
