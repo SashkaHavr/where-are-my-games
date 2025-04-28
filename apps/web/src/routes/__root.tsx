@@ -2,15 +2,13 @@ import type { QueryClient } from '@tanstack/react-query';
 import type { TRPCOptionsProxy } from '@trpc/tanstack-react-query';
 import {
   createRootRouteWithContext,
+  Navigate,
   Outlet,
-  redirect,
 } from '@tanstack/react-router';
 
 import type { AppRouter } from '@where-are-my-games/trpc';
 
 import { authClient } from '../lib/auth';
-
-// import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -22,16 +20,13 @@ export const Route = createRootRouteWithContext<{
     };
   },
   component: RootComponent,
-  notFoundComponent: () => {
-    throw redirect({ to: '/' });
-  },
+  notFoundComponent: () => <Navigate to="/" />,
 });
 
 function RootComponent() {
   return (
     <>
       <Outlet />
-      {/* <TanStackRouterDevtools /> */}
     </>
   );
 }
