@@ -1,9 +1,8 @@
 import { createFileRoute, redirect, useRouter } from '@tanstack/react-router';
 
-import { Button } from '@where-are-my-games/ui/button.js';
-
 import { Meteors } from '../components/landing/Meteors';
 import { TypingAnimation } from '../components/landing/TypingAnimation';
+import { Button } from '../components/ui/button';
 import { authClient } from '../lib/auth';
 
 export const Route = createFileRoute('/')({
@@ -37,7 +36,7 @@ function Index() {
       </div>
       <Button
         variant="outline"
-        className="animate-show w-64 self-center opacity-0 delay-2500 fill-mode-forwards"
+        className="w-64 animate-show self-center opacity-0 delay-2500 fill-mode-forwards"
         onClick={() => {
           void authClient.signIn
             .social({

@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./prettierrc.js"
+    ".": "./prettier.config.js"
   },
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
@@ -11,7 +11,6 @@
     "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
     "typecheck": "tsc --noEmit"
   },
-  "prettier": "./prettierrc.js",
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
     "@where-are-my-games/typescript-config": "workspace:*",

@@ -5,15 +5,17 @@
   "tsx": true,
   "tailwind": {
     "config": "",
-    "css": "src/global.css",
+    "css": "src/index.css",
     "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""
   },
   "aliases": {
+    "components": "@/components",
     "utils": "@where-are-my-games/utils",
-    "components": "@where-are-my-games/ui",
-    "ui": "src/ui"
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
   },
   "iconLibrary": "lucide"
 }

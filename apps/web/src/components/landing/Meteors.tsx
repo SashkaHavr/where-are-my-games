@@ -46,7 +46,7 @@ export function Meteors({
           key={idx}
           style={{ ...style }}
           className={cn(
-            'animate-meteor pointer-events-none absolute size-0.5 rotate-[var(--angle)] rounded-full bg-zinc-500 shadow-[0_0_0_1px_#ffffff10]',
+            'pointer-events-none absolute size-0.5 rotate-[var(--angle)] animate-meteor rounded-full bg-zinc-500 shadow-[0_0_0_1px_#ffffff10]',
             className,
           )}
         >

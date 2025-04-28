@@ -1,7 +1,6 @@
 import { createFileRoute, redirect, useRouter } from '@tanstack/react-router';
 
-import { Button } from '@where-are-my-games/ui/button.js';
-
+import { Button } from '../../components/ui/button';
 import { authClient } from '../../lib/auth';
 
 export const Route = createFileRoute('/app/')({
