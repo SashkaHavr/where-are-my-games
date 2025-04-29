@@ -35,7 +35,6 @@
     "@types/react-dom": "catalog:react",
     "@vitejs/plugin-react": "^4.3.4",
     "@where-are-my-games/auth": "workspace:*",
-    "@where-are-my-games/env": "workspace:*",
     "@where-are-my-games/eslint-config": "workspace:*",
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/trpc": "workspace:*",

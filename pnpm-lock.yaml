@@ -172,9 +172,6 @@ importers:
       '@where-are-my-games/auth':
         specifier: workspace:*
         version: link:../../packages/auth
-      '@where-are-my-games/env':
-        specifier: workspace:*
-        version: link:../../packages/env
       '@where-are-my-games/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
