@@ -10,10 +10,10 @@ import ReactDOM from 'react-dom/client';
 import superjson from 'superjson';
 
 import type { AppRouter } from '@where-are-my-games/trpc';
-import { envVite } from '@where-are-my-games/env/vite';
 
 import { TRPCProvider } from './lib/trpc';
 import { routeTree } from './routeTree.gen';
+import { getApiUrl } from './utils/getApiUrl';
 
 export function createRouter() {
   const queryClient = new QueryClient({});
@@ -22,7 +22,7 @@ export function createRouter() {
     links: [
       httpBatchStreamLink({
         transformer: superjson,
-        url: new URL('/trpc', envVite.VITE_API_URL),
+        url: new URL('/trpc', getApiUrl()),
         fetch(url, options) {
           return fetch(url, {
             ...options,

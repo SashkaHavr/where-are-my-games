@@ -15,7 +15,7 @@
   },
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
-    "@t3-oss/env-core": "^0.12.0",
+    "@t3-oss/env-core": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

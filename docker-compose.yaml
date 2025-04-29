@@ -1,0 +1,65 @@
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data 
+    environment:
+      - POSTGRES_PASSWORD=password
+    networks:
+      - db-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  db-update:
+    build:
+      context: .
+      dockerfile: ./packages/db/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - DATABASE_HOST=postgres
+      - DATABASE_NAME=postgres
+      - DATABASE_USER=postgres
+      - DATABASE_SSL=false
+      - DATABASE_PASSWORD=password
+    networks:
+      - db-network
+  api:
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - CORS_ORIGINS=http://localhost:5241
+      - BETTER_AUTH_SECRET=secret
+      - BETTER_AUTH_URL=http://localhost:5240
+      - DATABASE_HOST=postgres
+      - DATABASE_NAME=postgres
+      - DATABASE_USER=postgres
+      - DATABASE_SSL=false
+      - DATABASE_PASSWORD=password
+    env_file:
+      - .env
+    networks:
+      - db-network
+    ports:
+      - 5240:3000
+  web:
+    build:
+      context: .
+      dockerfile: ./apps/web/Dockerfile
+      args:
+        - VITE_API_URL=http://localhost:5240
+    ports:
+      - 5241:3000
+
+networks:
+  db-network:
+
+volumes:
+  pgdata:

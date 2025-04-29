@@ -9,7 +9,7 @@
     "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
     "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
     "lint": "eslint",
-    "start": "vite preview",
+    "start": "vite preview --host",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -28,6 +28,7 @@
     "superjson": "catalog:"
   },
   "devDependencies": {
+    "@t3-oss/env-core": "catalog:",
     "@tanstack/router-plugin": "^1.116.1",
     "@types/bun": "catalog:",
     "@types/react": "catalog:react",
@@ -45,6 +46,7 @@
     "tw-animate-css": "catalog:tailwind",
     "typescript": "catalog:",
     "vite": "^6.3.1",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "zod": "catalog:"
   }
 }

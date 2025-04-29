@@ -1,9 +1,20 @@
 import path from 'path';
+import { createEnv } from '@t3-oss/env-core';
 import tailwindcss from '@tailwindcss/vite';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { z } from 'zod';
+
+createEnv({
+  clientPrefix: 'VITE_',
+  client: {
+    VITE_API_URL: z.string().url().optional(),
+  },
+  runtimeEnv: import.meta.env,
+  emptyStringAsUndefined: true,
+});
 
 // https://vite.dev/config/
 export default defineConfig({
