@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useWindowSize } from '@uidotdev/usehooks';
+import { useViewportSize } from '@mantine/hooks';
 
 import { cn } from '@where-are-my-games/utils';
 
@@ -23,20 +23,28 @@ export function Meteors({
   className,
 }: MeteorsProps) {
   const [meteorStyles, setMeteorStyles] = useState<React.CSSProperties[]>([]);
-  const windowSize = useWindowSize();
+  const { width: windowWidth } = useViewportSize();
 
   useEffect(() => {
     const styles = new Array(number).fill(0).map(() => ({
       '--angle': -angle + 'deg',
       top: '-5%',
-      left: `calc(0% + ${Math.floor(Math.random() * window.innerWidth)}px)`,
+      left: `calc(0% + ${Math.floor(Math.random() * windowWidth)}px)`,
       animationDelay: Math.random() * (maxDelay - minDelay) + minDelay + 's',
       animationDuration:
         Math.floor(Math.random() * (maxDuration - minDuration) + minDuration) +
         's',
     }));
     setMeteorStyles(styles);
-  }, [number, minDelay, maxDelay, minDuration, maxDuration, angle, windowSize]);
+  }, [
+    number,
+    minDelay,
+    maxDelay,
+    minDuration,
+    maxDuration,
+    angle,
+    windowWidth,
+  ]);
 
   return (
     <>

@@ -40,6 +40,8 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
+  --font-typewriter: 'Cutive Mono', monospace;
+
   --animate-meteor: meteor 5s linear infinite;
 
   @keyframes meteor {
@@ -144,4 +146,12 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@font-face {
+  font-family: 'Cutive Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./assets/fonts/Cutive-Mono.woff2) format('woff2');
 }

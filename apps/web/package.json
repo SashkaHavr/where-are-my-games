@@ -13,13 +13,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@mantine/hooks": "^7.17.5",
     "@radix-ui/react-slot": "^1.2.0",
     "@tailwindcss/vite": "catalog:tailwind",
     "@tanstack/react-query": "^5.74.0",
     "@tanstack/react-router": "^1.116.0",
     "@trpc/client": "catalog:trpc",
     "@trpc/tanstack-react-query": "catalog:trpc",
-    "@uidotdev/usehooks": "^2.4.1",
     "better-auth": "catalog:",
     "lucide-react": "^0.488.0",
     "motion": "^12.9.2",

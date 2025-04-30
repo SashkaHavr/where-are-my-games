@@ -18,7 +18,7 @@ function Index() {
   const router = useRouter();
 
   return (
-    <div className="flex w-full flex-col px-4 pt-8 pb-2">
+    <div className="flex h-lvh w-full flex-col justify-center pb-20">
       <div className="flex min-h-80 w-64 flex-col gap-4 self-center">
         <TypingAnimation startOnView={false}>Where</TypingAnimation>
         <TypingAnimation startOnView={false} delay={700}>
@@ -28,15 +28,12 @@ function Index() {
           my
         </TypingAnimation>
         <TypingAnimation startOnView={false} delay={1600}>
-          games
-        </TypingAnimation>
-        <TypingAnimation startOnView={false} delay={2200}>
-          ?
+          games...?
         </TypingAnimation>
       </div>
       <Button
         variant="outline"
-        className="w-64 animate-show self-center opacity-0 delay-2500 fill-mode-forwards"
+        className="w-64 animate-show self-center opacity-0 delay-3000 fill-mode-forwards"
         onClick={() => {
           void authClient.signIn
             .social({
