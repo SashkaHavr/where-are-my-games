@@ -7,6 +7,7 @@ import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { z } from 'zod';
 
+// Check env variables on build
 createEnv({
   clientPrefix: 'VITE_',
   client: {
@@ -20,7 +21,7 @@ createEnv({
 export default defineConfig({
   plugins: [
     tailwindcss(),
-    TanStackRouterVite({ target: 'react' }),
+    TanStackRouterVite({ target: 'react', autoCodeSplitting: true }),
     react({
       babel: {
         plugins: [['babel-plugin-react-compiler', {}]],
