@@ -100,4 +100,16 @@ export default tseslint.config(
       ],
     },
   },
+  {
+    files: ['**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'TSEnumDeclaration',
+          message: "Don't declare enums",
+        },
+      ],
+    },
+  },
 );
