@@ -22,7 +22,9 @@ This is a demo [TypeScript](https://www.typescriptlang.org/) monorepo. Stack:
 
 ## Prepare application
 
-1. Create [GitHub OAuth app](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app)
+1. Create [Twitch OAuth app](https://dev.twitch.tv/docs/authentication/register-app/) with:
+  - OAuth Redirect URLs: http://localhost:3000/auth/callback/twitch
+  - Client Type: Confidential
 2. Create and remember client secret
 
 ## Fast local startup
@@ -32,7 +34,7 @@ This is a demo [TypeScript](https://www.typescriptlang.org/) monorepo. Stack:
 > This startup guide is for demonstration/testing purposes and local usage only. Do NOT use in production environments due to lack of security/stability guarantees.
 
 1. Create [.env](./.env) file in the root directory
-2. Set **GITHUB_CLIENT_ID** and **GITHUB_CLIENT_SECRET**
+2. Set **TWITCH_CLIENT_ID** and **TWITCH_CLIENT_SECRET**
 3. Run ``docker-compose up --build -d``
 
 ## Development setup

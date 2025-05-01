@@ -58,7 +58,7 @@
     }
   }
 
-  --animate-show: show 1s;
+  --animate-show: show 1s 3s forwards;
 
   @keyframes show {
     0% {

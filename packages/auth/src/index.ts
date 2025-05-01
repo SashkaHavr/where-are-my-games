@@ -23,13 +23,10 @@ export const auth = betterAuth({
     provider: 'pg',
   }),
   socialProviders: {
-    github:
-      envServer.GITHUB_CLIENT_ID && envServer.GITHUB_CLIENT_SECRET
-        ? {
-            clientId: envServer.GITHUB_CLIENT_ID,
-            clientSecret: envServer.GITHUB_CLIENT_SECRET,
-          }
-        : undefined,
+    twitch: {
+      clientId: envServer.TWITCH_CLIENT_ID,
+      clientSecret: envServer.TWITCH_CLIENT_SECRET,
+    },
   },
   plugins: [authorizedEmailsPlugin(envServer.AUTHORIZED_EMAILS)],
 });
