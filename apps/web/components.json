@@ -11,9 +11,9 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@/components",
+    "components": "~/components",
     "utils": "@where-are-my-games/utils",
-    "ui": "@/components/ui"
+    "ui": "~/components/ui"
   },
   "iconLibrary": "lucide"
 }

@@ -1,10 +1,10 @@
 import { createFileRoute, redirect, useRouter } from '@tanstack/react-router';
 
-import { Meteors } from '../components/landing/Meteors';
-import { TypingAnimation } from '../components/landing/TypingAnimation';
-import { Button } from '../components/ui/button';
-import { authClient } from '../lib/auth';
-import { TwitchIcon } from '../lib/icons';
+import { Meteors } from '~/components/landing/Meteors';
+import { TypingAnimation } from '~/components/landing/TypingAnimation';
+import { Button } from '~/components/ui/button';
+import { authClient } from '~/lib/auth';
+import { TwitchIcon } from '~/lib/icons';
 
 export const Route = createFileRoute('/')({
   beforeLoad: ({ context }) => {

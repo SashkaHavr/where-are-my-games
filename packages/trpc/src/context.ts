@@ -1,8 +1,8 @@
+import type { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch';
+
 import { auth } from '@where-are-my-games/auth';
 import { db } from '@where-are-my-games/db';
 import { envServer } from '@where-are-my-games/env/server';
-
-import type { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch';
 
 export function createContextRaw({ request }: { request: Request }) {
   return {

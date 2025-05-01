@@ -1,10 +1,10 @@
+import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 import { ZodError } from 'zod';
 
 import { envServer } from '@where-are-my-games/env/server';
 
 import type { Context } from '#context.ts';
-import { initTRPC, TRPCError } from '@trpc/server';
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,

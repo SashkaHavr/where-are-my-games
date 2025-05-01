@@ -1,3 +1,4 @@
+import { TRPCError } from '@trpc/server';
 import { and, eq } from 'drizzle-orm';
 import igdb from 'igdb-api-node';
 import { z } from 'zod';
@@ -6,7 +7,6 @@ import { account } from '@where-are-my-games/db/schema';
 import { envServer } from '@where-are-my-games/env/server';
 import { tryCatch } from '@where-are-my-games/utils';
 
-import { TRPCError } from '@trpc/server';
 import { protectedProcedure, router } from '#init.ts';
 
 interface IGDBGame {
