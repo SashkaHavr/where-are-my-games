@@ -18,7 +18,11 @@
   "dependencies": {
     "@trpc/server": "catalog:trpc",
     "@where-are-my-games/auth": "workspace:*",
+    "@where-are-my-games/db": "workspace:*",
     "@where-are-my-games/env": "workspace:*",
+    "@where-are-my-games/utils": "workspace:*",
+    "drizzle-orm": "catalog:",
+    "igdb-api-node": "^6.0.5",
     "superjson": "catalog:",
     "zod": "catalog:"
   },

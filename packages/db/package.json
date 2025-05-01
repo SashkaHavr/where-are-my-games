@@ -5,7 +5,8 @@
     "#*": "./src/*"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./schema": "./src/schema/index.ts"
   },
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
@@ -19,7 +20,7 @@
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
     "@where-are-my-games/env": "workspace:*",
-    "drizzle-orm": "^0.42.0",
+    "drizzle-orm": "catalog:",
     "pg": "^8.14.1"
   },
   "devDependencies": {

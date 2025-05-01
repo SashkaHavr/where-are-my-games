@@ -1,23 +1,10 @@
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 import { createContext, createContextRaw } from '#context.ts';
-import {
-  createCallerFactory,
-  protectedProcedure,
-  publicProcedure,
-  router,
-} from '#init.ts';
+import { createCallerFactory, router } from '#init.ts';
+import { igdbRouter } from '#routers/igdb.ts';
 
 const appRouter = router({
-  hello: publicProcedure.query(() => 'Hello from tRPC!'),
-  invalidateOnSessionChange: router({
-    isAuthorised: publicProcedure.query(async ({ ctx }) => {
-      const session = await ctx.auth.getSession({
-        headers: ctx.request.headers,
-      });
-      return session != undefined;
-    }),
-    protectedHello: protectedProcedure.query(() => 'Protected hello from tRPC'),
-  }),
+  igdb: igdbRouter,
 });
 
 export function trpcHandler({ request }: { request: Request }) {

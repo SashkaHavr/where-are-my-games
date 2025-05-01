@@ -1,9 +1,10 @@
-import type { Context } from '#context.ts';
-import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 import { ZodError } from 'zod';
 
 import { envServer } from '@where-are-my-games/env/server';
+
+import type { Context } from '#context.ts';
+import { initTRPC, TRPCError } from '@trpc/server';
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
@@ -23,6 +24,7 @@ const t = initTRPC.context<Context>().create({
 });
 
 export const router = t.router;
+
 export const publicProcedure =
   envServer.NODE_ENV == 'production'
     ? t.procedure
@@ -30,12 +32,13 @@ export const publicProcedure =
         const result = await next();
         if (!result.ok) {
           console.error(
-            // result.error,
-            `${result.error.name} ${result.error.code} ${result.error.message}`,
+            result.error,
+            // `${result.error.name} ${result.error.code} ${result.error.message}`,
           );
         }
         return result;
       });
+
 export const protectedProcedure = publicProcedure.use(async ({ ctx, next }) => {
   const session = await ctx.auth.getSession({
     headers: ctx.request.headers,
@@ -53,16 +56,5 @@ export const protectedProcedure = publicProcedure.use(async ({ ctx, next }) => {
     },
   });
 });
-export const authorizedProcedure = protectedProcedure.use(
-  async ({ ctx, next }) => {
-    if (!ctx.session.isAuthorized) {
-      throw new TRPCError({
-        message: 'You are not authorized to use this endpoint',
-        code: 'FORBIDDEN',
-      });
-    }
-    return next();
-  },
-);
 
 export const createCallerFactory = t.createCallerFactory;
