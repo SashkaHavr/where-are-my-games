@@ -29,7 +29,7 @@
     "@where-are-my-games/eslint-config": "workspace:*",
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",
-    "drizzle-kit": "^0.31.0",
+    "drizzle-kit": "beta",
     "typescript": "catalog:"
   }
 }

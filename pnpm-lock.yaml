@@ -16,8 +16,8 @@ catalogs:
       specifier: ^1.2.7
       version: 1.2.7
     drizzle-orm:
-      specifier: ^0.42.0
-      version: 0.42.0
+      specifier: beta
+      version: 1.0.0-beta.1-c0277c0
     superjson:
       specifier: ^2.2.2
       version: 2.2.2
@@ -247,7 +247,7 @@ importers:
         version: link:../env
       drizzle-orm:
         specifier: 'catalog:'
-        version: 0.42.0(@types/pg@8.11.13)(bun-types@1.2.10)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)
+        version: 1.0.0-beta.1-c0277c0(@types/pg@8.11.13)(bun-types@1.2.10)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)
       pg:
         specifier: ^8.14.1
         version: 8.14.1
@@ -268,8 +268,8 @@ importers:
         specifier: workspace:*
         version: link:../../tools/typescript-config
       drizzle-kit:
-        specifier: ^0.31.0
-        version: 0.31.0
+        specifier: beta
+        version: 1.0.0-beta.1-c0277c0
       typescript:
         specifier: 'catalog:'
         version: 5.8.2
@@ -315,7 +315,7 @@ importers:
         version: link:../utils
       drizzle-orm:
         specifier: 'catalog:'
-        version: 0.42.0(@types/pg@8.11.13)(bun-types@1.2.10)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)
+        version: 1.0.0-beta.1-c0277c0(@types/pg@8.11.13)(bun-types@1.2.10)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)
       igdb-api-node:
         specifier: ^6.0.5
         version: 6.0.5
@@ -1632,12 +1632,12 @@ packages:
     resolution: {integrity: sha512-PJWHUb1RFevKCwaFA9RlG5tCd+FO5iRh9A8HEtkmBH2Li03iJriB6m6JIN4rGz3K3JLawI7/veA1xzRKP6ISBw==}
     engines: {node: '>=0.3.1'}
 
-  drizzle-kit@0.31.0:
-    resolution: {integrity: sha512-pcKVT+GbfPA+bUovPIilgVOoq+onNBo/YQBG86sf3/GFHkN6lRJPm1l7dKN0IMAk57RQoIm4GUllRrasLlcaSg==}
+  drizzle-kit@1.0.0-beta.1-c0277c0:
+    resolution: {integrity: sha512-8oRt69AyPA1ONsI1/2nZCJGkp9egyQOOe/uBuNB8yxcWxIMCDI60OF4rLHUaYfpHP4zuqJwiABFIBQUViPxXTw==}
     hasBin: true
 
-  drizzle-orm@0.42.0:
-    resolution: {integrity: sha512-pS8nNJm2kBNZwrOjTHJfdKkaU+KuUQmV/vk5D57NojDq4FG+0uAYGMulXtYT///HfgsMF0hnFFvu1ezI3OwOkg==}
+  drizzle-orm@1.0.0-beta.1-c0277c0:
+    resolution: {integrity: sha512-4XnmY3CdFHUzJpbRwc6mElkpDzyZs8Ko98i+cRuuPlakFgZqItr+inoK0bFTH50Eh66E/UXbxfAW6U0JK/1wyw==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=4'
@@ -1655,7 +1655,7 @@ packages:
       '@types/sql.js': '*'
       '@vercel/postgres': '>=0.8.0'
       '@xata.io/client': '*'
-      better-sqlite3: '>=7'
+      better-sqlite3: '>=9.3.0'
       bun-types: '*'
       expo-sqlite: '>=14.0.0'
       gel: '>=2'
@@ -3923,7 +3923,7 @@ snapshots:
 
   diff@7.0.0: {}
 
-  drizzle-kit@0.31.0:
+  drizzle-kit@1.0.0-beta.1-c0277c0:
     dependencies:
       '@drizzle-team/brocli': 0.10.2
       '@esbuild-kit/esm-loader': 2.6.5
@@ -3932,7 +3932,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.42.0(@types/pg@8.11.13)(bun-types@1.2.10)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1):
+  drizzle-orm@1.0.0-beta.1-c0277c0(@types/pg@8.11.13)(bun-types@1.2.10)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1):
     optionalDependencies:
       '@types/pg': 8.11.13
       bun-types: 1.2.10

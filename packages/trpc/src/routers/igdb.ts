@@ -1,9 +1,7 @@
 import { TRPCError } from '@trpc/server';
-import { and, eq } from 'drizzle-orm';
 import igdb from 'igdb-api-node';
 import { z } from 'zod';
 
-import { account } from '@where-are-my-games/db/schema';
 import { envServer } from '@where-are-my-games/env/server';
 import { tryCatch } from '@where-are-my-games/utils';
 
@@ -25,7 +23,7 @@ interface IGDBGame {
   summary: string;
 }
 
-const igdbGame = z.object({
+export const igdbGame = z.object({
   id: z.number().nonnegative(),
   name: z.string().nonempty(),
   cover: z.string().url(),
@@ -45,10 +43,10 @@ export const igdbRouter = router({
           accessToken: true,
           accessTokenExpiresAt: true,
         },
-        where: and(
-          eq(account.userId, ctx.session.user.id),
-          eq(account.providerId, 'twitch'),
-        ),
+        where: {
+          userId: ctx.session.user.id,
+          providerId: 'twitch',
+        },
       });
       if (!twitchAccount) {
         throw new TRPCError({
