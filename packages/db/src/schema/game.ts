@@ -38,7 +38,7 @@ export const userToGame = pgTable(
   (table) => [primaryKey({ columns: [table.userId, table.gameId] })],
 );
 
-export const gamePlatformEnum = pgEnum('game_platform', [
+export const gamePlatformEnum = pgEnum('game_platform_enum', [
   'xbox',
   'switch',
   'ps',

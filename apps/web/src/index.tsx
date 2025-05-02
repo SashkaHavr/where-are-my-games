@@ -4,7 +4,7 @@ import {
   createRouter as createTanStackRouter,
   RouterProvider,
 } from '@tanstack/react-router';
-import { createTRPCClient, httpBatchStreamLink } from '@trpc/client';
+import { createTRPCClient, httpBatchStreamLink, httpLink } from '@trpc/client';
 import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query';
 import ReactDOM from 'react-dom/client';
 import superjson from 'superjson';
@@ -18,9 +18,10 @@ import { getApiUrl } from './utils/getApiUrl';
 export function createRouter() {
   const queryClient = new QueryClient({});
 
+  const trpcLink = import.meta.env.DEV ? httpLink : httpBatchStreamLink;
   const trpcClient = createTRPCClient<AppRouter>({
     links: [
-      httpBatchStreamLink({
+      trpcLink({
         transformer: superjson,
         url: new URL('/trpc', getApiUrl()),
         fetch(url, options) {

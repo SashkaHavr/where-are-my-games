@@ -3,11 +3,15 @@ import { z } from 'zod';
 
 import { dbConfig } from './db';
 
+const nodeEnvSchema = z.enum(['development', 'production']);
+const nodeEnv = nodeEnvSchema.parse(process.env.NODE_ENV);
+const prod = nodeEnv == 'production';
+
 export const envServer = createEnv({
   server: {
     ...dbConfig,
 
-    NODE_ENV: z.enum(['development', 'production']),
+    NODE_ENV: nodeEnvSchema,
 
     CORS_ORIGINS: z
       .string()
@@ -20,7 +24,7 @@ export const envServer = createEnv({
       .refine((a) => z.array(z.url()).safeParse(a)),
 
     BETTER_AUTH_SECRET: z.string(),
-    BETTER_AUTH_URL: z.url(),
+    BETTER_AUTH_URL: prod ? z.url() : z.string(),
 
     TWITCH_CLIENT_ID: z.string().nonempty(),
     TWITCH_CLIENT_SECRET: z.string().nonempty(),

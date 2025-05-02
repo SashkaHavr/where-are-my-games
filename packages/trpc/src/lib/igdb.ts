@@ -3,7 +3,31 @@ import z from 'zod';
 
 import { err, ok, tryCatchPromise } from '@where-are-my-games/utils';
 
-export const igdbGame = z.object({
+interface IGDBGame {
+  id: number;
+  name: string;
+  cover: {
+    id: number;
+    url: string;
+  };
+  first_release_date: number;
+  genres: {
+    id: number;
+    name: string;
+  }[];
+  slug: string;
+  summary: string;
+}
+
+interface IGDBResponse {
+  data: IGDBGame[];
+}
+
+interface IGDBError {
+  response: { data: object };
+}
+
+const igdbGame = z.object({
   id: z.number().nonnegative(),
   name: z.string().nonempty(),
   cover: z
@@ -20,12 +44,11 @@ export const igdbGame = z.object({
   summary: z.string(),
 });
 
-interface IGDBResponse {
-  data: { data: unknown };
-}
-
-interface IGDBError {
-  response: { data: object };
+function parseGame(game: IGDBGame) {
+  return igdbGame.safeParse({
+    firstReleaseDate: game.first_release_date,
+    ...game,
+  });
 }
 
 export async function searchGames(
@@ -61,11 +84,14 @@ export async function searchGames(
     return err('Expected array response from IGDB');
   }
 
+  const parsedGames = games.map((game) => parseGame(game));
+  const errors = parsedGames
+    .filter((game) => !game.success)
+    .map((game) => z.prettifyError(game.error));
+  if (errors.length > 0) console.error(errors);
+
   return ok(
-    games
-      .map((game) => igdbGame.safeParse(game))
-      .filter((game) => game.success)
-      .map((game) => game.data),
+    parsedGames.filter((game) => game.success).map((game) => game.data),
   );
 }
 

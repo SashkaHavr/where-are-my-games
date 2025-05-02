@@ -3,6 +3,7 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { envServer } from '@where-are-my-games/env/server';
 
 import { relations } from '#relations.ts';
+import * as schema from './schema';
 
 export const db = drizzle({
   connection: {
@@ -13,6 +14,7 @@ export const db = drizzle({
     password: envServer.DATABASE_PASSWORD,
     ssl: envServer.DATABASE_SSL,
   },
+  schema: schema,
   relations: relations,
   casing: 'snake_case',
 });
