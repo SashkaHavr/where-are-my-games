@@ -1,123 +1,39 @@
 import { TRPCError } from '@trpc/server';
-import igdb from 'igdb-api-node';
 import { z } from 'zod';
 
 import { envServer } from '@where-are-my-games/env/server';
-import { tryCatch } from '@where-are-my-games/utils';
 
 import { protectedProcedure, router } from '#init.ts';
-
-interface IGDBGame {
-  id: number;
-  name: string;
-  cover: {
-    id: number;
-    url: string;
-  };
-  first_release_date: number;
-  genres: {
-    id: number;
-    name: string;
-  }[];
-  slug: string;
-  summary: string;
-}
-
-export const igdbGame = z.object({
-  id: z.number().nonnegative(),
-  name: z.string().nonempty(),
-  cover: z.url(),
-  firstReleaseDate: z.number().nonnegative(),
-  genres: z.array(z.string()),
-  slug: z.string(),
-  summary: z.string(),
-});
+import { getTwitchAccessToken } from '#lib/getTwitchAccessToken.ts';
+import { searchGames } from '#lib/igdb.ts';
 
 export const igdbRouter = router({
   search: protectedProcedure
     .input(z.object({ searchString: z.string() }))
-    .output(z.array(igdbGame))
     .query(async ({ input, ctx }) => {
-      const twitchAccount = await ctx.db.query.account.findFirst({
-        columns: {
-          accessToken: true,
-          accessTokenExpiresAt: true,
-        },
-        where: {
-          userId: ctx.session.user.id,
-          providerId: 'twitch',
-        },
-      });
-      if (!twitchAccount) {
+      const accessToken = await getTwitchAccessToken(ctx.userId);
+
+      if (accessToken.error) {
         throw new TRPCError({
           message: 'Twitch account was not found',
           code: 'UNAUTHORIZED',
+          cause: accessToken.error,
         });
       }
 
-      let accessToken: string | undefined | null = twitchAccount.accessToken;
-      if (twitchAccount.accessTokenExpiresAt) {
-        const now = new Date().valueOf();
-        const diffSeconds =
-          (twitchAccount.accessTokenExpiresAt.valueOf() - now) / 1000;
-        if (diffSeconds < 60) {
-          const token = await ctx.auth.refreshToken({
-            body: { providerId: 'twitch', userId: ctx.session.user.id },
-          });
-          accessToken = token.accessToken;
-        }
-      }
-
-      if (!accessToken) {
-        throw new TRPCError({
-          message: 'Twitch account was not found',
-          code: 'UNAUTHORIZED',
-        });
-      }
-
-      const result = await tryCatch<
-        { data: IGDBGame[] },
-        { response: { data: unknown } }
-      >(
-        igdb(envServer.TWITCH_CLIENT_ID, accessToken)
-          .fields([
-            'cover.url',
-            'first_release_date',
-            'name',
-            'slug',
-            'summary',
-            'genres.name',
-          ])
-          .limit(10)
-          .search(input.searchString)
-          .where([
-            'cover != n',
-            'genres != n',
-            'first_release_date != n',
-            'summary != n',
-          ])
-          .request('/games'),
+      const gamesSearchResult = await searchGames(
+        input.searchString,
+        envServer.TWITCH_CLIENT_ID,
+        accessToken.data,
       );
-      if (result.data) {
-        return result.data.data
-          .map(
-            (game) =>
-              ({
-                id: game.id,
-                name: game.name,
-                cover: 'https:' + game.cover.url,
-                firstReleaseDate: game.first_release_date,
-                genres: game.genres.map((g) => g.name),
-                slug: game.slug,
-                summary: game.summary,
-              }) satisfies z.infer<typeof igdbGame>,
-          )
-          .map((game) => igdbGame.safeParse(game))
-          .filter((game) => game.success)
-          .map((game) => game.data);
+      if (gamesSearchResult.data) {
+        return gamesSearchResult.data;
       } else {
-        console.log(result.error.response.data);
+        throw new TRPCError({
+          code: 'BAD_GATEWAY',
+          message: 'Error while fetching from IGDB',
+          cause: gamesSearchResult.error,
+        });
       }
-      return [];
     }),
 });

@@ -1,7 +1,8 @@
 import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
-import { ZodError } from 'zod';
+import z, { ZodError } from 'zod';
 
+import { auth } from '@where-are-my-games/auth';
 import { envServer } from '@where-are-my-games/env/server';
 
 import type { Context } from '#context.ts';
@@ -15,9 +16,7 @@ const t = initTRPC.context<Context>().create({
       data: {
         ...shape.data,
         zodError:
-          error.code === 'BAD_REQUEST' && error.cause instanceof ZodError
-            ? error.cause.flatten()
-            : null,
+          error.cause instanceof ZodError ? z.prettifyError(error.cause) : null,
       },
     };
   },
@@ -30,17 +29,14 @@ export const publicProcedure =
     ? t.procedure
     : t.procedure.use(async ({ next }) => {
         const result = await next();
-        if (!result.ok) {
-          console.error(
-            result.error,
-            // `${result.error.name} ${result.error.code} ${result.error.message}`,
-          );
+        if (!result.ok && result.error.code == 'INTERNAL_SERVER_ERROR') {
+          console.error(result.error);
         }
         return result;
       });
 
 export const protectedProcedure = publicProcedure.use(async ({ ctx, next }) => {
-  const session = await ctx.auth.getSession({
+  const session = await auth.api.getSession({
     headers: ctx.request.headers,
   });
   if (!session) {
@@ -53,6 +49,7 @@ export const protectedProcedure = publicProcedure.use(async ({ ctx, next }) => {
     ctx: {
       ...ctx,
       session: session,
+      userId: session.user.id,
     },
   });
 });

@@ -1,26 +1,50 @@
+import { TRPCError } from '@trpc/server';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 
+import { db } from '@where-are-my-games/db';
 import { game } from '@where-are-my-games/db/schema';
+import { envServer } from '@where-are-my-games/env/server';
 
 import { protectedProcedure, router } from '#init.ts';
-import { igdbGame } from './igdb';
+import { getTwitchAccessToken } from '#lib/getTwitchAccessToken.ts';
+import { getGame } from '#lib/igdb.ts';
 
 export const gamesRouter = router({
   getAll: protectedProcedure.query(async ({ ctx }) => {
-    return ctx.db.query.game.findMany({
-      where: { users: { id: ctx.session.user.id } },
+    return db.query.game.findMany({
+      where: { users: { id: ctx.userId } },
     });
   }),
-  add: protectedProcedure.input(igdbGame).query(async ({ ctx, input }) => {
-    // Fetch game from igdb instead
-    await ctx.db
-      .insert(game)
-      .values({ ...input, firstReleaseDate: new Date(input.firstReleaseDate) });
-  }),
+  add: protectedProcedure
+    .input(z.object({ igdbGameId: z.number() }))
+    .query(async ({ ctx, input }) => {
+      const accessToken = await getTwitchAccessToken(ctx.userId);
+      if (accessToken.error) {
+        throw new TRPCError({
+          message: 'Twitch account was not found',
+          code: 'UNAUTHORIZED',
+          cause: accessToken.error,
+        });
+      }
+      const game = await getGame(
+        input.igdbGameId,
+        envServer.TWITCH_CLIENT_ID,
+        accessToken.data,
+      );
+      if (game.error) {
+        throw new TRPCError({
+          code: 'BAD_GATEWAY',
+          message: 'Error while fetching from IGDB',
+          cause: game.error,
+        });
+      }
+    }),
   delete: protectedProcedure
     .input(z.object({ gameId: z.number() }))
-    .query(async ({ ctx, input }) => {
-      await ctx.db.delete(game).where(eq(game.id, input.gameId));
+    .query(async ({ input }) => {
+      await db.delete(game).where(eq(game.id, input.gameId));
     }),
+
+  // Game platforms
 });
