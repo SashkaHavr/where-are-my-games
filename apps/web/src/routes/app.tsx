@@ -7,7 +7,7 @@ import { Input } from '~/components/ui/input';
 import { authClient } from '~/lib/auth';
 import { useTRPC } from '~/lib/trpc';
 
-export const Route = createFileRoute('/app/')({
+export const Route = createFileRoute('/app')({
   beforeLoad: ({ context }) => {
     if (!context.session) {
       throw redirect({ to: '/' });
