@@ -2,6 +2,7 @@ import {
   index,
   integer,
   jsonb,
+  pgEnum,
   pgTable,
   primaryKey,
   text,
@@ -35,4 +36,27 @@ export const userToGame = pgTable(
       .references(() => game.id),
   },
   (table) => [primaryKey({ columns: [table.userId, table.gameId] })],
+);
+
+export const gamePlatformEnum = pgEnum('game_platform', [
+  'xbox',
+  'switch',
+  'ps',
+  'steam',
+  'egs',
+  'gog',
+  'uplay',
+  'origins',
+  'msstore',
+]);
+
+export const gamePlatform = pgTable(
+  'game_platform',
+  {
+    gameId: integer()
+      .notNull()
+      .references(() => game.id),
+    platform: gamePlatformEnum().notNull(),
+  },
+  (table) => [primaryKey({ columns: [table.gameId, table.platform] })],
 );

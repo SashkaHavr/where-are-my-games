@@ -11,5 +11,6 @@ export const relations = defineRelations(schema, (r) => ({
   },
   game: {
     users: r.many.user(),
+    platforms: r.many.gamePlatform(),
   },
 }));
