@@ -26,7 +26,7 @@ interface IGDBGame {
 export const igdbGame = z.object({
   id: z.number().nonnegative(),
   name: z.string().nonempty(),
-  cover: z.string().url(),
+  cover: z.url(),
   firstReleaseDate: z.number().nonnegative(),
   genres: z.array(z.string()),
   slug: z.string(),

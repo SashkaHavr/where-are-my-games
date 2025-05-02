@@ -11,7 +11,7 @@ import { z } from 'zod';
 createEnv({
   clientPrefix: 'VITE_',
   client: {
-    VITE_API_URL: z.string().url().optional(),
+    VITE_API_URL: z.url().optional(),
   },
   runtimeEnv: import.meta.env,
   emptyStringAsUndefined: true,

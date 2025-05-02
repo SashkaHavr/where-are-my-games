@@ -7,7 +7,7 @@ export const dbConfig = {
     .string()
     .transform((str) => parseInt(str))
     .pipe(z.number())
-    .default('5432'),
+    .default(5432),
   DATABASE_NAME: z.string(),
   DATABASE_USER: z.string(),
   DATABASE_PASSWORD: z.string(),
@@ -15,7 +15,7 @@ export const dbConfig = {
     .string()
     .refine((s) => s === 'true' || s === 'false')
     .transform((s) => s === 'true')
-    .default('true'),
+    .default(true),
 };
 
 export const envDB = createEnv({
