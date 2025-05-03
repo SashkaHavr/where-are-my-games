@@ -1,8 +1,9 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
-import { DesktopNav } from '~/components/app/desktopNav';
-import { Search } from '~/components/app/search';
 import { Separator } from '~/components/ui/separator';
+
+import { DesktopNav } from '~/components/app/DesktopNav';
+import { Search } from '~/components/app/Search';
 
 export const Route = createFileRoute('/app')({
   beforeLoad: ({ context }) => {

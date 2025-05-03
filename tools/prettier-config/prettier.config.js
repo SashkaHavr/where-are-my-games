@@ -21,6 +21,7 @@ export default {
     '',
     '<TYPES>^@where-are-my-games',
     '^@where-are-my-games/(.*)$',
+    '^~/components/ui/(.*)$',
     '',
     '<TYPES>^[.|..|~|#]',
     '^[~/|#]',
