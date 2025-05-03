@@ -3,14 +3,14 @@ import { createTRPCClient, httpBatchStreamLink, httpLink } from '@trpc/client';
 import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query';
 import superjson from 'superjson';
 
-import type { AppRouter } from '@where-are-my-games/trpc';
+import type { TRPCRouter } from '@where-are-my-games/trpc';
 
 import { getApiUrl } from '../utils/getApiUrl';
 
 export const queryClient = new QueryClient({});
 
 const trpcLink = import.meta.env.DEV ? httpLink : httpBatchStreamLink;
-const trpcClient = createTRPCClient<AppRouter>({
+const trpcClient = createTRPCClient<TRPCRouter>({
   links: [
     trpcLink({
       transformer: superjson,
