@@ -5,6 +5,7 @@ import { err, ok } from '@where-are-my-games/utils';
 export async function getTwitchAccessToken(userId: string) {
   const twitchAccount = await db.query.account.findFirst({
     columns: {
+      id: true,
       accessToken: true,
       accessTokenExpiresAt: true,
     },
@@ -24,7 +25,11 @@ export async function getTwitchAccessToken(userId: string) {
       (twitchAccount.accessTokenExpiresAt.valueOf() - now) / 1000;
     if (diffSeconds < 60) {
       const token = await auth.api.refreshToken({
-        body: { providerId: 'twitch', userId: userId },
+        body: {
+          providerId: 'twitch',
+          userId: userId,
+          accountId: twitchAccount.id,
+        },
       });
       accessToken = token.accessToken;
     }

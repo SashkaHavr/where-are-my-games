@@ -4,6 +4,8 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { db } from '@where-are-my-games/db';
 import { envServer } from '@where-are-my-games/env/server';
 
+import { refreshAccessToken } from '#twitch/refreshAccessToken.ts';
+
 export const auth = betterAuth({
   basePath: '/auth',
   trustedOrigins: envServer.CORS_ORIGINS,
@@ -25,6 +27,11 @@ export const auth = betterAuth({
     twitch: {
       clientId: envServer.TWITCH_CLIENT_ID,
       clientSecret: envServer.TWITCH_CLIENT_SECRET,
+      refreshAccessToken: (refreshToken) =>
+        refreshAccessToken(refreshToken, {
+          clientId: envServer.TWITCH_CLIENT_ID,
+          clientSecret: envServer.TWITCH_CLIENT_SECRET,
+        }),
     },
   },
 });

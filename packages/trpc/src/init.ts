@@ -29,7 +29,16 @@ export const publicProcedure =
     ? t.procedure
     : t.procedure.use(async ({ next }) => {
         const result = await next();
-        if (!result.ok && result.error.code == 'INTERNAL_SERVER_ERROR') {
+        if (
+          !result.ok &&
+          [
+            'INTERNAL_SERVER_ERROR',
+            'NOT_IMPLEMENTED',
+            'BAD_GATEWAY',
+            'SERVICE_UNAVAILABLE',
+            'SERVICE_UNAVAILABLE',
+          ].includes(result.error.code)
+        ) {
           console.error(result.error);
         }
         return result;
