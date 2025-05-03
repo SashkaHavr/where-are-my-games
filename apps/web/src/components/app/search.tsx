@@ -45,7 +45,7 @@ export function Search() {
               <Hotkey>CTRL + K</Hotkey>
             </Button>
           </DialogTrigger>
-          <DialogContent className="top-20 flex h-[calc(100vh-100px)] translate-y-0 flex-col p-0 px-4">
+          <DialogContent className="top-20 flex h-[calc(100vh-140px)] translate-y-0 flex-col p-0 px-4 pb-2 sm:max-w-[80%] lg:max-w-[60%]">
             <VisuallyHidden>
               <DialogDescription>Search input and games</DialogDescription>
             </VisuallyHidden>
@@ -61,10 +61,10 @@ export function Search() {
               <Hotkey>Esc</Hotkey>
             </DialogHeader>
             {searchResult.isSuccess && (
-              <ScrollArea className="h-[calc(100vh-180px)]">
+              <ScrollArea className="min-h-0 grow">
                 {searchResult.data.map((game) => (
                   <div
-                    className="flex h-24 items-center gap-4 py-2 hover:bg-accent"
+                    className="flex h-24 items-center gap-4 px-4 py-2 hover:bg-accent"
                     key={game.id}
                   >
                     <img
