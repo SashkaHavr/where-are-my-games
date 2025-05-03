@@ -3,10 +3,12 @@ import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 
 import { createContext, createContextRaw } from '#context.ts';
 import { createCallerFactory, router } from '#init.ts';
+import { gamesRouter } from '#routers/games.ts';
 import { igdbRouter } from '#routers/igdb.ts';
 
 const appRouter = router({
   igdb: igdbRouter,
+  games: gamesRouter,
 });
 
 export function trpcHandler({ request }: { request: Request }) {

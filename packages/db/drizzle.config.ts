@@ -14,4 +14,5 @@ export default defineConfig({
     password: envDB.DATABASE_PASSWORD,
     ssl: envDB.DATABASE_SSL,
   },
+  casing: 'snake_case',
 });
