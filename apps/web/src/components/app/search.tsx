@@ -17,7 +17,7 @@ import {
 } from '../ui/dialog';
 import { Input } from '../ui/input';
 import { ScrollArea } from '../ui/scroll-area';
-import { GameItem } from './GameItem';
+import { GameSearchItem } from './GameSearchItem';
 
 // GameItem.div h-24
 const GAME_ITEM_HEIGHT = 96;
@@ -128,7 +128,7 @@ export function Search() {
             {searchResult.isSuccess && (
               <ScrollArea className="min-h-0 grow" viewportRef={scrollArea}>
                 {searchResult.data.map((game) => (
-                  <GameItem
+                  <GameSearchItem
                     key={game.id}
                     game={game}
                     selected={selectedGame == game}

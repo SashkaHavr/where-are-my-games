@@ -7,7 +7,7 @@ interface Props {
   onGameSelected: (game: Game) => void;
 }
 
-export function GameItem({ game, selected, onGameSelected }: Props) {
+export function GameSearchItem({ game, selected, onGameSelected }: Props) {
   return (
     <div
       aria-selected={selected}
