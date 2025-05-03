@@ -3,10 +3,11 @@ import pluginQuery from '@tanstack/eslint-plugin-query';
 import pluginReactCompiler from 'eslint-plugin-react-compiler';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
 import pluginReactRefresh from 'eslint-plugin-react-refresh';
+import { globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', '.output', '.vinxi'] },
+  globalIgnores(['dist/']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [js.configs.recommended],
@@ -49,12 +50,18 @@ export default tseslint.config(
       ],
       '@typescript-eslint/only-throw-error': 'off',
       '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/no-empty-function': 'off',
     },
   },
   pluginReactHooks.configs['recommended-latest'],
   {
-    files: ['**/*.{tsx}'],
-    ignores: ['src/ui/*.tsx'],
+    files: ['**/*.{ts,tsx}'],
+    ignores: ['src/components/ui/*.tsx'],
     extends: [pluginReactRefresh.configs.recommended],
   },
   pluginReactCompiler.configs.recommended,
@@ -109,6 +116,23 @@ export default tseslint.config(
           selector: 'TSEnumDeclaration',
           message: "Don't declare enums",
         },
+      ],
+    },
+  },
+  {
+    files: ['**/*.{ts,tsx}'],
+    rules: {
+      'no-empty-pattern': 'off',
+      'no-empty': 'off',
+    },
+  },
+  {
+    files: ['**/*.{ts,tsx}'],
+    ignores: ['src/components/ui/*.tsx'],
+    rules: {
+      '@typescript-eslint/no-restricted-imports': [
+        'error',
+        { patterns: ['@radix-ui/*', '!@radix-ui/react-visually-hidden'] },
       ],
     },
   },

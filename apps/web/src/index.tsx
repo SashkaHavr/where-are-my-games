@@ -1,61 +1,22 @@
 import { StrictMode } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import {
-  createRouter as createTanStackRouter,
-  RouterProvider,
-} from '@tanstack/react-router';
-import { createTRPCClient, httpBatchStreamLink, httpLink } from '@trpc/client';
-import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
 import ReactDOM from 'react-dom/client';
-import superjson from 'superjson';
 
-import type { AppRouter } from '@where-are-my-games/trpc';
-
-import { TRPCProvider } from './lib/trpc';
+import { queryClient } from './lib/trpc';
 import { routeTree } from './routeTree.gen';
-import { getApiUrl } from './utils/getApiUrl';
 
-export function createRouter() {
-  const queryClient = new QueryClient({});
-
-  const trpcLink = import.meta.env.DEV ? httpLink : httpBatchStreamLink;
-  const trpcClient = createTRPCClient<AppRouter>({
-    links: [
-      trpcLink({
-        transformer: superjson,
-        url: new URL('/trpc', getApiUrl()),
-        fetch(url, options) {
-          return fetch(url, {
-            ...options,
-            credentials: 'include',
-          });
-        },
-      }),
-    ],
-  });
-
-  const trpcHelpers = createTRPCOptionsProxy({
-    client: trpcClient,
-    queryClient: queryClient,
-  });
-
-  const router = createTanStackRouter({
-    routeTree,
-    scrollRestoration: true,
-    context: { queryClient, trpc: trpcHelpers },
-    Wrap: (props) => {
-      return (
-        <QueryClientProvider client={queryClient}>
-          <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
-            {props.children}
-          </TRPCProvider>
-        </QueryClientProvider>
-      );
-    },
-  });
-
-  return router;
-}
+const router = createRouter({
+  routeTree,
+  scrollRestoration: true,
+  Wrap: (props) => {
+    return (
+      <QueryClientProvider client={queryClient}>
+        {props.children}
+      </QueryClientProvider>
+    );
+  },
+});
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {
@@ -70,7 +31,7 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <RouterProvider router={createRouter()} />
+      <RouterProvider router={router} />
     </StrictMode>,
   );
 }

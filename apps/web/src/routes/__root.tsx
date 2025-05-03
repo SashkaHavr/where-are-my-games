@@ -1,19 +1,8 @@
-import type { QueryClient } from '@tanstack/react-query';
-import type { TRPCOptionsProxy } from '@trpc/tanstack-react-query';
-import {
-  createRootRouteWithContext,
-  Navigate,
-  Outlet,
-} from '@tanstack/react-router';
-
-import type { AppRouter } from '@where-are-my-games/trpc';
+import { createRootRoute, Navigate, Outlet } from '@tanstack/react-router';
 
 import { authClient } from '../lib/auth';
 
-export const Route = createRootRouteWithContext<{
-  queryClient: QueryClient;
-  trpc: TRPCOptionsProxy<AppRouter>;
-}>()({
+export const Route = createRootRoute({
   beforeLoad: async () => {
     return {
       session: (await authClient.getSession()).data,
