@@ -18,6 +18,8 @@
     "tailwind-merge": "catalog:tailwind"
   },
   "devDependencies": {
+    "@tanstack/react-query": "catalog:trpc",
+    "@trpc/client": "catalog:trpc",
     "@where-are-my-games/eslint-config": "workspace:*",
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",

@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
+import { optimisticUpdate } from '@where-are-my-games/utils';
 import { Separator } from '~/components/ui/separator';
 
 import { DesktopNav } from '~/components/app/DesktopNav';
@@ -26,24 +27,15 @@ function RouteComponent() {
   const user = Route.useRouteContext().user;
 
   const games = useQuery(trpc.games.getAll.queryOptions());
-  const gamesQueryKey = trpc.games.getAll.queryKey();
 
   const addGameMutation = useMutation(
-    trpc.games.add.mutationOptions({
-      onMutate: async (input) => {
-        await queryClient.cancelQueries({ queryKey: gamesQueryKey });
-        const previous = queryClient.getQueryData(gamesQueryKey);
-        queryClient.setQueryData(gamesQueryKey, (old) =>
-          old ? [...old, input.game] : [input.game],
-        );
-        return { previous };
-      },
-      onError: (err, newTodo, context) => {
-        queryClient.setQueryData(gamesQueryKey, context?.previous);
-      },
-      onSettled: () =>
-        queryClient.invalidateQueries({ queryKey: gamesQueryKey }),
-    }),
+    trpc.games.add.mutationOptions(
+      optimisticUpdate(
+        queryClient,
+        trpc.games.getAll.queryKey(),
+        (old, input) => (old ? [...old, input.game] : [input.game]),
+      ),
+    ),
   );
 
   return (

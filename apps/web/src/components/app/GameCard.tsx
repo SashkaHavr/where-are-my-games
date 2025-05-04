@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { PlusIcon } from 'lucide-react';
 
 import type { TRPCOutput } from '@where-are-my-games/trpc';
+import { optimisticUpdate } from '@where-are-my-games/utils';
 
 import { trpc } from '~/lib/trpc';
 import { gamePlatforms } from '../gamePlatforms';
@@ -27,23 +28,16 @@ export function GameCard({ game }: Props) {
   const platforms = useQuery(
     trpc.games.getPlatforms.queryOptions({ gameId: game.id }),
   );
-  const platformsQueryKey = trpc.games.getPlatforms.queryKey({
-    gameId: game.id,
-  });
   const gamePlatformMutation = useMutation(
-    trpc.games.setPlatforms.mutationOptions({
-      onMutate: async (input) => {
-        await queryClient.cancelQueries({ queryKey: platformsQueryKey });
-        const previous = queryClient.getQueryData(platformsQueryKey);
-        queryClient.setQueryData(platformsQueryKey, () => input.platforms);
-        return { previous };
-      },
-      onError: (err, newTodo, context) => {
-        queryClient.setQueryData(platformsQueryKey, context?.previous);
-      },
-      onSettled: () =>
-        queryClient.invalidateQueries({ queryKey: platformsQueryKey }),
-    }),
+    trpc.games.setPlatforms.mutationOptions(
+      optimisticUpdate(
+        queryClient,
+        trpc.games.getPlatforms.queryKey({
+          gameId: game.id,
+        }),
+        (old, input) => input.platforms,
+      ),
+    ),
   );
 
   return (
