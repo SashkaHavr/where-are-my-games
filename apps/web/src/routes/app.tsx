@@ -22,27 +22,39 @@ export const Route = createFileRoute('/app')({
 });
 
 function RouteComponent() {
-  const user = Route.useRouteContext().user;
-  const games = useQuery(trpc.games.getAll.queryOptions());
   const queryClient = useQueryClient();
+  const user = Route.useRouteContext().user;
+
+  const games = useQuery(trpc.games.getAll.queryOptions());
+  const gamesQueryKey = trpc.games.getAll.queryKey();
+
   const addGameMutation = useMutation(
     trpc.games.add.mutationOptions({
-      onSuccess: () =>
-        queryClient.invalidateQueries({
-          queryKey: trpc.games.getAll.queryKey(),
-        }),
+      onMutate: async (input) => {
+        await queryClient.cancelQueries({ queryKey: gamesQueryKey });
+        const previous = queryClient.getQueryData(gamesQueryKey);
+        queryClient.setQueryData(gamesQueryKey, (old) =>
+          old
+            ? [...old, { ...input.game, platforms: [] }]
+            : [{ ...input.game, platforms: [] }],
+        );
+        return { previous };
+      },
+      onError: (err, newTodo, context) => {
+        queryClient.setQueryData(gamesQueryKey, context?.previous);
+      },
+      onSettled: () =>
+        queryClient.invalidateQueries({ queryKey: gamesQueryKey }),
     }),
   );
 
   return (
     <div className="flex h-svh w-full">
-      <DesktopNav user={user} />
+      <DesktopNav user={user} className="shrink-0" />
       <Separator orientation="vertical" />
       <div className="flex h-full grow flex-col">
         <Search
-          onGameFound={(game) =>
-            addGameMutation.mutate({ igdbGameId: game.id })
-          }
+          onGameFound={(game) => addGameMutation.mutate({ game: game })}
         />
         <Separator />
         <main className="flex grow flex-col p-4">

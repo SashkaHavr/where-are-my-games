@@ -24,7 +24,7 @@ export function GameSearchItem({
       <img
         src={`https://images.igdb.com/igdb/image/upload/t_cover_small/${game.cover}.webp`}
         alt={game.name}
-        className="size-20 rounded-sm"
+        className="h-20 rounded-sm"
       />
       <p className="bold text-xl">{game.name}</p>
     </div>

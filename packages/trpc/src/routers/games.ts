@@ -63,15 +63,20 @@ export const gamesRouter = router({
   add: protectedProcedure
     .input(
       z.object({
-        igdbGameId: z.number(),
+        game: z.object({
+          id: z.number().nonnegative(),
+          name: z.string().nonempty(),
+          cover: z.string(),
+          firstReleaseDate: z.date(),
+          genres: z.array(z.string()),
+          slug: z.string(),
+          summary: z.string(),
+        }),
         platforms: z.array(gamePlatformSchema).nonempty().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const game = await getExistingGameOrFromIGDB(
-        ctx.userId,
-        input.igdbGameId,
-      );
+      const game = await getExistingGameOrFromIGDB(ctx.userId, input.game.id);
       if (game) {
         await db
           .insert(userToGame)
