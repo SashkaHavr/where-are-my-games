@@ -2,7 +2,6 @@ import {
   index,
   integer,
   jsonb,
-  pgEnum,
   pgTable,
   primaryKey,
   text,
@@ -34,29 +33,21 @@ export const userToGame = pgTable(
     gameId: integer()
       .notNull()
       .references(() => game.id),
+    platforms: jsonb().$type<GamePlatform[]>().notNull().default([]),
   },
   (table) => [primaryKey({ columns: [table.userId, table.gameId] })],
 );
 
-export const gamePlatformEnum = pgEnum('game_platform_enum', [
+export const gamePlatforms = [
   'xbox',
   'switch',
   'ps',
   'steam',
   'egs',
   'gog',
-  'uplay',
-  'origins',
+  'ubisoft',
+  'ea',
   'msstore',
-]);
+] as const;
 
-export const gamePlatform = pgTable(
-  'game_platform',
-  {
-    gameId: integer()
-      .notNull()
-      .references(() => game.id),
-    platform: gamePlatformEnum().notNull(),
-  },
-  (table) => [primaryKey({ columns: [table.gameId, table.platform] })],
-);
+export type GamePlatform = (typeof gamePlatforms)[number];

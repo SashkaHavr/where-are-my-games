@@ -34,9 +34,7 @@ function RouteComponent() {
         await queryClient.cancelQueries({ queryKey: gamesQueryKey });
         const previous = queryClient.getQueryData(gamesQueryKey);
         queryClient.setQueryData(gamesQueryKey, (old) =>
-          old
-            ? [...old, { ...input.game, platforms: [] }]
-            : [{ ...input.game, platforms: [] }],
+          old ? [...old, input.game] : [input.game],
         );
         return { previous };
       },

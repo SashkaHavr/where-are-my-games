@@ -11,9 +11,6 @@ export const relations = defineRelations(schema, (r) => ({
   },
   game: {
     users: r.many.user(),
-    platforms: r.many.gamePlatform({
-      from: r.game.id,
-      to: r.gamePlatform.gameId,
-    }),
+    userGames: r.many.userToGame({ from: r.game.id, to: r.userToGame.gameId }),
   },
 }));
