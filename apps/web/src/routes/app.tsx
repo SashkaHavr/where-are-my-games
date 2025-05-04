@@ -1,11 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, redirect } from '@tanstack/react-router';
+
+import { Separator } from '~/components/ui/separator';
 
 import { DesktopNav } from '~/components/app/DesktopNav';
 import { GameCard } from '~/components/app/GameCard';
 import { Search } from '~/components/app/Search';
 import { TypingAnimation } from '~/components/landing/TypingAnimation';
-import { Separator } from '~/components/ui/separator';
 import { trpc } from '~/lib/trpc';
 
 export const Route = createFileRoute('/app')({
@@ -23,16 +24,30 @@ export const Route = createFileRoute('/app')({
 function RouteComponent() {
   const user = Route.useRouteContext().user;
   const games = useQuery(trpc.games.getAll.queryOptions());
+  const queryClient = useQueryClient();
+  const addGameMutation = useMutation(
+    trpc.games.add.mutationOptions({
+      onSuccess: () =>
+        queryClient.invalidateQueries({
+          queryKey: trpc.games.getAll.queryKey(),
+        }),
+    }),
+  );
+
   return (
     <div className="flex h-svh w-full">
       <DesktopNav user={user} />
       <Separator orientation="vertical" />
       <div className="flex h-full grow flex-col">
-        <Search />
+        <Search
+          onGameFound={(game) =>
+            addGameMutation.mutate({ igdbGameId: game.id })
+          }
+        />
         <Separator />
-        <main className="flex grow flex-col">
+        <main className="flex grow flex-col p-4">
           {games.isSuccess && games.data.length > 0 && (
-            <div className="flex flex-wrap gap-4">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
               {games.data.map((game) => (
                 <GameCard key={game.id} game={game} />
               ))}

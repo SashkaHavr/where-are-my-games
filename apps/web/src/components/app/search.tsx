@@ -4,6 +4,8 @@ import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { useQuery } from '@tanstack/react-query';
 import { SearchIcon } from 'lucide-react';
 
+import type { TRPCOutput } from '@where-are-my-games/trpc';
+
 import { trpc } from '~/lib/trpc';
 import { Hotkey } from '../hotkey';
 import { Button } from '../ui/button';
@@ -23,7 +25,12 @@ import { GameSearchItem } from './GameSearchItem';
 // GameItem.div h-24
 const GAME_ITEM_HEIGHT = 96;
 
-export function Search() {
+type Game = TRPCOutput['igdb']['search'][number];
+interface Props {
+  onGameFound: (game: Game) => void;
+}
+
+export function Search({ onGameFound }: Props) {
   const [searchOpen, setSearchOpen] = useState(false);
 
   const [searchString, _setSearchString] = useDebouncedState('', 300);
@@ -81,17 +88,26 @@ export function Search() {
     }
   };
 
+  const gameFound = () => {
+    if (selectedGame == undefined) {
+      return;
+    }
+    onGameFound(selectedGame);
+    setSearchOpen(false);
+  };
+
   useHotkeys([
     ['ctrl+K', () => setSearchOpen(!searchOpen)],
     ['ArrowDown', () => selectGame('next')],
     ['ArrowUp', () => selectGame('previous')],
+    ['Enter', gameFound],
   ]);
 
   return (
     <>
       <div className="flex h-14 w-full items-center">
         <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
-          <VisuallyHidden>
+          <VisuallyHidden asChild>
             <DialogTitle>Game Search</DialogTitle>
           </VisuallyHidden>
           <DialogTrigger asChild>
@@ -101,8 +117,11 @@ export function Search() {
               <Hotkey>CTRL + K</Hotkey>
             </Button>
           </DialogTrigger>
-          <DialogContent className="top-20 flex h-[calc(100vh-140px)] translate-y-0 flex-col p-0 pb-2 sm:max-w-[80%] lg:max-w-[60%]">
-            <VisuallyHidden>
+          <DialogContent
+            className="top-20 flex h-[calc(100vh-140px)] translate-y-0 flex-col p-0 pb-2 sm:max-w-[80%] lg:max-w-[60%]"
+            onCloseAutoFocus={(e) => e.preventDefault()}
+          >
+            <VisuallyHidden asChild>
               <DialogDescription>Search input and games</DialogDescription>
             </VisuallyHidden>
             <DialogHeader className="flex flex-col gap-0">
@@ -121,6 +140,10 @@ export function Search() {
                     if (e.key == 'ArrowDown') {
                       e.preventDefault();
                       selectGame('next');
+                    }
+                    if (e.key == 'Enter') {
+                      e.preventDefault();
+                      gameFound();
                     }
                   }}
                   onChange={(e) => setSearchString(e.target.value)}
@@ -142,6 +165,7 @@ export function Search() {
                     onGameSelected={(g) =>
                       setSelectedGameIndex(searchResult.data.indexOf(g))
                     }
+                    onGameFound={gameFound}
                   />
                 ))}
               </ScrollArea>

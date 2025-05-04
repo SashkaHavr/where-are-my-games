@@ -7,6 +7,7 @@ import {
   game,
   gamePlatform,
   gamePlatformEnum,
+  userToGame,
 } from '@where-are-my-games/db/schema';
 import { envServer } from '@where-are-my-games/env/server';
 
@@ -20,6 +21,38 @@ const gamePlatformSchema = z.object({
   platform: gamePlatformEnumSchema,
 });
 
+async function getExistingGameOrFromIGDB(userId: string, gameId: number) {
+  const existingGame = await db.query.game.findFirst({
+    columns: { id: true },
+    where: { id: gameId },
+  });
+  if (existingGame) return existingGame;
+
+  const accessToken = await getTwitchAccessToken(userId);
+  if (accessToken.error) {
+    throw new TRPCError({
+      message: 'Twitch account was not found',
+      code: 'UNAUTHORIZED',
+      cause: accessToken.error,
+    });
+  }
+  const newGame = await getGame(
+    gameId,
+    envServer.TWITCH_CLIENT_ID,
+    accessToken.data,
+  );
+  if (newGame.error != undefined) {
+    throw new TRPCError({
+      code: 'BAD_GATEWAY',
+      message: 'Error while fetching from IGDB',
+      cause: newGame.error,
+    });
+  }
+  return (
+    await db.insert(game).values(newGame.data).returning({ id: game.id })
+  )[0];
+}
+
 export const gamesRouter = router({
   getAll: protectedProcedure.query(async ({ ctx }) => {
     return db.query.game.findMany({
@@ -31,50 +64,36 @@ export const gamesRouter = router({
     .input(
       z.object({
         igdbGameId: z.number(),
-        platforms: z.array(gamePlatformSchema).nonempty(),
+        platforms: z.array(gamePlatformSchema).nonempty().optional(),
       }),
     )
-    .query(async ({ ctx, input }) => {
-      const accessToken = await getTwitchAccessToken(ctx.userId);
-      if (accessToken.error) {
-        throw new TRPCError({
-          message: 'Twitch account was not found',
-          code: 'UNAUTHORIZED',
-          cause: accessToken.error,
-        });
-      }
-      const newGame = await getGame(
+    .mutation(async ({ ctx, input }) => {
+      const game = await getExistingGameOrFromIGDB(
+        ctx.userId,
         input.igdbGameId,
-        envServer.TWITCH_CLIENT_ID,
-        accessToken.data,
       );
-      if (newGame.error) {
-        throw new TRPCError({
-          code: 'BAD_GATEWAY',
-          message: 'Error while fetching from IGDB',
-          cause: newGame.error,
-        });
-      }
-      const dbGame = (
-        await db.insert(game).values(newGame.data).returning({ id: game.id })
-      )[0];
-      if (dbGame) {
-        await db.insert(gamePlatform).values(
-          input.platforms.map((p) => ({
-            ...p,
-            gameId: dbGame.id,
-          })),
-        );
+      if (game) {
+        await db
+          .insert(userToGame)
+          .values({ userId: ctx.userId, gameId: game.id });
+        if (input.platforms) {
+          await db.insert(gamePlatform).values(
+            input.platforms.map((p) => ({
+              ...p,
+              gameId: game.id,
+            })),
+          );
+        }
       }
     }),
   delete: protectedProcedure
     .input(z.object({ gameId: z.number() }))
-    .query(async ({ input }) => {
+    .mutation(async ({ input }) => {
       await db.delete(game).where(eq(game.id, input.gameId));
     }),
   addPlatform: protectedProcedure
     .input(z.object({ gameId: z.number(), platform: gamePlatformSchema }))
-    .query(async ({ input }) => {
+    .mutation(async ({ input }) => {
       const dbGame = await db.query.game.findFirst({
         where: { id: input.gameId },
       });
@@ -91,7 +110,7 @@ export const gamesRouter = router({
     }),
   deletePlatform: protectedProcedure
     .input(z.object({ gameId: z.number(), platform: gamePlatformEnumSchema }))
-    .query(async ({ input }) => {
+    .mutation(async ({ input }) => {
       const dbPlatform = await db.query.gamePlatform.findFirst({
         where: { gameId: input.gameId, platform: input.platform },
       });
@@ -110,5 +129,30 @@ export const gamesRouter = router({
             eq(gamePlatform.platform, input.platform),
           ),
         );
+    }),
+  setPlatforms: protectedProcedure
+    .input(
+      z.object({ gameId: z.number(), platforms: z.array(gamePlatformSchema) }),
+    )
+    .mutation(async ({ input }) => {
+      const dbGame = await db.query.game.findFirst({
+        where: { id: input.gameId },
+      });
+      if (!dbGame) {
+        throw new TRPCError({
+          message: 'Game not found',
+          code: 'UNPROCESSABLE_CONTENT',
+          cause: input,
+        });
+      }
+      await db
+        .delete(gamePlatform)
+        .where(and(eq(gamePlatform.gameId, input.gameId)));
+      await db.insert(gamePlatform).values(
+        input.platforms.map((platform) => ({
+          ...platform,
+          gameId: input.gameId,
+        })),
+      );
     }),
 });

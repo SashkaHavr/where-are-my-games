@@ -1,6 +1,6 @@
 import type { TRPCOutput } from '@where-are-my-games/trpc';
 
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Card, CardContent } from '../ui/card';
 
 type Game = TRPCOutput['games']['getAll'][number];
 interface Props {
@@ -10,17 +10,16 @@ interface Props {
 export function GameCard({ game }: Props) {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="flex w-full flex-col">
-          <img
-            src={game.cover}
-            alt={game.name}
-            className="size-20 self-center rounded-sm"
-          />
-          <p className="bold self-start text-xl">{game.name}</p>
-        </CardTitle>
-      </CardHeader>
-      <CardContent></CardContent>
+      <CardContent className="flex gap-4">
+        <img
+          src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover}.webp`}
+          alt={game.name}
+          className="h-40 self-center rounded-sm"
+        />
+        <div className="flex flex-col gap-2">
+          <p className="text-xl font-bold">{game.name}</p>
+        </div>
+      </CardContent>
     </Card>
   );
 }

@@ -8,7 +8,7 @@ interface IGDBGame {
   name: string;
   cover: {
     id: number;
-    url: string;
+    image_id: string;
   };
   first_release_date: number;
   genres: {
@@ -31,8 +31,8 @@ const igdbGame = z.object({
   id: z.number().nonnegative(),
   name: z.string().nonempty(),
   cover: z
-    .object({ url: z.string() })
-    .transform((cover) => 'https:' + cover.url),
+    .object({ image_id: z.string() })
+    .transform((cover) => cover.image_id),
   firstReleaseDate: z
     .number()
     .nonnegative()
@@ -51,6 +51,15 @@ function parseGame(game: IGDBGame) {
   });
 }
 
+const gameFields = [
+  'cover.image_id',
+  'first_release_date',
+  'name',
+  'slug',
+  'summary',
+  'genres.name',
+];
+
 export async function searchGames(
   searchString: string,
   twitchClientId: string,
@@ -58,14 +67,7 @@ export async function searchGames(
 ) {
   const result = await tryCatchPromise<IGDBResponse, IGDBError>(
     igdb(twitchClientId, twitchAccessToken)
-      .fields([
-        'cover.url',
-        'first_release_date',
-        'name',
-        'slug',
-        'summary',
-        'genres.name',
-      ])
+      .fields(gameFields)
       .limit(10)
       .search(searchString)
       .where([
@@ -102,14 +104,7 @@ export async function getGame(
 ) {
   const result = await tryCatchPromise<IGDBResponse, IGDBError>(
     igdb(twitchClientId, twitchAccessToken)
-      .fields([
-        'cover.url',
-        'first_release_date',
-        'name',
-        'slug',
-        'summary',
-        'genres.name',
-      ])
+      .fields(gameFields)
       .limit(10)
       .where([
         `id = ${gameId}`,
@@ -123,12 +118,12 @@ export async function getGame(
   if (result.error) {
     return err(result.error.response.data);
   }
-  if (!Array.isArray(result.data.data) || result.data.data.length != 1) {
+  if (!Array.isArray(result.data.data) || result.data.data[0] == undefined) {
     return err({ message: 'Game with given id was not found', gameId: gameId });
   }
-  const game = igdbGame.safeParse(result.data.data[0]);
+  const game = parseGame(result.data.data[0]);
   if (game.error) {
-    return err(game.error);
+    return err(z.prettifyError(game.error));
   }
   return ok(game.data);
 }
