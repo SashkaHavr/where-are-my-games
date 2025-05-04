@@ -105,7 +105,7 @@ export function Search({ onGameFound }: Props) {
 
   return (
     <>
-      <div className="flex h-14 w-full items-center">
+      <div className="flex h-14 w-full shrink-0 items-center">
         <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
           <VisuallyHidden asChild>
             <DialogTitle>Game Search</DialogTitle>

@@ -49,7 +49,7 @@ function RouteComponent() {
         <Separator />
         <main className="flex grow flex-col p-4">
           {games.isSuccess && games.data.length > 0 && (
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-4">
               {games.data.map((game) => (
                 <GameCard key={game.id} game={game} />
               ))}

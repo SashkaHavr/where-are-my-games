@@ -46,26 +46,30 @@ export function GameCard({ game }: Props) {
         <img
           src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover}.webp`}
           alt={game.name}
-          className="h-40 self-center rounded-sm"
+          className="h-48 self-center rounded-sm"
         />
         <div className="flex grow flex-col gap-2">
           <p className="text-xl font-bold">{game.name}</p>
           <Separator />
-          <div className="flex gap-1">
+          <div className="flex flex-wrap gap-1">
             {platforms.isSuccess &&
               platforms.data.map((platform) => {
                 const gamePlatform = gamePlatforms.find(
                   (p) => p.key == platform,
                 )!;
                 return (
-                  <div className="w-9 rounded-md border p-2">
+                  <div className="w-9 rounded-md border p-2" key={platform}>
                     <gamePlatform.icon />
                   </div>
                 );
               })}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="icon">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="justify-self-end"
+                >
                   <PlusIcon />
                 </Button>
               </DropdownMenuTrigger>
