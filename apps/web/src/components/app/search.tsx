@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useDebouncedState, useHotkeys } from '@mantine/hooks';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
-import { useQuery } from '@tanstack/react-query';
+import { skipToken, useQuery } from '@tanstack/react-query';
 import { SearchIcon } from 'lucide-react';
 
 import type { TRPCOutput } from '@where-are-my-games/trpc';
@@ -40,8 +40,7 @@ export function Search({ onGameFound }: Props) {
   };
   const searchResult = useQuery(
     trpc.igdb.search.queryOptions(
-      { searchString: searchString },
-      { enabled: searchString.length > 3 },
+      searchString.length > 3 ? { searchString: searchString } : skipToken,
     ),
   );
 

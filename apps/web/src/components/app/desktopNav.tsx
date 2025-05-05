@@ -1,6 +1,9 @@
+import { Gamepad2Icon } from 'lucide-react';
+
 import { cn } from '@where-are-my-games/utils';
 
-import { TwitchIcon } from '../icons';
+import type { GamePlatform } from '../gamePlatforms';
+import { gamePlatforms } from '../gamePlatforms';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { Separator } from '../ui/separator';
@@ -9,22 +12,18 @@ import { Skeleton } from '../ui/skeleton';
 interface Props {
   className?: string;
   user: { name: string; image?: string | null };
+  availablePlatforms: GamePlatform['key'][];
+  filterPlatforms: GamePlatform['key'][];
+  onFilterPlatformsChanged: (value: GamePlatform['key'][]) => void;
 }
 
-const filters = [
-  {
-    text: 'Steam',
-    platform: 'steam',
-    icon: TwitchIcon,
-  },
-  {
-    text: 'Epic Games Store',
-    platform: 'egs',
-    icon: TwitchIcon,
-  },
-];
-
-export function DesktopNav({ user, className }: Props) {
+export function DesktopNav({
+  user,
+  className,
+  availablePlatforms,
+  filterPlatforms,
+  onFilterPlatformsChanged,
+}: Props) {
   return (
     <nav
       className={cn(
@@ -39,25 +38,37 @@ export function DesktopNav({ user, className }: Props) {
         <Separator />
         <div className="flex flex-col p-2 pt-8">
           <Button
-            className="flex justify-start gap-2"
+            className="flex justify-start gap-2 aria-selected:bg-accent"
             variant="ghost"
             size="lg"
+            aria-selected={filterPlatforms.length == 0}
+            onClick={() => onFilterPlatformsChanged([])}
           >
-            <TwitchIcon />
+            <Gamepad2Icon />
             <span>All</span>
           </Button>
           <Separator className="my-2" />
-          {filters.map((filter) => (
-            <Button
-              key={filter.platform}
-              className="flex justify-start gap-2"
-              variant="ghost"
-              size="lg"
-            >
-              <filter.icon />
-              <span>{filter.text}</span>
-            </Button>
-          ))}
+          {gamePlatforms
+            .filter((p) => availablePlatforms.includes(p.key))
+            .map((platform) => (
+              <Button
+                key={platform.key}
+                className="flex justify-start gap-2 aria-selected:bg-sidebar-accent aria-selected:text-sidebar-accent-foreground"
+                variant="ghost"
+                size="lg"
+                aria-selected={filterPlatforms.includes(platform.key)}
+                onClick={() =>
+                  onFilterPlatformsChanged(
+                    filterPlatforms.includes(platform.key)
+                      ? filterPlatforms.filter((p) => p != platform.key)
+                      : [...filterPlatforms, platform.key],
+                  )
+                }
+              >
+                <platform.icon />
+                <span>{platform.text}</span>
+              </Button>
+            ))}
         </div>
       </div>
       <Button

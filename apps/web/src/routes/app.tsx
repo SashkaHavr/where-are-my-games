@@ -1,9 +1,16 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import {
+  useMutation,
+  useQueries,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
 import { optimisticUpdate } from '@where-are-my-games/utils';
 import { Separator } from '~/components/ui/separator';
 
+import type { GamePlatform } from '~/components/gamePlatforms';
 import { DesktopNav } from '~/components/app/DesktopNav';
 import { GameCard } from '~/components/app/GameCard';
 import { Search } from '~/components/app/Search';
@@ -27,7 +34,6 @@ function RouteComponent() {
   const user = Route.useRouteContext().user;
 
   const games = useQuery(trpc.games.getAll.queryOptions());
-
   const addGameMutation = useMutation(
     trpc.games.add.mutationOptions(
       optimisticUpdate(
@@ -38,9 +44,46 @@ function RouteComponent() {
     ),
   );
 
+  const platforms = useQueries({
+    queries: games.isSuccess
+      ? games.data.map((game) =>
+          trpc.games.getPlatforms.queryOptions({ gameId: game.id }),
+        )
+      : [],
+  });
+
+  const availablePlatforms = platforms
+    .map((p) => (p.isSuccess ? p.data : []))
+    .flat()
+    .filter((p, index, arr) => arr.indexOf(p) == index);
+
+  const [filterPlatforms, setFilterPlatforms] = useState<GamePlatform['key'][]>(
+    [],
+  );
+  const filteredGames = games.isSuccess
+    ? games.data.filter((game, idx) => {
+        if (filterPlatforms.length == 0) {
+          return true;
+        }
+        if (platforms[idx]?.isSuccess) {
+          return (
+            platforms[idx].data.filter((p) => filterPlatforms.includes(p))
+              .length > 0
+          );
+        }
+        return false;
+      })
+    : [];
+
   return (
     <div className="flex h-svh w-full">
-      <DesktopNav user={user} className="shrink-0" />
+      <DesktopNav
+        user={user}
+        className="shrink-0"
+        availablePlatforms={availablePlatforms}
+        filterPlatforms={filterPlatforms}
+        onFilterPlatformsChanged={setFilterPlatforms}
+      />
       <Separator orientation="vertical" />
       <div className="flex h-full grow flex-col">
         <Search
@@ -48,11 +91,18 @@ function RouteComponent() {
         />
         <Separator />
         <main className="flex grow flex-col p-4">
-          {games.isSuccess && games.data.length > 0 && (
+          {games.isSuccess && filteredGames.length > 0 && (
             <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-4">
-              {games.data.map((game) => (
+              {filteredGames.map((game) => (
                 <GameCard key={game.id} game={game} />
               ))}
+            </div>
+          )}
+          {games.isSuccess && filteredGames.length == 0 && (
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-4">
+              <TypingAnimation className="mb-20 text-lg" duration={25}>
+                No games found for the selected filter 🥲
+              </TypingAnimation>
             </div>
           )}
           {games.isSuccess && games.data.length == 0 && (
