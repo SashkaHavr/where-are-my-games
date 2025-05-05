@@ -1,8 +1,10 @@
-import { Gamepad2Icon } from 'lucide-react';
+import { useRouter } from '@tanstack/react-router';
+import { Gamepad2Icon, LogOutIcon } from 'lucide-react';
 
 import { cn } from '@where-are-my-games/utils';
 
 import type { GamePlatform } from '../gamePlatforms';
+import { authClient } from '~/lib/auth';
 import { gamePlatforms } from '../gamePlatforms';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
@@ -24,6 +26,8 @@ export function DesktopNav({
   filterPlatforms,
   onFilterPlatformsChanged,
 }: Props) {
+  const router = useRouter();
+
   return (
     <nav
       className={cn(
@@ -71,19 +75,31 @@ export function DesktopNav({
             ))}
         </div>
       </div>
-      <Button
-        variant="ghost"
-        size="lg"
-        className="m-2 flex h-12 items-center justify-start gap-4 p-2"
-      >
-        <Avatar>
-          <AvatarImage src={user.image ?? undefined} alt={user.name} />
-          <AvatarFallback>
-            <Skeleton className="h-10 w-10 rounded-full" />
-          </AvatarFallback>
-        </Avatar>
-        <span className="truncate font-semibold">{user.name}</span>
-      </Button>
+      <div className="m-2 flex items-center gap-1">
+        <Button
+          variant="ghost"
+          size="lg"
+          className="flex h-12 grow items-center justify-start gap-4 p-2"
+        >
+          <Avatar>
+            <AvatarImage src={user.image ?? undefined} alt={user.name} />
+            <AvatarFallback>
+              <Skeleton className="h-10 w-10 rounded-full" />
+            </AvatarFallback>
+          </Avatar>
+          <span className="truncate font-semibold">{user.name}</span>
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-12"
+          onClick={() =>
+            void authClient.signOut().then(() => router.invalidate())
+          }
+        >
+          <LogOutIcon />
+        </Button>
+      </div>
     </nav>
   );
 }
