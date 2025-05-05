@@ -40,12 +40,15 @@ export function DesktopNav({
           <p>Where are my games?</p>
         </div>
         <Separator />
-        <div className="flex flex-col p-2 pt-8">
+        <div className="flex flex-col gap-1 p-2 pt-8">
           <Button
-            className="flex justify-start gap-2 aria-selected:bg-accent"
+            className={cn(
+              'flex justify-start gap-2',
+              filterPlatforms.length == 0 &&
+                'bg-sidebar-accent text-sidebar-accent-foreground hover:bg-sidebar-accent dark:hover:bg-sidebar-accent',
+            )}
             variant="ghost"
             size="lg"
-            aria-selected={filterPlatforms.length == 0}
             onClick={() => onFilterPlatformsChanged([])}
           >
             <Gamepad2Icon />
@@ -57,10 +60,13 @@ export function DesktopNav({
             .map((platform) => (
               <Button
                 key={platform.key}
-                className="flex justify-start gap-2 aria-selected:bg-sidebar-accent aria-selected:text-sidebar-accent-foreground"
+                className={cn(
+                  'flex justify-start gap-2',
+                  filterPlatforms.includes(platform.key) &&
+                    'bg-sidebar-accent text-sidebar-accent-foreground hover:bg-sidebar-accent dark:hover:bg-sidebar-accent',
+                )}
                 variant="ghost"
                 size="lg"
-                aria-selected={filterPlatforms.includes(platform.key)}
                 onClick={() =>
                   onFilterPlatformsChanged(
                     filterPlatforms.includes(platform.key)
