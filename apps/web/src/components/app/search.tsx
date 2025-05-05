@@ -103,75 +103,71 @@ export function Search({ onGameFound }: Props) {
   ]);
 
   return (
-    <>
-      <div className="flex h-14 w-full shrink-0 items-center">
-        <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
-          <VisuallyHidden asChild>
-            <DialogTitle>Game Search</DialogTitle>
-          </VisuallyHidden>
-          <DialogTrigger asChild>
-            <Button className="ml-12 flex gap-4" variant="outline">
-              <SearchIcon className="size-3.5" />
-              <span className="pr-10">Find your game...</span>
-              <Hotkey>CTRL + K</Hotkey>
-            </Button>
-          </DialogTrigger>
-          <DialogContent
-            className="top-20 flex h-[calc(100vh-140px)] translate-y-0 flex-col p-0 pb-2 sm:max-w-[80%] lg:max-w-[60%]"
-            onCloseAutoFocus={(e) => e.preventDefault()}
+    <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
+      <VisuallyHidden asChild>
+        <DialogTitle>Game Search</DialogTitle>
+      </VisuallyHidden>
+      <DialogTrigger asChild>
+        <Button className="ml-12 flex gap-4" variant="outline">
+          <SearchIcon className="size-3.5" />
+          <span className="pr-10">Find your game...</span>
+          <Hotkey>CTRL + K</Hotkey>
+        </Button>
+      </DialogTrigger>
+      <DialogContent
+        className="top-20 flex h-[calc(100vh-140px)] translate-y-0 flex-col p-0 pb-2 sm:max-w-[80%] lg:max-w-[60%]"
+        onCloseAutoFocus={(e) => e.preventDefault()}
+      >
+        <VisuallyHidden asChild>
+          <DialogDescription>Search input and games</DialogDescription>
+        </VisuallyHidden>
+        <DialogHeader className="flex flex-col gap-0">
+          <div className="flex flex-row items-center gap-4 px-3">
+            <SearchIcon className="size-4" />
+            <Input
+              className="md:text-md h-14 border-none bg-background p-0 shadow-none ring-0 focus-visible:border-none focus-visible:ring-0 dark:bg-background"
+              type="text"
+              placeholder="Search games..."
+              defaultValue={searchString}
+              onKeyDown={(e) => {
+                if (e.key == 'ArrowUp') {
+                  e.preventDefault();
+                  selectGame('previous');
+                }
+                if (e.key == 'ArrowDown') {
+                  e.preventDefault();
+                  selectGame('next');
+                }
+                if (e.key == 'Enter') {
+                  e.preventDefault();
+                  gameFound();
+                }
+              }}
+              onChange={(e) => setSearchString(e.target.value)}
+            ></Input>
+            <Hotkey>esc</Hotkey>
+          </div>
+          <Separator />
+        </DialogHeader>
+        {searchResult.isSuccess && (
+          <ScrollArea
+            className="min-h-0 grow px-4 py-2"
+            viewportRef={scrollArea}
           >
-            <VisuallyHidden asChild>
-              <DialogDescription>Search input and games</DialogDescription>
-            </VisuallyHidden>
-            <DialogHeader className="flex flex-col gap-0">
-              <div className="flex flex-row items-center gap-4 px-3">
-                <SearchIcon className="size-4" />
-                <Input
-                  className="md:text-md h-14 border-none bg-background p-0 shadow-none ring-0 focus-visible:border-none focus-visible:ring-0"
-                  type="text"
-                  placeholder="Search games..."
-                  defaultValue={searchString}
-                  onKeyDown={(e) => {
-                    if (e.key == 'ArrowUp') {
-                      e.preventDefault();
-                      selectGame('previous');
-                    }
-                    if (e.key == 'ArrowDown') {
-                      e.preventDefault();
-                      selectGame('next');
-                    }
-                    if (e.key == 'Enter') {
-                      e.preventDefault();
-                      gameFound();
-                    }
-                  }}
-                  onChange={(e) => setSearchString(e.target.value)}
-                ></Input>
-                <Hotkey>esc</Hotkey>
-              </div>
-              <Separator />
-            </DialogHeader>
-            {searchResult.isSuccess && (
-              <ScrollArea
-                className="min-h-0 grow px-4 py-2"
-                viewportRef={scrollArea}
-              >
-                {searchResult.data.map((game) => (
-                  <GameSearchItem
-                    key={game.id}
-                    game={game}
-                    selected={selectedGame == game}
-                    onGameSelected={(g) =>
-                      setSelectedGameIndex(searchResult.data.indexOf(g))
-                    }
-                    onGameFound={gameFound}
-                  />
-                ))}
-              </ScrollArea>
-            )}
-          </DialogContent>
-        </Dialog>
-      </div>
-    </>
+            {searchResult.data.map((game) => (
+              <GameSearchItem
+                key={game.id}
+                game={game}
+                selected={selectedGame == game}
+                onGameSelected={(g) =>
+                  setSelectedGameIndex(searchResult.data.indexOf(g))
+                }
+                onGameFound={gameFound}
+              />
+            ))}
+          </ScrollArea>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }

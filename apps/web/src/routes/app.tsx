@@ -15,6 +15,7 @@ import { DesktopNav } from '~/components/app/DesktopNav';
 import { GameCard } from '~/components/app/GameCard';
 import { Search } from '~/components/app/Search';
 import { TypingAnimation } from '~/components/landing/TypingAnimation';
+import { ThemeToggle } from '~/components/theme/ThemeToggle';
 import { trpc } from '~/lib/trpc';
 
 export const Route = createFileRoute('/app')({
@@ -86,9 +87,13 @@ function RouteComponent() {
       />
       <Separator orientation="vertical" />
       <div className="flex h-full grow flex-col">
-        <Search
-          onGameFound={(game) => addGameMutation.mutate({ game: game })}
-        />
+        <div className="flex h-14 w-full shrink-0 items-center">
+          <Search
+            onGameFound={(game) => addGameMutation.mutate({ game: game })}
+          />
+          <div className="grow" />
+          <ThemeToggle className="mr-4" />
+        </div>
         <Separator />
         <main className="flex grow flex-col p-4">
           {games.isSuccess && filteredGames.length > 0 && (

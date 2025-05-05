@@ -5,6 +5,7 @@ import { Button } from '~/components/ui/button';
 import { TwitchIcon } from '~/components/icons';
 import { Meteors } from '~/components/landing/Meteors';
 import { TypingAnimation } from '~/components/landing/TypingAnimation';
+import { ThemeToggle } from '~/components/theme/ThemeToggle';
 import { authClient } from '~/lib/auth';
 
 export const Route = createFileRoute('/')({
@@ -21,6 +22,7 @@ function Index() {
 
   return (
     <div className="flex h-lvh w-full flex-col justify-center pb-20">
+      <ThemeToggle className="absolute top-4 right-4 animate-show opacity-0" />
       <div className="flex min-h-80 w-64 flex-col gap-4 self-center">
         <TypingAnimation startOnView={false}>Where</TypingAnimation>
         <TypingAnimation startOnView={false} delay={700}>
