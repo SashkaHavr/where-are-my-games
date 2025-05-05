@@ -51,6 +51,16 @@ export const gamesRouter = router({
     .mutation(async ({ ctx, input }) => {
       const game = await getExistingGameOrFromIGDB(ctx.userId, input.game.id);
       if (game) {
+        const userGame = await db.query.userToGame.findFirst({
+          where: { userId: ctx.userId, gameId: input.game.id },
+        });
+        if (userGame) {
+          throw new TRPCError({
+            message: 'Duplicate game',
+            code: 'UNPROCESSABLE_CONTENT',
+            cause: input,
+          });
+        }
         await db
           .insert(userToGame)
           .values({ userId: ctx.userId, gameId: game.id });
