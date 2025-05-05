@@ -7,7 +7,7 @@ import { SearchIcon } from 'lucide-react';
 import type { TRPCOutput } from '@where-are-my-games/trpc';
 
 import { trpc } from '~/lib/trpc';
-import { Hotkey } from '../hotkey';
+import { Hotkey } from '../Hotkey';
 import { Button } from '../ui/button';
 import {
   Dialog,
