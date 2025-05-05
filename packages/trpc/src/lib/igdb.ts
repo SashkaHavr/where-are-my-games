@@ -68,7 +68,7 @@ export async function searchGames(
   const result = await tryCatchPromise<IGDBResponse, IGDBError>(
     igdb(twitchClientId, twitchAccessToken)
       .fields(gameFields)
-      .limit(10)
+      .limit(50)
       .search(searchString)
       .where([
         'cover != n',
@@ -105,7 +105,7 @@ export async function getGame(
   const result = await tryCatchPromise<IGDBResponse, IGDBError>(
     igdb(twitchClientId, twitchAccessToken)
       .fields(gameFields)
-      .limit(10)
+      .limit(1)
       .where([
         `id = ${gameId}`,
         'cover != n',
