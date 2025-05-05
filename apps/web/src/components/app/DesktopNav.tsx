@@ -69,9 +69,10 @@ export function DesktopNav({
                 size="lg"
                 onClick={() =>
                   onFilterPlatformsChanged(
-                    filterPlatforms.includes(platform.key)
-                      ? filterPlatforms.filter((p) => p != platform.key)
-                      : [...filterPlatforms, platform.key],
+                    [platform.key],
+                    // filterPlatforms.includes(platform.key)
+                    //   ? filterPlatforms.filter((p) => p != platform.key)
+                    //   : [...filterPlatforms, platform.key],
                   )
                 }
               >
