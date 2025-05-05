@@ -23,7 +23,7 @@ This is a demo [TypeScript](https://www.typescriptlang.org/) monorepo. Stack:
 ## Prepare application
 
 1. Create [Twitch OAuth app](https://dev.twitch.tv/docs/authentication/register-app/) with:
-  - OAuth Redirect URLs: http://localhost:3000/auth/callback/twitch
+  - OAuth Redirect URLs: http://localhost:3000/auth/callback/twitch and http://localhost:5240/auth/callback/twitch 
   - Client Type: Confidential
 2. Create and remember client secret
 
