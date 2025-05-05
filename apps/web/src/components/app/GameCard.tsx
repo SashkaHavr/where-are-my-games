@@ -1,8 +1,9 @@
+import { useHover } from '@mantine/hooks';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { PlusIcon } from 'lucide-react';
+import { PlusIcon, Trash2Icon } from 'lucide-react';
 
 import type { TRPCOutput } from '@where-are-my-games/trpc';
-import { optimisticUpdate } from '@where-are-my-games/utils';
+import { cn, optimisticUpdate } from '@where-are-my-games/utils';
 
 import { trpc } from '~/lib/trpc';
 import { gamePlatforms } from '../gamePlatforms';
@@ -40,8 +41,20 @@ export function GameCard({ game }: Props) {
     ),
   );
 
+  const deleteGameMutation = useMutation(
+    trpc.games.delete.mutationOptions(
+      optimisticUpdate(
+        queryClient,
+        trpc.games.getAll.queryKey(),
+        (old, input) => (old ? old.filter((g) => g.id != input.gameId) : []),
+      ),
+    ),
+  );
+
+  const { hovered, ref } = useHover();
+
   return (
-    <Card>
+    <Card ref={ref}>
       <CardContent className="flex gap-4">
         <img
           src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover}.webp`}
@@ -49,7 +62,20 @@ export function GameCard({ game }: Props) {
           className="h-48 self-center rounded-sm"
         />
         <div className="flex grow flex-col gap-2">
-          <p className="text-xl font-bold">{game.name}</p>
+          <div className="flex items-center gap-1">
+            <p className="grow text-xl font-bold">{game.name}</p>
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                'shrink-0 self-start justify-self-end opacity-0',
+                hovered && 'opacity-100',
+              )}
+              onClick={() => deleteGameMutation.mutate({ gameId: game.id })}
+            >
+              <Trash2Icon />
+            </Button>
+          </div>
           <Separator />
           <div className="flex flex-wrap gap-1">
             {platforms.isSuccess &&
