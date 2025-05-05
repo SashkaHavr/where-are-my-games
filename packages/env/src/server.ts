@@ -4,8 +4,8 @@ import { z } from 'zod';
 import { dbConfig } from './db';
 
 const nodeEnvSchema = z.enum(['development', 'production']);
-const nodeEnv = nodeEnvSchema.parse(process.env.NODE_ENV);
-const prod = nodeEnv == 'production';
+
+const urlSchema = z.union([z.url(), z.string().regex(/^http:\/\/localhost.*/)]);
 
 export const envServer = createEnv({
   server: {
@@ -21,10 +21,10 @@ export const envServer = createEnv({
           ? ['http://localhost:5173', 'http://localhost:4173']
           : s.split(' '),
       )
-      .refine((a) => z.array(z.url()).safeParse(a)),
+      .refine((a) => z.array(urlSchema).safeParse(a)),
 
     BETTER_AUTH_SECRET: z.string(),
-    BETTER_AUTH_URL: prod ? z.url() : z.string(),
+    BETTER_AUTH_URL: urlSchema,
 
     TWITCH_CLIENT_ID: z.string().nonempty(),
     TWITCH_CLIENT_SECRET: z.string().nonempty(),

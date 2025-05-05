@@ -20,14 +20,14 @@ COPY --from=builder /app/out/json/ .
 RUN pnpm install --frozen-lockfile
 # Build
 COPY --from=builder /app/out/full/ .
-RUN pnpm build
+# RUN pnpm build
 
-FROM oven/bun:1 AS runner
-WORKDIR /app
-COPY --from=installer /app/apps/api/dist/index.js .
+# FROM oven/bun:1 AS runner
+# WORKDIR /app
+# COPY --from=installer /app/apps/api/dist/index.js .
 
 USER bun
 EXPOSE 3000/tcp
 
 ENV NODE_ENV=production
-CMD [ "bun", "run", "index.js" ]
+CMD [ "bun", "run", "./apps/api/src/index.ts" ]
