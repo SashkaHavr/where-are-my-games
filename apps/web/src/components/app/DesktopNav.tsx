@@ -83,11 +83,7 @@ export function DesktopNav({
         </div>
       </div>
       <div className="m-2 flex items-center gap-1">
-        <Button
-          variant="ghost"
-          size="lg"
-          className="flex h-12 grow items-center justify-start gap-4 p-2"
-        >
+        <div className="flex h-12 grow items-center justify-start gap-4 p-2 font-bold">
           <Avatar>
             <AvatarImage src={user.image ?? undefined} alt={user.name} />
             <AvatarFallback>
@@ -95,7 +91,7 @@ export function DesktopNav({
             </AvatarFallback>
           </Avatar>
           <span className="truncate font-semibold">{user.name}</span>
-        </Button>
+        </div>
         <Button
           variant="ghost"
           size="icon"
