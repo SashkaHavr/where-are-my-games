@@ -99,7 +99,7 @@ function RouteComponent() {
             </div>
           )}
           {games.isSuccess && filteredGames.length == 0 && (
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-4">
+            <div className="flex w-full grow flex-col items-center justify-center">
               <TypingAnimation className="mb-20 text-lg" duration={25}>
                 No games found for the selected filter 🥲
               </TypingAnimation>
