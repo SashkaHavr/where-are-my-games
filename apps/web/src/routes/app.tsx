@@ -103,13 +103,15 @@ function RouteComponent() {
               ))}
             </div>
           )}
-          {games.isSuccess && filteredGames.length == 0 && (
-            <div className="flex w-full grow flex-col items-center justify-center">
-              <TypingAnimation className="mb-20 text-lg" duration={25}>
-                No games found for the selected filter 🥲
-              </TypingAnimation>
-            </div>
-          )}
+          {games.isSuccess &&
+            games.data.length > 0 &&
+            filteredGames.length == 0 && (
+              <div className="flex w-full grow flex-col items-center justify-center">
+                <TypingAnimation className="mb-20 text-lg" duration={25}>
+                  No games found for the selected filter 🥲
+                </TypingAnimation>
+              </div>
+            )}
           {games.isSuccess && games.data.length == 0 && (
             <div className="flex w-full grow flex-col items-center justify-center">
               <TypingAnimation className="mb-20 text-lg" duration={25}>
