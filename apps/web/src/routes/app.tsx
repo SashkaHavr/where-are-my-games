@@ -1,13 +1,8 @@
 import { useState } from 'react';
-import {
-  useMutation,
-  useQueries,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
-import { optimisticUpdate } from '@where-are-my-games/utils';
+import { useOptimisticUpdate } from '@where-are-my-games/utils';
 import { Separator } from '~/components/ui/separator';
 
 import type { GamePlatform } from '~/components/gamePlatforms';
@@ -31,16 +26,13 @@ export const Route = createFileRoute('/app')({
 });
 
 function RouteComponent() {
-  const queryClient = useQueryClient();
   const user = Route.useRouteContext().user;
 
   const games = useQuery(trpc.games.getAll.queryOptions());
   const addGameMutation = useMutation(
     trpc.games.add.mutationOptions(
-      optimisticUpdate(
-        queryClient,
-        trpc.games.getAll.queryKey(),
-        (old, input) => (old ? [...old, input.game] : [input.game]),
+      useOptimisticUpdate(trpc.games.getAll.queryKey(), (old, input) =>
+        old ? [...old, input.game] : [input.game],
       ),
     ),
   );

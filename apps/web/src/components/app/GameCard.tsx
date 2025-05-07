@@ -1,9 +1,9 @@
 import { useHover } from '@mantine/hooks';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { PlusIcon, Trash2Icon } from 'lucide-react';
 
 import type { TRPCOutput } from '@where-are-my-games/trpc';
-import { cn, optimisticUpdate } from '@where-are-my-games/utils';
+import { cn, useOptimisticUpdate } from '@where-are-my-games/utils';
 
 import { trpc } from '~/lib/trpc';
 import { gamePlatforms } from '../gamePlatforms';
@@ -25,14 +25,12 @@ interface Props {
 }
 
 export function GameCard({ game }: Props) {
-  const queryClient = useQueryClient();
   const platforms = useQuery(
     trpc.games.getPlatforms.queryOptions({ gameId: game.id }),
   );
   const gamePlatformMutation = useMutation(
     trpc.games.setPlatforms.mutationOptions(
-      optimisticUpdate(
-        queryClient,
+      useOptimisticUpdate(
         trpc.games.getPlatforms.queryKey({
           gameId: game.id,
         }),
@@ -43,10 +41,8 @@ export function GameCard({ game }: Props) {
 
   const deleteGameMutation = useMutation(
     trpc.games.delete.mutationOptions(
-      optimisticUpdate(
-        queryClient,
-        trpc.games.getAll.queryKey(),
-        (old, input) => (old ? old.filter((g) => g.id != input.gameId) : []),
+      useOptimisticUpdate(trpc.games.getAll.queryKey(), (old, input) =>
+        old ? old.filter((g) => g.id != input.gameId) : [],
       ),
     ),
   );

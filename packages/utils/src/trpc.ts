@@ -2,15 +2,15 @@ import type {
   dataTagErrorSymbol,
   dataTagSymbol,
   MutationOptions,
-  QueryClient,
 } from '@tanstack/react-query';
 import type { TRPCQueryKey } from '@trpc/tanstack-react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
-export function optimisticUpdate<T extends object, I, E>(
-  queryClient: QueryClient,
+export function useOptimisticUpdate<T extends object, I, E>(
   queryKey: TRPCQueryKey & { [dataTagSymbol]: T; [dataTagErrorSymbol]: E },
   updater: (old: T | undefined, input: I) => T,
 ) {
+  const queryClient = useQueryClient();
   return {
     onMutate: async (input) => {
       await queryClient.cancelQueries({ queryKey: queryKey });
