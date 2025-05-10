@@ -3,6 +3,7 @@ import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
 import { useOptimisticUpdate } from '@where-are-my-games/utils';
+import { ScrollArea } from '~/components/ui/scroll-area';
 import { Separator } from '~/components/ui/separator';
 
 import type { GamePlatform } from '~/components/gamePlatforms';
@@ -88,13 +89,15 @@ function RouteComponent() {
         </div>
         <Separator />
         <main className="flex grow flex-col p-4">
-          {games.isSuccess && filteredGames.length > 0 && (
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-4">
-              {filteredGames.map((game) => (
-                <GameCard key={game.id} game={game} />
-              ))}
-            </div>
-          )}
+          <ScrollArea className="h-[calc(100svh-89px)]">
+            {games.isSuccess && filteredGames.length > 0 && (
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-4">
+                {filteredGames.map((game) => (
+                  <GameCard key={game.id} game={game} />
+                ))}
+              </div>
+            )}
+          </ScrollArea>
           {games.isSuccess &&
             games.data.length > 0 &&
             filteredGames.length == 0 && (
