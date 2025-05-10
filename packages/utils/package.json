@@ -13,13 +13,14 @@
   },
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
+    "@mantine/hooks": "catalog:",
+    "@tanstack/react-query": "catalog:trpc",
+    "@trpc/client": "catalog:trpc",
     "class-variance-authority": "catalog:tailwind",
     "clsx": "catalog:tailwind",
     "tailwind-merge": "catalog:tailwind"
   },
   "devDependencies": {
-    "@tanstack/react-query": "catalog:trpc",
-    "@trpc/client": "catalog:trpc",
     "@where-are-my-games/eslint-config": "workspace:*",
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",

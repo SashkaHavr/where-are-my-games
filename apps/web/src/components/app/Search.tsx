@@ -108,7 +108,7 @@ export function Search({ onGameFound }: Props) {
         <DialogTitle>Game Search</DialogTitle>
       </VisuallyHidden>
       <DialogTrigger asChild>
-        <Button className="ml-12 flex gap-4" variant="outline">
+        <Button className="ml-4 flex gap-4 sm:ml-12" variant="outline">
           <SearchIcon className="size-3.5" />
           <span className="pr-10">Find your game...</span>
           <Hotkey>CTRL + K</Hotkey>

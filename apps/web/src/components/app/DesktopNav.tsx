@@ -1,7 +1,7 @@
 import { useRouter } from '@tanstack/react-router';
 import { Gamepad2Icon, LogOutIcon } from 'lucide-react';
 
-import { cn } from '@where-are-my-games/utils';
+import { cn, useBreakpoint } from '@where-are-my-games/utils';
 
 import type { GamePlatform } from '../gamePlatforms';
 import { authClient } from '~/lib/auth';
@@ -27,17 +27,18 @@ export function DesktopNav({
   onFilterPlatformsChanged,
 }: Props) {
   const router = useRouter();
+  const sm = useBreakpoint('sm');
 
   return (
     <nav
       className={cn(
-        'flex h-full w-64 flex-col bg-sidebar text-sidebar-foreground',
+        'flex h-full w-16 flex-col bg-sidebar text-sidebar-foreground sm:w-64',
         className,
       )}
     >
       <div className="flex grow flex-col">
         <div className="grid h-14 items-center justify-items-center font-typewriter text-lg font-bold">
-          <p>Where are my games?</p>
+          {sm ? <p>Where are my games?</p> : <p>?</p>}
         </div>
         <Separator />
         <div className="flex flex-col gap-1 p-2 pt-8">
@@ -52,7 +53,7 @@ export function DesktopNav({
             onClick={() => onFilterPlatformsChanged([])}
           >
             <Gamepad2Icon />
-            <span>All</span>
+            {sm && <span>All</span>}
           </Button>
           <Separator className="my-2" />
           {gamePlatforms
@@ -77,12 +78,12 @@ export function DesktopNav({
                 }
               >
                 <platform.icon />
-                <span>{platform.text}</span>
+                {sm && <span>{platform.text}</span>}
               </Button>
             ))}
         </div>
       </div>
-      <div className="m-2 flex items-center gap-1">
+      <div className="m-2 flex flex-col items-center gap-1 sm:flex-row">
         <div className="flex h-12 grow items-center justify-start gap-4 p-2 font-bold">
           <Avatar>
             <AvatarImage src={user.image ?? undefined} alt={user.name} />
@@ -90,7 +91,7 @@ export function DesktopNav({
               <Skeleton className="h-10 w-10 rounded-full" />
             </AvatarFallback>
           </Avatar>
-          <span className="truncate font-semibold">{user.name}</span>
+          {sm && <span className="truncate font-semibold">{user.name}</span>}
         </div>
         <Button
           variant="ghost"

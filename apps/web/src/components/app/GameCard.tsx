@@ -55,16 +55,16 @@ export function GameCard({ game }: Props) {
         <img
           src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover}.webp`}
           alt={game.name}
-          className="h-48 self-center rounded-sm"
+          className="h-32 rounded-sm sm:h-48"
         />
         <div className="flex grow flex-col gap-2">
           <div className="flex items-center gap-1">
-            <p className="grow text-xl font-bold">{game.name}</p>
+            <p className="grow text-lg font-bold sm:text-xl">{game.name}</p>
             <Button
               variant="ghost"
               size="icon"
               className={cn(
-                'shrink-0 self-start justify-self-end opacity-0',
+                'shrink-0 self-start justify-self-end sm:opacity-0',
                 hovered && 'opacity-100',
               )}
               onClick={() => deleteGameMutation.mutate({ gameId: game.id })}

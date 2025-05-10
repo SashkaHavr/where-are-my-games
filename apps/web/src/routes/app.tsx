@@ -88,10 +88,10 @@ function RouteComponent() {
           <ThemeToggle className="mr-4" />
         </div>
         <Separator />
-        <main className="flex grow flex-col p-4">
-          <ScrollArea className="h-[calc(100svh-89px)]">
+        <main className="flex grow flex-col">
+          <ScrollArea className="h-[calc(100svh-57px)] p-4">
             {games.isSuccess && filteredGames.length > 0 && (
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-4">
+              <div className="flex flex-col gap-4 sm:grid sm:grid-cols-[repeat(auto-fill,minmax(320px,1fr))]">
                 {filteredGames.map((game) => (
                   <GameCard key={game.id} game={game} />
                 ))}
