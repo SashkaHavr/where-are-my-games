@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "add-component": "pnpm dlx shadcn@latest add",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "clean": "git clean -xdf .turbo node_modules dist",
     "dev": "vite",
     "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",

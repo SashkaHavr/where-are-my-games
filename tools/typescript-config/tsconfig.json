@@ -4,7 +4,7 @@
     // Base Options:
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "target": "es2022",
+    "target": "ESNext",
     "allowJs": true,
     "resolveJsonModule": true,
     "moduleDetection": "force",
@@ -23,7 +23,7 @@
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
 
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ESNext"],
     "jsx": "react-jsx"
   }
 }

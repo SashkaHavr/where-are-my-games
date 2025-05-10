@@ -11,13 +11,47 @@ import { getTwitchAccessToken } from '#lib/getTwitchAccessToken.ts';
 import { getGame } from '#lib/igdb.ts';
 
 export const gamesRouter = router({
-  getAll: protectedProcedure.query(async ({ ctx }) => {
-    const games = await db.query.game.findMany({
-      where: { userGames: { userId: ctx.userId } },
+  getAll: protectedProcedure
+    .output(
+      z.array(
+        z.object({
+          id: z.number(),
+          name: z.string(),
+          cover: z.string(),
+          platforms: z.array(z.enum(gamePlatforms)),
+        }),
+      ),
+    )
+    .query(async ({ ctx }) => {
+      const games = await db.query.game.findMany({
+        where: { userGames: { userId: ctx.userId } },
+        with: {
+          userGames: {
+            columns: { platforms: true, createdAt: true },
+          },
+        },
+      });
+      return games
+        .map((game) => {
+          return {
+            ...game,
+            platforms: game.userGames[0]!.platforms,
+          };
+        })
+        .toSorted(
+          (a, b) =>
+            a.userGames[0]!.createdAt.valueOf() -
+            b.userGames[0]!.createdAt.valueOf(),
+        );
+    }),
+  getAllPlatforms: protectedProcedure.query(async ({ ctx }) => {
+    const games = await db.query.userToGame.findMany({
+      where: { userId: ctx.userId },
     });
-    return games.map((game) => ({
-      ...game,
-    }));
+    return games
+      .map((g) => g.platforms)
+      .flat()
+      .filter((p, index, arr) => arr.indexOf(p) == index);
   }),
   getPlatforms: protectedProcedure
     .input(z.object({ gameId: z.number() }))

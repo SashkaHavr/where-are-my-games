@@ -33,6 +33,7 @@ export const userToGame = pgTable(
     gameId: integer()
       .notNull()
       .references(() => game.id),
+    createdAt: timestamp().notNull().defaultNow(),
     platforms: jsonb().$type<GamePlatform[]>().notNull().default([]),
   },
   (table) => [primaryKey({ columns: [table.userId, table.gameId] })],

@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
-import { useOptimisticUpdate } from '@where-are-my-games/utils';
 import { ScrollArea } from '~/components/ui/scroll-area';
 import { Separator } from '~/components/ui/separator';
 
@@ -27,45 +26,38 @@ export const Route = createFileRoute('/app')({
 });
 
 function RouteComponent() {
+  const queryClient = useQueryClient();
   const user = Route.useRouteContext().user;
 
   const games = useQuery(trpc.games.getAll.queryOptions());
   const addGameMutation = useMutation(
-    trpc.games.add.mutationOptions(
-      useOptimisticUpdate(trpc.games.getAll.queryKey(), (old, input) =>
-        old ? [...old, input.game] : [input.game],
-      ),
-    ),
+    trpc.games.add.mutationOptions({
+      onSuccess: () => {
+        void queryClient.invalidateQueries({
+          queryKey: trpc.games.getAllPlatforms.queryKey(),
+        });
+        void queryClient.invalidateQueries({
+          queryKey: trpc.games.getAll.queryKey(),
+        });
+      },
+    }),
   );
 
-  const platforms = useQueries({
-    queries: games.isSuccess
-      ? games.data.map((game) =>
-          trpc.games.getPlatforms.queryOptions({ gameId: game.id }),
-        )
-      : [],
-  });
+  const platforms = useQuery(trpc.games.getAllPlatforms.queryOptions());
 
-  const availablePlatforms = platforms
-    .map((p) => (p.isSuccess ? p.data : []))
-    .flat()
-    .filter((p, index, arr) => arr.indexOf(p) == index);
+  const availablePlatforms = platforms.isSuccess ? platforms.data : [];
 
   const [filterPlatforms, setFilterPlatforms] = useState<GamePlatform['key'][]>(
     [],
   );
   const filteredGames = games.isSuccess
-    ? games.data.filter((game, idx) => {
+    ? games.data.filter((game) => {
         if (filterPlatforms.length == 0) {
           return true;
         }
-        if (platforms[idx]?.isSuccess) {
-          return (
-            platforms[idx].data.filter((p) => filterPlatforms.includes(p))
-              .length > 0
-          );
-        }
-        return false;
+        return (
+          game.platforms.filter((p) => filterPlatforms.includes(p)).length > 0
+        );
       })
     : [];
 
@@ -89,15 +81,15 @@ function RouteComponent() {
         </div>
         <Separator />
         <main className="flex grow flex-col">
-          <ScrollArea className="h-[calc(100svh-57px)] p-4">
-            {games.isSuccess && filteredGames.length > 0 && (
+          {games.isSuccess && filteredGames.length > 0 && (
+            <ScrollArea className="h-[calc(100svh-57px)] p-4">
               <div className="flex flex-col gap-4 sm:grid sm:grid-cols-[repeat(auto-fill,minmax(320px,1fr))]">
                 {filteredGames.map((game) => (
                   <GameCard key={game.id} game={game} />
                 ))}
               </div>
-            )}
-          </ScrollArea>
+            </ScrollArea>
+          )}
           {games.isSuccess &&
             games.data.length > 0 &&
             filteredGames.length == 0 && (

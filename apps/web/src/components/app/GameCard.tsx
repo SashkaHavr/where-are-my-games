@@ -1,9 +1,9 @@
 import { useHover } from '@mantine/hooks';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { PlusIcon, Trash2Icon } from 'lucide-react';
 
 import type { TRPCOutput } from '@where-are-my-games/trpc';
-import { cn, useOptimisticUpdate } from '@where-are-my-games/utils';
+import { cn } from '@where-are-my-games/utils';
 
 import { trpc } from '~/lib/trpc';
 import { gamePlatforms } from '../gamePlatforms';
@@ -25,26 +25,35 @@ interface Props {
 }
 
 export function GameCard({ game }: Props) {
+  const queryClient = useQueryClient();
   const platforms = useQuery(
     trpc.games.getPlatforms.queryOptions({ gameId: game.id }),
   );
-  const gamePlatformMutation = useMutation(
-    trpc.games.setPlatforms.mutationOptions(
-      useOptimisticUpdate(
-        trpc.games.getPlatforms.queryKey({
-          gameId: game.id,
-        }),
-        (old, input) => input.platforms,
-      ),
-    ),
+
+  const gamePlatformsMutation = useMutation(
+    trpc.games.setPlatforms.mutationOptions({
+      onSuccess: () => {
+        void queryClient.invalidateQueries({
+          queryKey: trpc.games.getAllPlatforms.queryKey(),
+        });
+        void queryClient.invalidateQueries({
+          queryKey: trpc.games.getPlatforms.queryKey({ gameId: game.id }),
+        });
+      },
+    }),
   );
 
   const deleteGameMutation = useMutation(
-    trpc.games.delete.mutationOptions(
-      useOptimisticUpdate(trpc.games.getAll.queryKey(), (old, input) =>
-        old ? old.filter((g) => g.id != input.gameId) : [],
-      ),
-    ),
+    trpc.games.delete.mutationOptions({
+      onSuccess: () => {
+        void queryClient.invalidateQueries({
+          queryKey: trpc.games.getAllPlatforms.queryKey(),
+        });
+        void queryClient.invalidateQueries({
+          queryKey: trpc.games.getAll.queryKey(),
+        });
+      },
+    }),
   );
 
   const { hovered, ref } = useHover();
@@ -65,7 +74,7 @@ export function GameCard({ game }: Props) {
               size="icon"
               className={cn(
                 'shrink-0 self-start justify-self-end sm:opacity-0',
-                hovered && 'opacity-100',
+                hovered && 'sm:opacity-100',
               )}
               onClick={() => deleteGameMutation.mutate({ gameId: game.id })}
             >
@@ -110,7 +119,7 @@ export function GameCard({ game }: Props) {
                       onSelect={(e) => e.preventDefault()}
                       checked={platforms.data.includes(platform.key)}
                       onCheckedChange={(value) => {
-                        gamePlatformMutation.mutate({
+                        gamePlatformsMutation.mutate({
                           gameId: game.id,
                           platforms: value
                             ? [...platforms.data, platform.key]
