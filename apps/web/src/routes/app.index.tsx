@@ -13,7 +13,7 @@ import { TypingAnimation } from '~/components/landing/TypingAnimation';
 import { ThemeToggle } from '~/components/theme/ThemeToggle';
 import { trpc } from '~/lib/trpc';
 
-export const Route = createFileRoute('/app')({
+export const Route = createFileRoute('/app/')({
   beforeLoad: ({ context }) => {
     if (!context.session) {
       throw redirect({ to: '/' });
