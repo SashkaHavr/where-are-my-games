@@ -6,8 +6,8 @@ import { SearchIcon } from 'lucide-react';
 
 import type { TRPCOutput } from '@where-are-my-games/trpc';
 
-import { trpc } from '~/lib/trpc';
-import { Hotkey } from '../Hotkey';
+import { useTRPC } from '~/lib/trpc';
+import { Hotkey } from '../hotkey';
 import { Button } from '../ui/button';
 import {
   Dialog,
@@ -20,7 +20,7 @@ import {
 import { Input } from '../ui/input';
 import { ScrollArea } from '../ui/scroll-area';
 import { Separator } from '../ui/separator';
-import { GameSearchItem } from './GameSearchItem';
+import { GameSearchItem } from './game-search-item';
 
 // GameItem.div h-24
 const GAME_ITEM_HEIGHT = 96;
@@ -31,6 +31,8 @@ interface Props {
 }
 
 export function Search({ onGameFound }: Props) {
+  const trpc = useTRPC();
+
   const [searchOpen, setSearchOpen] = useState(false);
 
   const [searchString, _setSearchString] = useDebouncedState('', 300);

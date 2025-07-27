@@ -1,16 +1,21 @@
 {
   "name": "@where-are-my-games/env",
+  "private": true,
   "type": "module",
+  "imports": {
+    "#*": "./src/*"
+  },
   "exports": {
     "./server": "./src/server.ts",
     "./db": "./src/db.ts",
-    "./vite": "./src/vite.ts"
+    "./auth": "./src/auth.ts"
   },
   "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
+    "clean": "git clean -xdf .turbo node_modules dist .tanstack .nitro .output",
     "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
     "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
     "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@where-are-my-games/prettier-config",
@@ -19,6 +24,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@types/bun": "catalog:",
     "@where-are-my-games/eslint-config": "workspace:*",
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",

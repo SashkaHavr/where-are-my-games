@@ -8,104 +8,155 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { createServerRootRoute } from '@tanstack/react-start/server'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
-import { Route as AppIndexImport } from './routes/app.index'
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as Char123LocaleChar125RouteRouteImport } from './routes/{-$locale}/route'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { ServerRoute as TrpcSplatServerRouteImport } from './routes/trpc.$'
+import { ServerRoute as AuthSplatServerRouteImport } from './routes/auth.$'
 
-// Create/Update Routes
+const rootServerRouteImport = createServerRootRoute()
 
-const IndexRoute = IndexImport.update({
+const Char123LocaleChar125RouteRoute =
+  Char123LocaleChar125RouteRouteImport.update({
+    id: '/{-$locale}',
+    path: '/{-$locale}',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AppIndexRoute = AppIndexImport.update({
+const AppIndexRoute = AppIndexRouteImport.update({
   id: '/app/',
   path: '/app/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrpcSplatServerRoute = TrpcSplatServerRouteImport.update({
+  id: '/trpc/$',
+  path: '/trpc/$',
+  getParentRoute: () => rootServerRouteImport,
+} as any)
+const AuthSplatServerRoute = AuthSplatServerRouteImport.update({
+  id: '/auth/$',
+  path: '/auth/$',
+  getParentRoute: () => rootServerRouteImport,
 } as any)
 
-// Populate the FileRoutesByPath interface
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/{-$locale}': typeof Char123LocaleChar125RouteRoute
+  '/app': typeof AppIndexRoute
+}
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/{-$locale}': typeof Char123LocaleChar125RouteRoute
+  '/app': typeof AppIndexRoute
+}
+export interface FileRoutesById {
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/{-$locale}': typeof Char123LocaleChar125RouteRoute
+  '/app/': typeof AppIndexRoute
+}
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/{-$locale}' | '/app'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/{-$locale}' | '/app'
+  id: '__root__' | '/' | '/{-$locale}' | '/app/'
+  fileRoutesById: FileRoutesById
+}
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  Char123LocaleChar125RouteRoute: typeof Char123LocaleChar125RouteRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+export interface FileServerRoutesByFullPath {
+  '/auth/$': typeof AuthSplatServerRoute
+  '/trpc/$': typeof TrpcSplatServerRoute
+}
+export interface FileServerRoutesByTo {
+  '/auth/$': typeof AuthSplatServerRoute
+  '/trpc/$': typeof TrpcSplatServerRoute
+}
+export interface FileServerRoutesById {
+  __root__: typeof rootServerRouteImport
+  '/auth/$': typeof AuthSplatServerRoute
+  '/trpc/$': typeof TrpcSplatServerRoute
+}
+export interface FileServerRouteTypes {
+  fileServerRoutesByFullPath: FileServerRoutesByFullPath
+  fullPaths: '/auth/$' | '/trpc/$'
+  fileServerRoutesByTo: FileServerRoutesByTo
+  to: '/auth/$' | '/trpc/$'
+  id: '__root__' | '/auth/$' | '/trpc/$'
+  fileServerRoutesById: FileServerRoutesById
+}
+export interface RootServerRouteChildren {
+  AuthSplatServerRoute: typeof AuthSplatServerRoute
+  TrpcSplatServerRoute: typeof TrpcSplatServerRoute
+}
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/{-$locale}': {
+      id: '/{-$locale}'
+      path: '/{-$locale}'
+      fullPath: '/{-$locale}'
+      preLoaderRoute: typeof Char123LocaleChar125RouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/app/': {
       id: '/app/'
       path: '/app'
       fullPath: '/app'
-      preLoaderRoute: typeof AppIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
-
-// Create and export the route tree
-
-export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/app': typeof AppIndexRoute
-}
-
-export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/app': typeof AppIndexRoute
-}
-
-export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/app/': typeof AppIndexRoute
-}
-
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app'
-  id: '__root__' | '/' | '/app/'
-  fileRoutesById: FileRoutesById
-}
-
-export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AppIndexRoute: typeof AppIndexRoute
+declare module '@tanstack/react-start/server' {
+  interface ServerFileRoutesByPath {
+    '/trpc/$': {
+      id: '/trpc/$'
+      path: '/trpc/$'
+      fullPath: '/trpc/$'
+      preLoaderRoute: typeof TrpcSplatServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
+    '/auth/$': {
+      id: '/auth/$'
+      path: '/auth/$'
+      fullPath: '/auth/$'
+      preLoaderRoute: typeof AuthSplatServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  Char123LocaleChar125RouteRoute: Char123LocaleChar125RouteRoute,
   AppIndexRoute: AppIndexRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/app/"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/app/": {
-      "filePath": "app.index.tsx"
-    }
-  }
+const rootServerRouteChildren: RootServerRouteChildren = {
+  AuthSplatServerRoute: AuthSplatServerRoute,
+  TrpcSplatServerRoute: TrpcSplatServerRoute,
 }
-ROUTE_MANIFEST_END */
+export const serverRouteTree = rootServerRouteImport
+  ._addFileChildren(rootServerRouteChildren)
+  ._addFileTypes<FileServerRouteTypes>()

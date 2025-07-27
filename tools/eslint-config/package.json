@@ -6,24 +6,25 @@
     ".": "./eslint.config.js"
   },
   "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
+    "clean": "git clean -xdf .turbo node_modules dist .tanstack .nitro .output",
     "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
     "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@where-are-my-games/prettier-config",
   "devDependencies": {
-    "@eslint/compat": "^1.2.8",
-    "@eslint/js": "^9.24.0",
-    "@tanstack/eslint-plugin-query": "^5.73.3",
+    "@eslint/compat": "^1.3.1",
+    "@eslint/js": "^9.32.0",
+    "@tanstack/eslint-plugin-query": "^5.81.2",
+    "@tanstack/eslint-plugin-router": "^1.129.7",
+    "@types/node": "catalog:",
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",
-    "eslint": "^9.24.0",
+    "eslint": "^9.32.0",
     "eslint-plugin-react-compiler": "latest",
     "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "prettier": "^3.5.3",
+    "eslint-plugin-react-refresh": "^0.4.20",
     "typescript": "catalog:",
-    "typescript-eslint": "^8.30.1"
+    "typescript-eslint": "^8.38.0"
   }
 }

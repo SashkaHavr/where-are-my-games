@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { useBreakpoint } from '@where-are-my-games/utils';
+import { useBreakpoint } from '~/hooks/use-breakpoint';
 
 interface Props {
   children: ReactNode;

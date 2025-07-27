@@ -1,7 +1,7 @@
 import igdb from 'igdb-api-node';
 import z from 'zod';
 
-import { err, ok, tryCatchPromise } from '@where-are-my-games/utils';
+import { tryCatch, tryCatchSync, TwitchError } from '#utils/error.ts';
 
 interface IGDBGame {
   id: number;
@@ -23,10 +23,6 @@ interface IGDBResponse {
   data: IGDBGame[];
 }
 
-interface IGDBError {
-  response: { data: object };
-}
-
 const igdbGame = z.object({
   id: z.number().nonnegative(),
   name: z.string().nonempty(),
@@ -44,8 +40,11 @@ const igdbGame = z.object({
   summary: z.string(),
 });
 
-function parseGame(game: IGDBGame) {
-  return igdbGame.safeParse({
+function parseGame(game: IGDBGame | undefined) {
+  if (!game) {
+    throw new TwitchError({ message: 'Game data is undefined' });
+  }
+  return igdbGame.parse({
     firstReleaseDate: game.first_release_date,
     ...game,
   });
@@ -65,7 +64,7 @@ export async function searchGames(
   twitchClientId: string,
   twitchAccessToken: string,
 ) {
-  const result = await tryCatchPromise<IGDBResponse, IGDBError>(
+  const result = await tryCatch<IGDBResponse>(
     igdb(twitchClientId, twitchAccessToken)
       .fields(gameFields)
       .limit(50)
@@ -79,22 +78,24 @@ export async function searchGames(
       .request('/games'),
   );
   if (result.error) {
-    return err(result.error.response.data);
+    throw new TwitchError({
+      message: 'Failed to fetch games from IGDB',
+      cause: result.error,
+    });
   }
   const games = result.data.data;
   if (!Array.isArray(games)) {
-    return err('Expected array response from IGDB');
+    throw new TwitchError({ message: 'Expected array response from IGDB' });
   }
 
-  const parsedGames = games.map((game) => parseGame(game));
-  const errors = parsedGames
-    .filter((game) => !game.success)
-    .map((game) => z.prettifyError(game.error));
-  if (errors.length > 0) console.error(errors);
-
-  return ok(
-    parsedGames.filter((game) => game.success).map((game) => game.data),
-  );
+  const parsedGames = tryCatchSync(() => games.map((game) => parseGame(game)));
+  if (parsedGames.error) {
+    throw new TwitchError({
+      message: 'Failed to parse games from IGDB',
+      cause: parsedGames.error,
+    });
+  }
+  return parsedGames.data;
 }
 
 export async function getGame(
@@ -102,7 +103,7 @@ export async function getGame(
   twitchClientId: string,
   twitchAccessToken: string,
 ) {
-  const result = await tryCatchPromise<IGDBResponse, IGDBError>(
+  const result = await tryCatch<IGDBResponse>(
     igdb(twitchClientId, twitchAccessToken)
       .fields(gameFields)
       .limit(1)
@@ -116,14 +117,22 @@ export async function getGame(
       .request('/games'),
   );
   if (result.error) {
-    return err(result.error.response.data);
+    throw new TwitchError({
+      message: 'Failed to fetch game from IGDB',
+      cause: result.error,
+    });
   }
   if (!Array.isArray(result.data.data) || result.data.data[0] == undefined) {
-    return err({ message: 'Game with given id was not found', gameId: gameId });
+    throw new TwitchError({
+      message: 'Game with given id was not found: ' + gameId,
+    });
   }
-  const game = parseGame(result.data.data[0]);
+  const game = tryCatchSync(() => parseGame(result.data.data[0]));
   if (game.error) {
-    return err(z.prettifyError(game.error));
+    throw new TwitchError({
+      message: 'Failed to parse game from IGDB',
+      cause: game.error,
+    });
   }
-  return ok(game.data);
+  return game.data;
 }

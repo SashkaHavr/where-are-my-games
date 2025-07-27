@@ -3,14 +3,14 @@ import { createFileRoute, redirect, useRouter } from '@tanstack/react-router';
 import { Button } from '~/components/ui/button';
 
 import { TwitchIcon } from '~/components/icons';
-import { Meteors } from '~/components/landing/Meteors';
-import { TypingAnimation } from '~/components/landing/TypingAnimation';
-import { ThemeToggle } from '~/components/theme/ThemeToggle';
+import { Meteors } from '~/components/landing/meteors';
+import { TypingAnimation } from '~/components/landing/typing-animation';
+import { ThemeToggle } from '~/components/theme-toggle';
 import { authClient } from '~/lib/auth';
 
 export const Route = createFileRoute('/')({
   beforeLoad: ({ context }) => {
-    if (context.session) {
+    if (context.auth.loggedIn) {
       throw redirect({ to: '/app' });
     }
   },

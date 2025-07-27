@@ -1,65 +1,45 @@
 services:
-  postgres:
+  db:
     image: postgres
     volumes:
-      - pgdata:/var/lib/postgresql/data 
+      - db-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=password
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mysecretpassword}
     networks:
-      - db-network
+      db-network:
+        aliases:
+          - db-internal
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
+      test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 10s
-      timeout: 5s
-      retries: 5
-  db-update:
-    build:
-      context: .
-      dockerfile: ./packages/db/Dockerfile
-    depends_on:
-      postgres:
-        condition: service_healthy
-    environment:
-      - DATABASE_HOST=postgres
-      - DATABASE_NAME=postgres
-      - DATABASE_USER=postgres
-      - DATABASE_SSL=false
-      - DATABASE_PASSWORD=password
-    networks:
-      - db-network
-  api:
-    build:
-      context: .
-      dockerfile: ./apps/api/Dockerfile
-    depends_on:
-      postgres:
-        condition: service_healthy
-    environment:
-      - CORS_ORIGINS=http://localhost:5241
-      - BETTER_AUTH_SECRET=secret
-      - BETTER_AUTH_URL=http://localhost:5240
-      - DATABASE_HOST=postgres
-      - DATABASE_NAME=postgres
-      - DATABASE_USER=postgres
-      - DATABASE_SSL=false
-      - DATABASE_PASSWORD=password
+      timeout: 10s
+  pgadmin:
+    image: dpage/pgadmin4
     env_file:
-      - .env
+      - path: .env
+        required: false
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
       - db-network
-    ports:
-      - 5240:3000
   web:
     build:
       context: .
       dockerfile: ./apps/web/Dockerfile
-      args:
-        - VITE_API_URL=http://localhost:5240
-    ports:
-      - 5241:3000
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:mysecretpassword@db-internal:5432/postgres}
+    env_file:
+      - path: .env
+        required: false
+    networks:
+      - db-network
+    depends_on:
+      db:
+        condition: service_healthy
 
 networks:
   db-network:
 
 volumes:
-  pgdata:
+  db-data:

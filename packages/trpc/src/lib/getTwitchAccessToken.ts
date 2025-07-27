@@ -1,6 +1,7 @@
 import { auth } from '@where-are-my-games/auth';
 import { db } from '@where-are-my-games/db';
-import { err, ok } from '@where-are-my-games/utils';
+
+import { TwitchError } from '#utils/error.ts';
 
 export async function getTwitchAccessToken(userId: string) {
   const twitchAccount = await db.query.account.findFirst({
@@ -15,7 +16,7 @@ export async function getTwitchAccessToken(userId: string) {
     },
   });
   if (!twitchAccount) {
-    return err({ message: 'Twitch account was not found' });
+    throw new TwitchError({ message: 'Twitch account was not found' });
   }
 
   let accessToken: string | undefined | null = twitchAccount.accessToken;
@@ -36,7 +37,7 @@ export async function getTwitchAccessToken(userId: string) {
   }
 
   if (!accessToken) {
-    return err({ message: 'Twitch access token was not found' });
+    throw new TwitchError({ message: 'Twitch access token was not found' });
   }
-  return ok(accessToken);
+  return accessToken;
 }

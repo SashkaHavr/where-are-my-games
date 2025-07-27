@@ -10,12 +10,8 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env", ".env.local"],
-      "outputs": ["dist"],
-      "env": ["VITE_*"]
-    },
-    "dev": {
-      "cache": false,
-      "persistent": true
+      "outputs": ["dist", ".output"],
+      "env": ["VITE_*", "NODE_ENV"]
     },
     "format": {
       "cache": false
@@ -27,6 +23,10 @@
       "dependsOn": ["^build"],
       "outputLogs": "errors-only"
     },
+    "lint:fix": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
     "typecheck": {
       "dependsOn": ["^build"],
       "outputLogs": "errors-only"
@@ -37,19 +37,8 @@
     "test": {
       "outputLogs": "full"
     },
-    "test:watch": {
-      "cache": false,
-      "persistent": true
-    },
     "//#clean:root": {
       "cache": false
-    },
-    "//#lint:root": {
-      "cache": false,
-      "interactive": true
-    },
-    "//#lint:root:check": {
-      "outputLogs": "errors-only"
     }
   }
 }

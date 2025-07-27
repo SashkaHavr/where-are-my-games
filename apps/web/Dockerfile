@@ -1,36 +1,49 @@
-FROM node:slim AS base
+FROM oven/bun:slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
-RUN pnpm add -g turbo
 ENV TURBO_TELEMETRY_DISABLED=1
+RUN bun install -g pnpm
+RUN bun install -g turbo
 
-FROM base AS builder
-# Set working directory
+# Generate a partial monorepo
+FROM base AS turbo
 WORKDIR /app
 COPY . .
-# Generate a partial monorepo with a pruned lockfile for a target workspace.
 RUN turbo prune @where-are-my-games/web --docker
 
-# Add lockfile and package.json's of isolated subworkspace
-FROM base AS installer
+# Install and build
+FROM base AS builder
 WORKDIR /app
-# First install the dependencies (as they change less often)
-COPY --from=builder /app/out/json/ .
-RUN pnpm install --frozen-lockfile
-# Build
-COPY --from=builder /app/out/full/ .
+COPY --from=turbo /app/out/json/ .
+RUN pnpm install --frozen-lockfile --prod
+COPY --from=turbo /app/out/full/ .
 
-ARG VITE_API_URL
-ENV VITE_API_URL=${VITE_API_URL}
+RUN --mount=type=secret,id=TURBO_TEAM,env=TURBO_TEAM \
+    --mount=type=secret,id=TURBO_TOKEN,env=TURBO_TOKEN \
+    turbo build
 
-RUN pnpm build
-
-FROM node:slim AS runner
+# Generate a partial monorepo for db
+FROM base AS turbo-db
 WORKDIR /app
-COPY --from=installer /app/apps/web/dist dist
+COPY . .
+RUN turbo prune @where-are-my-games/db --docker
 
-RUN npm i -g serve
-EXPOSE 3000/tcp
+# Install and build
+FROM base AS builder-db
+WORKDIR /app
+COPY --from=turbo-db /app/out/json/ .
+RUN pnpm install --frozen-lockfile --prod
+COPY --from=turbo-db /app/out/full/ .
 
-CMD [ "serve", "-s", "dist" ]
+# Run
+FROM oven/bun:slim AS runner
+COPY --from=builder /app/apps/web/.output /app
+COPY --from=builder-db /app /db
+
+RUN apt-get -y update && apt-get -y install curl
+HEALTHCHECK --interval=10s --timeout=10s CMD [ "curl", "http://localhost:3000/trpc/health" ]
+
+USER bun
+EXPOSE 3000
+ENV NODE_ENV=production
+CMD [ "sh", "-c", "cd /db/packages/db && bun push && cd /app && bun run server/index.mjs" ]

@@ -1,5 +1,6 @@
 {
   "name": "@where-are-my-games/db",
+  "private": true,
   "type": "module",
   "imports": {
     "#*": "./src/*"
@@ -9,10 +10,11 @@
     "./schema": "./src/schema/index.ts"
   },
   "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
+    "clean": "git clean -xdf .turbo node_modules dist .tanstack .nitro .output",
     "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
     "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
     "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "push": "drizzle-kit push",
     "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit"
@@ -20,16 +22,16 @@
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
     "@where-are-my-games/env": "workspace:*",
-    "drizzle-orm": "catalog:",
-    "pg": "^8.14.1"
+    "drizzle-kit": "catalog:drizzle",
+    "drizzle-orm": "catalog:drizzle",
+    "pg": "catalog:drizzle"
   },
   "devDependencies": {
     "@types/bun": "catalog:",
-    "@types/pg": "^8.11.13",
+    "@types/pg": "catalog:drizzle",
     "@where-are-my-games/eslint-config": "workspace:*",
     "@where-are-my-games/prettier-config": "workspace:*",
     "@where-are-my-games/typescript-config": "workspace:*",
-    "drizzle-kit": "beta",
     "typescript": "catalog:"
   }
 }

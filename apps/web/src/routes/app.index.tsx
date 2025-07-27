@@ -5,29 +5,28 @@ import { createFileRoute, redirect } from '@tanstack/react-router';
 import { ScrollArea } from '~/components/ui/scroll-area';
 import { Separator } from '~/components/ui/separator';
 
-import type { GamePlatform } from '~/components/gamePlatforms';
-import { DesktopNav } from '~/components/app/DesktopNav';
-import { GameCard } from '~/components/app/GameCard';
-import { Search } from '~/components/app/Search';
-import { TypingAnimation } from '~/components/landing/TypingAnimation';
-import { ThemeToggle } from '~/components/theme/ThemeToggle';
-import { trpc } from '~/lib/trpc';
+import type { GamePlatform } from '~/components/game-platforms';
+import { DesktopNav } from '~/components/app/desktop-nav';
+import { GameCard } from '~/components/app/game-card';
+import { Search } from '~/components/app/search';
+import { TypingAnimation } from '~/components/landing/typing-animation';
+import { ThemeToggle } from '~/components/theme-toggle';
+import { useLoggedInAuth } from '~/lib/route-context-hooks';
+import { useTRPC } from '~/lib/trpc';
 
 export const Route = createFileRoute('/app/')({
   beforeLoad: ({ context }) => {
-    if (!context.session) {
+    if (!context.auth.loggedIn) {
       throw redirect({ to: '/' });
     }
-    return {
-      user: context.session.user,
-    };
   },
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const queryClient = useQueryClient();
-  const user = Route.useRouteContext().user;
+  const trpc = useTRPC();
+  const { user } = useLoggedInAuth();
 
   const games = useQuery(trpc.games.getAll.queryOptions());
   const addGameMutation = useMutation(

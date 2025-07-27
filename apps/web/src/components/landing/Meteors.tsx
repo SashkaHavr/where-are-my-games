@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useViewportSize } from '@mantine/hooks';
 
-import { cn } from '@where-are-my-games/utils';
+import { cn } from '~/lib/utils';
 
 interface MeteorsProps {
   number?: number;

@@ -1,5 +1,6 @@
 {
   "name": "@where-are-my-games/trpc",
+  "private": true,
   "type": "module",
   "imports": {
     "#*": "./src/*"
@@ -8,10 +9,11 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
+    "clean": "git clean -xdf .turbo node_modules dist .tanstack .nitro .output",
     "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
     "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
     "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@where-are-my-games/prettier-config",
@@ -20,8 +22,7 @@
     "@where-are-my-games/auth": "workspace:*",
     "@where-are-my-games/db": "workspace:*",
     "@where-are-my-games/env": "workspace:*",
-    "@where-are-my-games/utils": "workspace:*",
-    "drizzle-orm": "catalog:",
+    "drizzle-orm": "catalog:drizzle",
     "igdb-api-node": "^6.0.5",
     "superjson": "catalog:",
     "zod": "catalog:"

@@ -150,26 +150,11 @@ async function getExistingGameOrFromIGDB(userId: string, gameId: number) {
   if (existingGame) return existingGame;
 
   const accessToken = await getTwitchAccessToken(userId);
-  if (accessToken.error) {
-    throw new TRPCError({
-      message: 'Twitch account was not found',
-      code: 'UNAUTHORIZED',
-      cause: accessToken.error,
-    });
-  }
+
   const newGame = await getGame(
     gameId,
     envServer.TWITCH_CLIENT_ID,
-    accessToken.data,
+    accessToken,
   );
-  if (newGame.error != undefined) {
-    throw new TRPCError({
-      code: 'BAD_GATEWAY',
-      message: 'Error while fetching from IGDB',
-      cause: newGame.error,
-    });
-  }
-  return (
-    await db.insert(game).values(newGame.data).returning({ id: game.id })
-  )[0];
+  return (await db.insert(game).values(newGame).returning({ id: game.id }))[0];
 }

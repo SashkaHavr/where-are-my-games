@@ -1,28 +1,35 @@
 import { QueryClient } from '@tanstack/react-query';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
-import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query';
+import {
+  createTRPCContext,
+  createTRPCOptionsProxy,
+} from '@trpc/tanstack-react-query';
 import superjson from 'superjson';
 
 import type { TRPCRouter } from '@where-are-my-games/trpc';
 
-export const queryClient = new QueryClient({});
+export function createTRPCRouteContext() {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      dehydrate: { serializeData: superjson.serialize },
+      hydrate: { deserializeData: superjson.deserialize },
+    },
+  });
+  const trpcClient = createTRPCClient<TRPCRouter>({
+    links: [
+      httpBatchLink({
+        transformer: superjson,
+        url: '/trpc',
+      }),
+    ],
+  });
+  const trpc = createTRPCOptionsProxy({
+    client: trpcClient,
+    queryClient: queryClient,
+  });
+  return { trpc, queryClient, trpcClient };
+}
 
-const trpcClient = createTRPCClient<TRPCRouter>({
-  links: [
-    httpBatchLink({
-      transformer: superjson,
-      url: new URL('/trpc', import.meta.env.VITE_API_URL),
-      fetch(url, options) {
-        return fetch(url, {
-          ...options,
-          credentials: 'include',
-        });
-      },
-    }),
-  ],
-});
-
-export const trpc = createTRPCOptionsProxy({
-  client: trpcClient,
-  queryClient: queryClient,
-});
+export type TRPCRouteContext = ReturnType<typeof createTRPCRouteContext>;
+export const { TRPCProvider, useTRPC, useTRPCClient } =
+  createTRPCContext<TRPCRouter>();

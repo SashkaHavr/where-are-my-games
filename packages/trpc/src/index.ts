@@ -1,12 +1,15 @@
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 
-import { createContext, createContextRaw } from '#context.ts';
-import { createCallerFactory, router } from '#init.ts';
+import { createContext } from '#context.ts';
+import { createCallerFactory, publicProcedure, router } from '#init.ts';
+import { configRouter } from '#routers/config.ts';
 import { gamesRouter } from '#routers/games.ts';
 import { igdbRouter } from '#routers/igdb.ts';
 
 const appRouter = router({
+  health: publicProcedure.query(() => 'tRPC healthy!'),
+  config: configRouter,
   igdb: igdbRouter,
   games: gamesRouter,
 });
@@ -16,16 +19,12 @@ export function trpcHandler({ request }: { request: Request }) {
     req: request,
     router: appRouter,
     endpoint: '/trpc',
-    createContext: createContext,
+    createContext: (opts) => createContext({ request: opts.req }),
   });
 }
 
-export type TRPCRouter = typeof appRouter;
-export function createTRPCCaller(
-  props: Parameters<typeof createContextRaw>[0],
-) {
-  return createCallerFactory(appRouter)(createContextRaw(props));
-}
+export const createTrpcCaller = createCallerFactory(appRouter);
 
+export type TRPCRouter = typeof appRouter;
 export type TRPCInput = inferRouterInputs<TRPCRouter>;
 export type TRPCOutput = inferRouterOutputs<TRPCRouter>;

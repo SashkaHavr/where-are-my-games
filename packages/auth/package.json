@@ -1,21 +1,27 @@
 {
   "name": "@where-are-my-games/auth",
+  "private": true,
   "type": "module",
   "imports": {
     "#*": "./src/*"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./permissions": "./src/permissions.ts"
   },
   "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
+    "clean": "git clean -xdf .turbo node_modules dist .tanstack .nitro .output",
     "format": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --write",
     "format:check": "prettier . --ignore-path ../../.gitignore --ignore-path ../../.prettierignore --check",
+    "generate-db-schema": "bun exec \"DATABASE_URL=url npx @better-auth/cli@latest generate --config src/index.ts\"",
     "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@where-are-my-games/prettier-config",
   "dependencies": {
+    "@better-auth/utils": "^0.2.6",
+    "@better-fetch/fetch": "^1.1.18",
     "@where-are-my-games/db": "workspace:*",
     "@where-are-my-games/env": "workspace:*",
     "better-auth": "catalog:"
