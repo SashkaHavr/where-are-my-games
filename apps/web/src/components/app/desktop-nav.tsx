@@ -1,9 +1,8 @@
-import { useRouter } from '@tanstack/react-router';
 import { Gamepad2Icon, LogOutIcon } from 'lucide-react';
 
 import type { GamePlatform } from '../game-platforms';
 import { useBreakpoint } from '~/hooks/use-breakpoint';
-import { authClient } from '~/lib/auth';
+import { useSignout } from '~/lib/auth';
 import { cn } from '~/lib/utils';
 import { gamePlatforms } from '../game-platforms';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
@@ -26,8 +25,9 @@ export function DesktopNav({
   filterPlatforms,
   onFilterPlatformsChanged,
 }: Props) {
-  const router = useRouter();
   const sm = useBreakpoint('sm');
+
+  const signOutMutation = useSignout();
 
   return (
     <nav
@@ -97,9 +97,7 @@ export function DesktopNav({
           variant="ghost"
           size="icon"
           className="h-12"
-          onClick={() =>
-            void authClient.signOut().then(() => router.invalidate())
-          }
+          onClick={() => signOutMutation.mutate()}
         >
           <LogOutIcon />
         </Button>

@@ -1,4 +1,5 @@
-import { createFileRoute, redirect, useRouter } from '@tanstack/react-router';
+import { useMutation } from '@tanstack/react-query';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 
 import { Button } from '~/components/ui/button';
 
@@ -14,11 +15,17 @@ export const Route = createFileRoute('/')({
       throw redirect({ to: '/app' });
     }
   },
-  component: Index,
+  component: RouteComponent,
 });
 
-function Index() {
-  const router = useRouter();
+function RouteComponent() {
+  const signInMutation = useMutation({
+    mutationFn: () => {
+      return authClient.signIn.social({
+        provider: 'twitch',
+      });
+    },
+  });
 
   return (
     <div className="flex h-lvh w-full flex-col justify-center pb-20">
@@ -38,14 +45,7 @@ function Index() {
       <Button
         variant="outline"
         className="w-64 animate-show self-center opacity-0"
-        onClick={() => {
-          void authClient.signIn
-            .social({
-              provider: 'twitch',
-              callbackURL: window.location.href,
-            })
-            .then(() => router.invalidate());
-        }}
+        onClick={() => signInMutation.mutate()}
       >
         <TwitchIcon />
         Login with Twitch
