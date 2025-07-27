@@ -4,8 +4,8 @@
     "paths": {
       "~/*": ["./src/*"]
     },
-    "target": "ES2023",
-    "lib": ["ES2023", "DOM", "DOM.Iterable"]
+    "target": "ES2024",
+    "lib": ["ES2024", "DOM", "DOM.Iterable"]
   },
   "extends": "@where-are-my-games/typescript-config"
 }
