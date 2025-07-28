@@ -11,8 +11,8 @@ import { ScrollArea } from '~/components/ui/scroll-area';
 import { Separator } from '~/components/ui/separator';
 
 import type { GamePlatform } from '~/components/game-platforms';
-import { DesktopNav } from '~/components/app/desktop-nav';
 import { GameCard } from '~/components/app/game-card';
+import { MainNav } from '~/components/app/main-nav';
 import { Search } from '~/components/app/search';
 import { TypingAnimation } from '~/components/landing/typing-animation';
 import { ThemeToggle } from '~/components/theme-toggle';
@@ -69,7 +69,7 @@ function RouteComponent() {
 
   return (
     <div className="flex h-svh w-full">
-      <DesktopNav
+      <MainNav
         user={user}
         className="shrink-0"
         availablePlatforms={platforms}

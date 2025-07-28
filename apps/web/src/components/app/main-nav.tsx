@@ -19,7 +19,7 @@ interface Props {
   onFilterPlatformsChanged: (value: GamePlatform['key'][]) => void;
 }
 
-export function DesktopNav({
+export function MainNav({
   user,
   className,
   availablePlatforms,
