@@ -3,6 +3,7 @@ import { useDebouncedState, useHotkeys } from '@mantine/hooks';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { skipToken, useQuery } from '@tanstack/react-query';
 import { SearchIcon } from 'lucide-react';
+import { useTranslations } from 'use-intl';
 
 import type { TRPCOutput } from '@where-are-my-games/trpc';
 
@@ -32,6 +33,7 @@ interface Props {
 
 export function Search({ onGameFound }: Props) {
   const trpc = useTRPC();
+  const t = useTranslations('search');
 
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -112,7 +114,7 @@ export function Search({ onGameFound }: Props) {
       <DialogTrigger asChild>
         <Button className="ml-4 flex gap-4 sm:ml-12" variant="outline">
           <SearchIcon className="size-3.5" />
-          <span className="pr-10">Find your game...</span>
+          <span className="pr-10">{t('findGame')}</span>
           <Hotkey>CTRL + K</Hotkey>
         </Button>
       </DialogTrigger>
@@ -121,7 +123,7 @@ export function Search({ onGameFound }: Props) {
         onCloseAutoFocus={(e) => e.preventDefault()}
       >
         <VisuallyHidden asChild>
-          <DialogDescription>Search input and games</DialogDescription>
+          <DialogDescription>{t('description')}</DialogDescription>
         </VisuallyHidden>
         <DialogHeader className="flex flex-col gap-0">
           <div className="flex flex-row items-center gap-4 px-3">
@@ -129,7 +131,7 @@ export function Search({ onGameFound }: Props) {
             <Input
               className="md:text-md h-14 border-none bg-background p-0 shadow-none ring-0 focus-visible:border-none focus-visible:ring-0 dark:bg-background"
               type="text"
-              placeholder="Search games..."
+              placeholder={t('placeholder')}
               defaultValue={searchString}
               onKeyDown={(e) => {
                 if (e.key == 'ArrowUp') {

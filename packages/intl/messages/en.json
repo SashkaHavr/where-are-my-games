@@ -1,8 +1,28 @@
 {
+  "appIndex": {
+    "noGamesAdded": "No games are added yet... Use search bar above!",
+    "noGamesFound": "No games found for the selected filter 🥲"
+  },
   "defaultComponents": {
     "error": "Something went wrong",
     "loading": "Loading...",
     "notFound": "The page you are looking for does not exist",
     "returnToHomePage": "Return to Home page"
+  },
+  "landing": {
+    "are": "are",
+    "games": "games...?",
+    "loginTwitch": "Login with Twitch",
+    "my": "my",
+    "where": "Where"
+  },
+  "nav": {
+    "all": "All",
+    "title": "Where are my games?"
+  },
+  "search": {
+    "description": "Search input and games",
+    "findGame": "Find your game...",
+    "placeholder": "Search games..."
   }
 }

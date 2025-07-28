@@ -1,4 +1,5 @@
 import { Gamepad2Icon, LogOutIcon } from 'lucide-react';
+import { useTranslations } from 'use-intl';
 
 import type { GamePlatform } from '../game-platforms';
 import { useBreakpoint } from '~/hooks/use-breakpoint';
@@ -25,6 +26,8 @@ export function DesktopNav({
   filterPlatforms,
   onFilterPlatformsChanged,
 }: Props) {
+  const t = useTranslations('nav');
+
   const sm = useBreakpoint('sm');
 
   const signOutMutation = useSignout();
@@ -38,7 +41,7 @@ export function DesktopNav({
     >
       <div className="flex grow flex-col">
         <div className="grid h-14 items-center justify-items-center font-typewriter text-lg font-bold">
-          {sm ? <p>Where are my games?</p> : <p>?</p>}
+          {sm ? <p>{t('title')}</p> : <p>?</p>}
         </div>
         <Separator />
         <div className="flex flex-col gap-1 p-2 pt-8">
@@ -53,7 +56,7 @@ export function DesktopNav({
             onClick={() => onFilterPlatformsChanged([])}
           >
             <Gamepad2Icon />
-            {sm && <span>All</span>}
+            {sm && <span>{t('all')}</span>}
           </Button>
           <Separator className="my-2" />
           {gamePlatforms

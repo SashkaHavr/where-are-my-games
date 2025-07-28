@@ -1,7 +1,9 @@
-import igdb from 'igdb-api-node';
+import _igdb from 'igdb-api-node';
 import z from 'zod';
 
 import { tryCatch, tryCatchSync, TwitchError } from '#utils/error.ts';
+
+const igdb = 'default' in _igdb ? (_igdb.default as typeof _igdb) : _igdb;
 
 interface IGDBGame {
   id: number;

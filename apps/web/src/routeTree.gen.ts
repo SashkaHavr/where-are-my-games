@@ -12,8 +12,8 @@ import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as Char123LocaleChar125RouteRouteImport } from './routes/{-$locale}/route'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as Char123LocaleChar125IndexRouteImport } from './routes/{-$locale}/index'
+import { Route as Char123LocaleChar125AppIndexRouteImport } from './routes/{-$locale}/app.index'
 import { ServerRoute as TrpcSplatServerRouteImport } from './routes/trpc.$'
 import { ServerRoute as AuthSplatServerRouteImport } from './routes/auth.$'
 
@@ -25,16 +25,18 @@ const Char123LocaleChar125RouteRoute =
     path: '/{-$locale}',
     getParentRoute: () => rootRouteImport,
   } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppIndexRoute = AppIndexRouteImport.update({
-  id: '/app/',
-  path: '/app/',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const Char123LocaleChar125IndexRoute =
+  Char123LocaleChar125IndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
+const Char123LocaleChar125AppIndexRoute =
+  Char123LocaleChar125AppIndexRouteImport.update({
+    id: '/app/',
+    path: '/app/',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
 const TrpcSplatServerRoute = TrpcSplatServerRouteImport.update({
   id: '/trpc/$',
   path: '/trpc/$',
@@ -47,33 +49,30 @@ const AuthSplatServerRoute = AuthSplatServerRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/{-$locale}': typeof Char123LocaleChar125RouteRoute
-  '/app': typeof AppIndexRoute
+  '/{-$locale}': typeof Char123LocaleChar125RouteRouteWithChildren
+  '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
+  '/{-$locale}/app': typeof Char123LocaleChar125AppIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/{-$locale}': typeof Char123LocaleChar125RouteRoute
-  '/app': typeof AppIndexRoute
+  '/{-$locale}': typeof Char123LocaleChar125IndexRoute
+  '/{-$locale}/app': typeof Char123LocaleChar125AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/{-$locale}': typeof Char123LocaleChar125RouteRoute
-  '/app/': typeof AppIndexRoute
+  '/{-$locale}': typeof Char123LocaleChar125RouteRouteWithChildren
+  '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
+  '/{-$locale}/app/': typeof Char123LocaleChar125AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/{-$locale}' | '/app'
+  fullPaths: '/{-$locale}' | '/{-$locale}/' | '/{-$locale}/app'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/{-$locale}' | '/app'
-  id: '__root__' | '/' | '/{-$locale}' | '/app/'
+  to: '/{-$locale}' | '/{-$locale}/app'
+  id: '__root__' | '/{-$locale}' | '/{-$locale}/' | '/{-$locale}/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  Char123LocaleChar125RouteRoute: typeof Char123LocaleChar125RouteRoute
-  AppIndexRoute: typeof AppIndexRoute
+  Char123LocaleChar125RouteRoute: typeof Char123LocaleChar125RouteRouteWithChildren
 }
 export interface FileServerRoutesByFullPath {
   '/auth/$': typeof AuthSplatServerRoute
@@ -110,19 +109,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char123LocaleChar125RouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/{-$locale}/': {
+      id: '/{-$locale}/'
       path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/{-$locale}/'
+      preLoaderRoute: typeof Char123LocaleChar125IndexRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
     }
-    '/app/': {
-      id: '/app/'
+    '/{-$locale}/app/': {
+      id: '/{-$locale}/app/'
       path: '/app'
-      fullPath: '/app'
-      preLoaderRoute: typeof AppIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/{-$locale}/app'
+      preLoaderRoute: typeof Char123LocaleChar125AppIndexRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
     }
   }
 }
@@ -145,10 +144,24 @@ declare module '@tanstack/react-start/server' {
   }
 }
 
+interface Char123LocaleChar125RouteRouteChildren {
+  Char123LocaleChar125IndexRoute: typeof Char123LocaleChar125IndexRoute
+  Char123LocaleChar125AppIndexRoute: typeof Char123LocaleChar125AppIndexRoute
+}
+
+const Char123LocaleChar125RouteRouteChildren: Char123LocaleChar125RouteRouteChildren =
+  {
+    Char123LocaleChar125IndexRoute: Char123LocaleChar125IndexRoute,
+    Char123LocaleChar125AppIndexRoute: Char123LocaleChar125AppIndexRoute,
+  }
+
+const Char123LocaleChar125RouteRouteWithChildren =
+  Char123LocaleChar125RouteRoute._addFileChildren(
+    Char123LocaleChar125RouteRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  Char123LocaleChar125RouteRoute: Char123LocaleChar125RouteRoute,
-  AppIndexRoute: AppIndexRoute,
+  Char123LocaleChar125RouteRoute: Char123LocaleChar125RouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
