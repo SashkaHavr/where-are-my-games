@@ -1,5 +1,5 @@
 import { useHover } from '@mantine/hooks';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PlusIcon, Trash2Icon } from 'lucide-react';
 
 import type { TRPCOutput } from '@where-are-my-games/trpc';
@@ -28,18 +28,20 @@ export function GameCard({ game }: Props) {
   const queryClient = useQueryClient();
   const trpc = useTRPC();
 
-  const platforms = useQuery(
-    trpc.games.getPlatforms.queryOptions({ gameId: game.id }),
-  );
-
   const gamePlatformsMutation = useMutation(
     trpc.games.setPlatforms.mutationOptions({
-      onSuccess: () => {
-        void queryClient.invalidateQueries({
-          queryKey: trpc.games.getAllPlatforms.queryKey(),
-        });
-        void queryClient.invalidateQueries({
-          queryKey: trpc.games.getPlatforms.queryKey({ gameId: game.id }),
+      onSuccess: (_, vars) => {
+        queryClient.setQueryData(trpc.games.getAll.queryKey(), (games) => {
+          if (!games) return games;
+          return games.map((g) => {
+            if (g.id === game.id) {
+              return {
+                ...g,
+                platforms: vars.platforms,
+              };
+            }
+            return g;
+          });
         });
       },
     }),
@@ -47,11 +49,8 @@ export function GameCard({ game }: Props) {
 
   const deleteGameMutation = useMutation(
     trpc.games.delete.mutationOptions({
-      onSuccess: () => {
-        void queryClient.invalidateQueries({
-          queryKey: trpc.games.getAllPlatforms.queryKey(),
-        });
-        void queryClient.invalidateQueries({
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({
           queryKey: trpc.games.getAll.queryKey(),
         });
       },
@@ -85,17 +84,16 @@ export function GameCard({ game }: Props) {
           </div>
           <Separator />
           <div className="flex flex-wrap gap-1">
-            {platforms.isSuccess &&
-              platforms.data.map((platform) => {
-                const gamePlatform = gamePlatforms.find(
-                  (p) => p.key == platform,
-                )!;
-                return (
-                  <div className="w-9 rounded-md border p-2" key={platform}>
-                    <gamePlatform.icon />
-                  </div>
-                );
-              })}
+            {game.platforms.map((platform) => {
+              const gamePlatform = gamePlatforms.find(
+                (p) => p.key == platform,
+              )!;
+              return (
+                <div className="w-9 rounded-md border p-2" key={platform}>
+                  <gamePlatform.icon />
+                </div>
+              );
+            })}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -114,25 +112,24 @@ export function GameCard({ game }: Props) {
               >
                 <DropdownMenuLabel>Platforms</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                {platforms.isSuccess &&
-                  gamePlatforms.map((platform) => (
-                    <DropdownMenuCheckboxItem
-                      key={platform.key}
-                      onSelect={(e) => e.preventDefault()}
-                      checked={platforms.data.includes(platform.key)}
-                      onCheckedChange={(value) => {
-                        gamePlatformsMutation.mutate({
-                          gameId: game.id,
-                          platforms: value
-                            ? [...platforms.data, platform.key]
-                            : platforms.data.filter((p) => p != platform.key),
-                        });
-                      }}
-                    >
-                      <platform.icon />
-                      <p>{platform.text}</p>
-                    </DropdownMenuCheckboxItem>
-                  ))}
+                {gamePlatforms.map((platform) => (
+                  <DropdownMenuCheckboxItem
+                    key={platform.key}
+                    onSelect={(e) => e.preventDefault()}
+                    checked={game.platforms.includes(platform.key)}
+                    onCheckedChange={(value) => {
+                      gamePlatformsMutation.mutate({
+                        gameId: game.id,
+                        platforms: value
+                          ? [...game.platforms, platform.key]
+                          : game.platforms.filter((p) => p != platform.key),
+                      });
+                    }}
+                  >
+                    <platform.icon />
+                    <p>{platform.text}</p>
+                  </DropdownMenuCheckboxItem>
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

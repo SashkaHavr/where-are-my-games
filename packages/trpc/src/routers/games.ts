@@ -44,30 +44,6 @@ export const gamesRouter = router({
             b.userGames[0]!.createdAt.valueOf(),
         );
     }),
-  getAllPlatforms: protectedProcedure.query(async ({ ctx }) => {
-    const games = await db.query.userToGame.findMany({
-      where: { userId: ctx.userId },
-    });
-    return games
-      .map((g) => g.platforms)
-      .flat()
-      .filter((p, index, arr) => arr.indexOf(p) == index);
-  }),
-  getPlatforms: protectedProcedure
-    .input(z.object({ gameId: z.number() }))
-    .query(async ({ ctx, input }) => {
-      const userGame = await db.query.userToGame.findFirst({
-        where: { userId: ctx.userId, gameId: input.gameId },
-      });
-      if (!userGame) {
-        throw new TRPCError({
-          message: 'Game not found',
-          code: 'UNPROCESSABLE_CONTENT',
-          cause: input,
-        });
-      }
-      return userGame.platforms;
-    }),
   add: protectedProcedure
     .input(
       z.object({

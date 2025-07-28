@@ -1,4 +1,4 @@
-import { createMiddleware } from '@tanstack/react-start';
+import { createMiddleware, createServerFn } from '@tanstack/react-start';
 import { getWebRequest } from '@tanstack/react-start/server';
 
 import { createTrpcCaller } from '@where-are-my-games/trpc';
@@ -12,3 +12,9 @@ export const trpcServerFnMiddleware = createMiddleware({
     },
   });
 });
+
+export const gamesGetAllServerFn = createServerFn()
+  .middleware([trpcServerFnMiddleware])
+  .handler(({ context }) => {
+    return context.trpc.games.getAll();
+  });
